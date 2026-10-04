@@ -12,6 +12,14 @@ assert.ok(Math.abs(F.bearing({lat:43,lon:-5},{lat:44,lon:-5}))<1e-9);assert.ok(M
 assert.equal(F.stormDistance(30).toFixed(2),'10.29');assert.equal(F.stormDistance(0),null);
 const r=F.turnaround({start:0,now:3,deadline:10});assert.equal(r.turn,5);assert.equal(r.late,false);assert.equal(F.turnaround({start:0,now:6,deadline:10}).late,true);assert.equal(F.turnaround({start:NaN,now:1,deadline:2}),null);
 const m=F.moonIllumination(Date.UTC(2026,8,26,16,49));assert.ok(m.fraction>.97,'luna llena 26-sep-2026');assert.equal(m.name,'Luna llena');
-const pts=[0,1,2,3].map(i=>({lat:43+i*.001,lon:-5,ele:1000+i*10,t:i*60000}));const s=F.trackStats(pts);assert.ok(Math.abs(s.km-.3336)<.002);assert.equal(s.up,30);assert.ok(s.pace>8.5&&s.pace<9.5,"9 min/km");
-assert.match(F.toGPX('A & B',pts),/<name>A &amp; B<\/name>.*<time>1970-01-01T00:00:00.000Z<\/time>/s);
-console.log('Field core passed: sun times (incl. polar night), UTM, DMS, bearings, storm distance, turnaround, moon phase, track stats, GPX.');
+// Posición solar: Madrid, mediodía solar del solsticio ≈ 73° de altura hacia el sur.
+const sp=F.sunPosition(Date.UTC(2026,5,21,12,15),40.4168,-3.7038);assert.ok(Math.abs(sp.altitude-73)<1.5,'altura '+sp.altitude);assert.ok(Math.abs(sp.azimuth-180)<12,'acimut '+sp.azimuth);
+assert.ok(F.sunPosition(Date.UTC(2026,5,21,7),40.4168,-3.7038).azimuth<110);
+// Ladera que sube hacia el norte → orientada al sur (180°), 45 % ≈ 24°.
+const g=[90,90,90,45,45,45,0,0,0];const sa=F.slopeAspect(g,100);assert.ok(Math.abs(sa.aspect-180)<1);assert.ok(Math.abs(sa.slope-24.2)<.5);
+assert.ok(Math.abs(F.distance({lat:43,lon:-5},F.offset({lat:43,lon:-5},1000,90))*1000-1000)<1);
+assert.equal(F.illumination({slope:0,aspect:0,horizon:[0,0,0,0,0,0,0,0]},{azimuth:180,altitude:-2}).state,'night');
+assert.equal(F.illumination({slope:0,aspect:0,horizon:[0,0,0,0,30,0,0,0]},{azimuth:180,altitude:20}).reason,'relieve');
+assert.equal(F.illumination({slope:40,aspect:0,horizon:[0,0,0,0,0,0,0,0]},{azimuth:180,altitude:30}).reason,'ladera');
+assert.equal(F.illumination({slope:30,aspect:180,horizon:[0,0,0,0,0,0,0,0]},{azimuth:180,altitude:30}).state,'sun');
+console.log('Field core passed: sun times (incl. polar night), sun position, slope/aspect, offsets, relief shading, UTM, DMS, bearings, moon phase.');

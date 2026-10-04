@@ -95,3 +95,21 @@ Primera ficha revisada: Canal de Trea, con resúmenes atribuidos al refugio Vega
 - **Agua y refugios** (`pois.js`): fuentes, puntos de agua y refugios de OpenStreetMap a menos de 400 m del track, con su kilómetro, tramo más largo sin agua y marcadores en los mapas. Se guardan con la ruta.
 - Límite: con el teléfono bloqueado, iOS pausa el GPS de las webs; el seguimiento funciona con la app en primer plano.
 - Pruebas nuevas: `tests/field.test.cjs` (sol, UTM, rumbos, retorno, luna, track) y comprobaciones v9 en `tests/v8.mjs`.
+
+## Versión 10: planificar y decidir, con atmósfera
+Se retiran las funciones para usar durante la marcha (seguimiento GPS, grabación de track, brújula y SOS). La app se centra en **decidir antes de salir**.
+- **Estética**: clara y sin recuadros. Unbounded (titulares), IBM Plex Sans (texto) e IBM Plex Mono (datos); auroras difuminadas, grano fino, botones de cristal con borde iridiscente, apariciones con desenfoque y dock flotante. Navegación: **Planificar · Cielo · Terreno · Canales · Más**. Cielo agrupa previsión, radar, modelos y AEMET.
+- **Mapa de la semana** (`week.js`): calendario día × hora de salida para tu ruta, valorado con la previsión en cada sector, la luz y tu ritmo. Mejores ventanas destacadas; al tocar una casilla se replanifica.
+- **Mar de nubes** (`sky.js`): base y techo de la capa nubosa por niveles de presión (Open-Meteo), comparados con tu cota; diagrama y evolución en 24 h.
+- **Terreno** (`relief.js`): sol y sombra por sector a tu hora de paso con pendiente, orientación y horizonte reales (MDT Copernicus 90 m); riesgo de hielo y de calor; lluvia y nieve de 72 h, heladas, isoterma y cota de nieve aproximada; agua y refugios.
+- **Tu ritmo real** (`pace.js`): ajusta min/km y min/100 m a partir de un GPX tuyo con tiempos.
+- **Ensayo 3D** (`flyover.js`): vuelo sobre el relieve (MapLibre + AWS Terrain Tiles, ortofoto PNOA) con hora de paso y previsión de cada sector.
+- **Parte para el grupo** (`card.js`): imagen vertical con ruta, hora, semáforo, cifras, perfil coloreado, material y avisos de mastines.
+- **Canales de los tres macizos** (`canales.js`): catálogo de OpenStreetMap agrupado en Occidental, Central y Oriental. Ficha con mapa IGN (topográfico, ortofoto u OSM), perfil real, longitud, desnivel y pendiente máxima. Incluye accesos por abajo y por arriba (lugares, collados, refugios, pueblo y aparcamiento más cercanos), caminos que la cruzan con su km y dificultad, enlaces con otras canales, agua, horas de sol dentro de la canal para un día concreto, previsión, vuelo 3D, planificación y estado actual con IA. Las 15 fichas del Cares (Pyrenaica 2003) se integran en su canal.
+- **Mastines** (`mastines.js`): mapa de avisos con fecha, número, comportamiento y rebaño; filtros de 7 días a 1 año y alerta de los que están a menos de 500 m de tu ruta. Se comparten en Firestore si hay configuración de Firebase; si no, se guardan en el dispositivo. Reglas sugeridas para Firestore:
+  ```
+  match /mastines/{id} { allow read: if true;
+    allow create: if request.resource.data.keys().hasOnly(['lat','lon','t','count','beh','flock','notes','created'])
+      && request.resource.data.lat is number && request.resource.data.lon is number
+      && request.resource.data.notes.size() <= 200; }
+  ```

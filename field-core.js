@@ -1,4 +1,4 @@
-/* Cálculos sin conexión para la marcha: sol y luna, UTM, rumbos, tormenta, retorno y track. Sin dependencias. */
+/* Cálculos astronómicos y de relieve sin conexión: sol y luna, posición solar, pendiente, orientación, UTM y rumbos. */
 (function(root){
 const rad=Math.PI/180,dayMs=86400000,J1970=2440588,J2000=2451545,e=rad*23.4397;
 const toJulian=d=>d/dayMs-.5+J1970,fromJulian=j=>(j+.5-J1970)*dayMs,toDays=d=>toJulian(d)-J2000;
@@ -33,7 +33,13 @@ function cardinal(deg){return['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO
 function stormDistance(seconds){return seconds>0?seconds*.343:null}
 /* Retorno: la hora límite de llegada es el ocaso menos el margen. */
 function turnaround({start,now,deadline,returnRatio=1}){if(![start,now,deadline].every(Number.isFinite))return null;const turn=start+(deadline-start)/(1+returnRatio);return{turn,remaining:turn-now,late:now>turn}}
-function trackStats(points){let km=0,up=0,down=0,anchor=null,moving=0;for(let i=0;i<points.length;i++){const p=points[i];if(i){const d=distance(points[i-1],p);km+=d;const dt=(p.t-points[i-1].t)/1000;if(dt>0&&d*1000/dt>.4&&dt<600)moving+=dt}if(Number.isFinite(p.ele)){if(anchor===null)anchor=p.ele;const dz=p.ele-anchor;if(Math.abs(dz)>=5){dz>0?up+=dz:down-=dz;anchor=p.ele}}}const elapsed=points.length>1?(points.at(-1).t-points[0].t)/1000:0;return{km,up,down,elapsed,moving,pace:km>.05&&moving>0?moving/60/km:null}}
-function toGPX(name,points){const x=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));return `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="TrailMeteo" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>${x(name)}</name><trkseg>${points.map(p=>`<trkpt lat="${p.lat.toFixed(6)}" lon="${p.lon.toFixed(6)}">${Number.isFinite(p.ele)?`<ele>${p.ele.toFixed(1)}</ele>`:''}<time>${new Date(p.t).toISOString()}</time></trkpt>`).join('')}</trkseg></trk></gpx>`}
-const api={sunTimes,moonIllumination,toUTM,toDMS,distance,bearing,cardinal,stormDistance,turnaround,trackStats,toGPX};root.FieldCore=api;if(typeof module!=='undefined')module.exports=api;
+/* Posición del sol: acimut desde el norte (horario) y altura sobre el horizonte, en grados. */
+function sunPosition(time,lat,lon){const d=toDays(time),lw=rad*-lon,phi=rad*lat,M=solarMeanAnomaly(d),L=eclipticLongitude(M),dec=declination(L,0),ra=rightAscension(L,0),H=rad*(280.16+360.9856235*d)-lw-ra;const az=Math.atan2(Math.sin(H),Math.cos(H)*Math.sin(phi)-Math.tan(dec)*Math.cos(phi)),alt=Math.asin(Math.sin(phi)*Math.sin(dec)+Math.cos(phi)*Math.cos(dec)*Math.cos(H));return{azimuth:((az/rad)+180+360)%360,altitude:alt/rad}}
+/* Pendiente y orientación a partir de una rejilla 3×3 (fila norte primero), separación en metros. */
+function slopeAspect(g,step){const [a,b,c,d,,f,gg,h,i]=g;if(g.some(v=>!Number.isFinite(v)))return null;const dzdx=((c+2*f+i)-(a+2*d+gg))/(8*step),dzdy=((a+2*b+c)-(gg+2*h+i))/(8*step);const slope=Math.atan(Math.hypot(dzdx,dzdy))/rad;let aspect=Math.atan2(-dzdx,-dzdy)/rad;aspect=(aspect+360)%360;return{slope,aspect}}
+/* Desplaza un punto una distancia (m) con un rumbo (grados). */
+function offset(p,dist,brg){const R=6371000,d=dist/R,b=brg*rad,la=p.lat*rad,lo=p.lon*rad,la2=Math.asin(Math.sin(la)*Math.cos(d)+Math.cos(la)*Math.sin(d)*Math.cos(b)),lo2=lo+Math.atan2(Math.sin(b)*Math.sin(d)*Math.cos(la),Math.cos(d)-Math.sin(la)*Math.sin(la2));return{lat:la2/rad,lon:lo2/rad}}
+/* Iluminación: noche, sombra del relieve, ladera de espaldas o sol directo. */
+function illumination({slope,aspect,horizon},sun){if(sun.altitude<=0)return{state:'night',incidence:0};const n=Array.isArray(horizon)&&horizon.length?horizon.length:0;if(n){const k=sun.azimuth/(360/n),i0=Math.floor(k)%n,i1=(i0+1)%n,t=k-Math.floor(k),hz=horizon[i0]*(1-t)+horizon[i1]*t;if(sun.altitude<hz)return{state:'shade',reason:'relieve',incidence:0,horizon:hz}}const z=(90-sun.altitude)*rad,s=(slope||0)*rad,inc=Math.cos(z)*Math.cos(s)+Math.sin(z)*Math.sin(s)*Math.cos((sun.azimuth-(aspect||0))*rad);if(inc<=0)return{state:'shade',reason:'ladera',incidence:0};return{state:'sun',incidence:inc}}
+const api={sunTimes,sunPosition,slopeAspect,offset,illumination,moonIllumination,toUTM,toDMS,distance,bearing,cardinal,stormDistance,turnaround};root.FieldCore=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
