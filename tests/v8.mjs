@@ -13,7 +13,7 @@ w.fetch=async(url,opts={})=>{const u=new URL(url,'http://localhost:8765');let d;
  else if(u.hostname==='r.jina.ai')return{ok:true,text:async()=>String(url).includes('duckduckgo')?'## [Canal de Trea - Wikiloc | Ruta Senderismo](https://es.wikiloc.com/rutas-senderismo/canal-de-trea-12345678)\nDistancia 8,5 km · Desnivel positivo 1.250 m · Difícil\n## [Otra](https://blog.example/x)':'<html><title>Canal de Trea | Wikiloc</title><script>var d={"geometry":{"coordinates":['+Array.from({length:40},(_,i)=>`[${(-4.87+i*.001).toFixed(5)},${(43.22+i*.0008).toFixed(5)}]`).join(',')+']}}</script></html>'};
  else if(u.hostname==='api.open-meteo.com'&&u.pathname.includes('elevation'))d={elevation:u.searchParams.get('latitude').split(',').map((_,i)=>500+i*20)};
  else d=forecast(u);return{ok:true,status:200,json:async()=>d,text:async()=>JSON.stringify(d)}};
-const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','wikiloc.js','canales.js','gear.js'];
+const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','wikiloc.js','canales.js','gear.js','field-core.js','field.js','pois.js'];
 w.eval(scripts.map(s=>fs.readFileSync(s,'utf8')).join('\n')+'\nglobalThis.T={get route(){return S.route},importRoute,enterApp,showTab,get S(){return S}};');
 await new Promise(r=>setTimeout(r,150));
 const $=s=>w.document.querySelector(s),$$=s=>[...w.document.querySelectorAll(s)];
@@ -45,4 +45,17 @@ assert.equal(w.Copilot.provider(),'free');assert.equal(w.Copilot.parseFirebaseCo
 const before=aiCalls.length;const out=await w.Copilot.ask('¿A qué hora salgo?');assert.match(out.text,/9:00/);const last=aiCalls.at(-1);assert.ok(aiCalls.length>before);assert.match(last.messages.at(-1).content,/Canal de Trea/,'el contexto incluye la ruta');assert.match(last.messages.at(-1).content,/sectores/);assert.match($('#cpLog').textContent,/Lleva chaqueta/);assert.equal($$('#cpLog li').length>=2,true,'markdown en listas');
 assert.equal(w.Copilot.md('<img src=x onerror=alert(1)> [x](javascript:alert(1))').includes('<img'),false);assert.equal(w.Copilot.md('[x](javascript:alert(1))').includes('href'),false);
 const ai=w.T.S.qwen;const r=await ai.chat.completions.create({messages:[{role:'system',content:'S'},{role:'user',content:'U'}]});assert.match(r.choices[0].message.content,/9:00/);
-console.log('v8 checks passed: splash→planner, dock order, Commons attribution, 15 visual canales + filters/search/detail, Wikiloc parse/search/load with elevation, go-meter + gear, copilot context/markdown safety/adapter.');await w.happyDOM.close();
+// v9 · En ruta, temas, menú Más, fuentes y refugios
+w.T.showTab('field');assert.equal($('#pane-field').hidden,false);assert.equal(w.document.body.dataset.tab,'field');
+const F=w.Field;F.state.watch=1;const rp=w.T.route.points;const pos=(lat,lon,acc=8)=>({coords:{latitude:lat,longitude:lon,altitude:1200,accuracy:acc,speed:1.2,heading:90},timestamp:Date.now()});
+F.onPosition(pos(rp[10].lat,rp[10].lon));assert.match($('#fieldReadouts').textContent,/Fuera de ruta/);assert.equal($('#fa-off'),null);assert.equal(F.state.track.length,1);
+F.onPosition(pos(rp[10].lat+.006,rp[10].lon));F.onPosition(pos(rp[10].lat+.0062,rp[10].lon));assert.match($('#fa-off').textContent,/Fuera del track/);
+F.onPosition(pos(rp[12].lat,rp[12].lon));assert.match($('#fa-off').textContent,/De nuevo sobre el track/);
+const strike=F.recordStrike(20);assert.ok(strike.km<10);assert.match($('#fa-storm').textContent,/Rayos a 6,9 km/);assert.equal(F.recordStrike(10).trend,'se acerca');
+const msg=F.sosMessage();assert.match(msg,/UTM 30T \d+ E \d+ N/);assert.match(msg,/Canal de Trea/);assert.match($('#sosCoords').textContent,/UTM/);
+const ti=F.turnInfo();assert.ok(['outback','none'].includes(ti.mode));assert.match($('#sunRows').textContent,/Amanecer/);
+assert.ok($('#compassTarget').options.length>=2);F.state.watch=null;
+const rows=w.TMPois.rows(w.T.route,[{type:'node',id:1,lat:rp[30].lat+.0005,lon:rp[30].lon,tags:{natural:'spring',name:'Fuente Cuarroble'}},{type:'node',id:2,lat:rp[5].lat,lon:rp[5].lon+.0003,tags:{tourism:'alpine_hut',name:'Refugio'}},{type:'node',id:3,lat:44,lon:-4,tags:{amenity:'drinking_water'}},{type:'node',id:4,lat:rp[8].lat,lon:rp[8].lon,tags:{amenity:'bench'}}]);assert.equal(rows.length,2);assert.equal(rows[0].kind,'alpine_hut');assert.ok(rows[0].km<rows[1].km);
+w.TMTheme.apply('night');assert.equal(w.document.documentElement.dataset.theme,'night');w.TMTheme.apply('day');assert.equal(w.document.documentElement.dataset.theme,undefined);
+w.TMTheme.openMore();assert.ok($('#moreSheet'));$('#moreSheet [data-more="canales"]').click();assert.equal($('#moreSheet'),null);assert.equal($('#pane-canales').hidden,false);
+console.log('v8/v9 checks passed: field mode (off-route alarm, storm, SOS/UTM, turnaround, compass targets), POIs near track, themes, Más sheet, splash→planner, dock order, Commons attribution, 15 visual canales + filters/search/detail, Wikiloc parse/search/load with elevation, go-meter + gear, copilot context/markdown safety/adapter.');await w.happyDOM.close();

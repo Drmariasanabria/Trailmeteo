@@ -81,3 +81,17 @@ Primera ficha revisada: Canal de Trea, con resúmenes atribuidos al refugio Vega
 - **Copiloto IA** (botón ✦): chat con el contexto real de la app (previsión, ruta y sectores, salidas alternativas, avisos, boletín AEMET, canal abierta, fuentes web recuperadas). Incluye atajos, dictado y lectura por voz. Usa **Gemini mediante Firebase AI Logic** (gratuito, con búsqueda en Google y fuentes citadas) si se configura en `firebase-config.js` o en ⚙ Ajustes del copiloto. Si no, recurre a un servicio comunitario gratuito (Pollinations); como opción queda la IA en el dispositivo. Los botones de explicación existentes usan el mismo motor.
 - **Semáforo GO / OJO / STOP**, **mochila según la previsión** (agua, luz, impermeable, isoterma frente a la cota máxima…) y **compartir plan**.
 - Pruebas nuevas: `tests/v8.mjs`.
+
+## Versión 9: diseño claro y modo «En ruta» para alta montaña
+- **Diseño**: claro y limpio, sin recuadros: secciones separadas por líneas finas, cifras grandes tipo instrumento, curvas de nivel animadas, foto difuminada en la cabecera, aparición al desplazar, contadores animados, onda al pulsar y menú inferior con 5 accesos (Ruta, En ruta, Tiempo, Radar, Más). Temas **Día**, **Noche** (rojo, conserva la visión nocturna y ahorra batería en OLED) y **Sol** (máximo contraste). Botón **SOS** fijo en la barra superior.
+- **En ruta** (`field.js`, cálculos en `field-core.js` sin conexión):
+  - Cabina GPS: altitud, recorrido hecho y restante, llegada estimada con el ritmo real, luz restante, distancia al track, desnivel, tiempo en marcha y ritmo.
+  - Avisos con sonido y vibración: fuera de ruta (umbral configurable), hora de retorno y vigilancia meteorológica cada 20 minutos en tu posición (tormenta, rachas, lluvia intensa). Pantalla siempre encendida (Wake Lock).
+  - Hora límite de retorno (ida y vuelta o travesía), con margen antes del ocaso. Sol, crepúsculo, hora dorada y fase lunar calculados en el dispositivo.
+  - Brújula (sensor del teléfono o rumbo GPS) que apunta al inicio, al final o a puntos guardados (coche, cruce…).
+  - Contador relámpago-trueno con distancia, tendencia y pautas de la regla 30/30.
+  - Grabación del track con recuperación si se cierra la web, exportación GPX y opción de usarlo como ruta.
+  - SOS: coordenadas en grados, UTM y GMS, llamada al 112, SMS con la posición, compartir, silbato y luz SOS en morse, y ficha para el rescate guardada solo en el dispositivo.
+- **Agua y refugios** (`pois.js`): fuentes, puntos de agua y refugios de OpenStreetMap a menos de 400 m del track, con su kilómetro, tramo más largo sin agua y marcadores en los mapas. Se guardan con la ruta.
+- Límite: con el teléfono bloqueado, iOS pausa el GPS de las webs; el seguimiento funciona con la app en primer plano.
+- Pruebas nuevas: `tests/field.test.cjs` (sol, UTM, rumbos, retorno, luna, track) y comprobaciones v9 en `tests/v8.mjs`.
