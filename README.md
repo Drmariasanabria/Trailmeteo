@@ -104,12 +104,38 @@ Se retiran las funciones para usar durante la marcha (seguimiento GPS, grabació
 - **Terreno** (`relief.js`): sol y sombra por sector a tu hora de paso con pendiente, orientación y horizonte reales (MDT Copernicus 90 m); riesgo de hielo y de calor; lluvia y nieve de 72 h, heladas, isoterma y cota de nieve aproximada; agua y refugios.
 - **Tu ritmo real** (`pace.js`): ajusta min/km y min/100 m a partir de un GPX tuyo con tiempos.
 - **Ensayo 3D** (`flyover.js`): vuelo sobre el relieve (MapLibre + AWS Terrain Tiles, ortofoto PNOA) con hora de paso y previsión de cada sector.
-- **Parte para el grupo** (`card.js`): imagen vertical con ruta, hora, semáforo, cifras, perfil coloreado, material y avisos de mastines.
+- **Parte para el grupo** (`card.js`): imagen vertical con ruta, hora, semáforo, cifras, perfil coloreado, material y avisos.
 - **Canales de los tres macizos** (`canales.js`): catálogo de OpenStreetMap agrupado en Occidental, Central y Oriental. Ficha con mapa IGN (topográfico, ortofoto u OSM), perfil real, longitud, desnivel y pendiente máxima. Incluye accesos por abajo y por arriba (lugares, collados, refugios, pueblo y aparcamiento más cercanos), caminos que la cruzan con su km y dificultad, enlaces con otras canales, agua, horas de sol dentro de la canal para un día concreto, previsión, vuelo 3D, planificación y estado actual con IA. Las 15 fichas del Cares (Pyrenaica 2003) se integran en su canal.
-- **Mastines** (`mastines.js`): mapa de avisos con fecha, número, comportamiento y rebaño; filtros de 7 días a 1 año y alerta de los que están a menos de 500 m de tu ruta. Se comparten en Firestore si hay configuración de Firebase; si no, se guardan en el dispositivo. Reglas sugeridas para Firestore:
+
+## Versión 11: cine de montaña, nieve, más modelos y cuentas
+Se retiran los avisos de mastines compartidos.
+- **Estética**: clara y limpia. Archivo (ancho variable) y JetBrains Mono. Detrás, la foto del lugar difuminada con un lento movimiento de cámara, grano fino y **partículas en tiempo real** (`fx.js`): nieve con profundidad de campo, lluvia, niebla o motas de luz según el tiempo actual del lugar, con ráfagas de viento. Respeta «reducir movimiento» y se pausa en segundo plano.
+- **Sonido**: síntesis Web Audio con sala (reverberación generada), nuevos efectos y **viento ambiente** opcional (Más → Viento ambiente).
+- **Más modelos** (`modelsx.js`): además de ECMWF, ICON, GFS, Météo-France, GEM y MET Norway, se añaden UK Met Office, JMA, CMA, BOM, ECMWF AIFS (IA), AROME 1,5 km y HARMONIE, pedidos uno a uno para que un fallo no tumbe al resto. **Conjuntos** ECMWF ENS (51), GFS ENS (31) e ICON EPS (40): abanico P10–P90 de temperatura, probabilidad de lluvia y de rachas ≥ 50 km/h, con la franja de tu ruta. **Meteograma multimodelo** de 72 h con mediana.
+- **Nieve** (`snow.js`, en Terreno): espesor actual, nevada de los últimos 7 días y de los próximos 7 a la cota máxima de tu ruta, horas de fusión, **cota de nieve hora a hora** frente a tus cotas, **nieve sector a sector** a tu hora de paso, y **satélite** NASA GIBS (MODIS/VIIRS color real y cubierta de nieve NDSI) con selector de día. En la ficha de cada canal: nieve en su parte alta.
+- **Más fuentes de rutas** (`trails.js`): senderos señalizados GR/PR/SL de OpenStreetMap con trazado completo cargable, enlaces a Waymarked Trails, y búsqueda en Komoot, Outdooractive y AllTrails.
+- **Canales**: en la ficha, senderos señalizados que la recorren, tracks de Wikiloc superpuestos en el mapa y planificables, **pendiente coloreada** sobre el trazado con marcas de kilómetro, capa OpenTopoMap y capa de senderos PR·GR.
+- **Cuentas opcionales** (`account.js`): entra con Google para guardar tus rutas en la nube y sincronizarlas entre dispositivos, o usa la app **sin registrarte** (todo se guarda en el dispositivo).
+- **Buzón de sugerencias y contacto** (`contact.js`): Más → Buzón y contacto, y pie de página. Envía por correo a mariawilderwest@gmail.com y, si Firebase está configurado, también lo guarda en Firestore.
+
+### Activar las cuentas (gratis, plan Spark)
+1. Firebase → Authentication → Sign-in method → activa **Google**.
+2. Authentication → Settings → Dominios autorizados → añade el dominio de GitHub Pages.
+3. Firestore Database → crear (modo producción) y pega estas reglas:
   ```
-  match /mastines/{id} { allow read: if true;
-    allow create: if request.resource.data.keys().hasOnly(['lat','lon','t','count','beh','flock','notes','created'])
-      && request.resource.data.lat is number && request.resource.data.lon is number
-      && request.resource.data.notes.size() <= 200; }
+  rules_version = '2';
+  service cloud.firestore {
+    match /databases/{db}/documents {
+      match /users/{uid}/routes/{id} {
+        allow read, delete: if request.auth != null && request.auth.uid == uid;
+        allow create, update: if request.auth != null && request.auth.uid == uid
+          && request.resource.data.poly is string && request.resource.data.poly.size() < 600000;
+      }
+      match /feedback/{id} {
+        allow create: if request.resource.data.keys().hasOnly(['type','message','email','at','uid','page','ua'])
+          && request.resource.data.message is string && request.resource.data.message.size() < 4000;
+      }
+    }
+  }
   ```
+4. La misma configuración web de Firebase del Copiloto (`firebase-config.js` o Copiloto → ⚙ Ajustes) sirve para las cuentas.
