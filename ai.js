@@ -56,6 +56,7 @@ function appContext(){const c={generado:new Date().toLocaleString('es-ES'),ubica
  try{const k=Knowledge?.selected;if(k)c.fuentes_web_recuperadas=k.sources.filter(s=>s.status==='read').map(s=>({id:s.id,titulo:s.title,url:s.url,extracto:s.text.slice(0,900)}))}catch{}
  if(globalThis.TMCanales?.selected)c.canal=globalThis.TMCanales.contextFor(globalThis.TMCanales.selected);
  try{const sd=globalThis.TMSky?.data;if(sd){const L=TMSky.cloudLayer(sd.h,sd.start);c.nubes_bajas_ahora=L&&!L.clear?{base_m:L.base,techo_m:L.top,cobertura:L.cover}:'sin capa baja'}}catch{}
+ try{const rd=globalThis.TMRoad?.context();if(rd)c.carretera=rd}catch{}
  let s=JSON.stringify(c);if(s.length>16000)s=s.slice(0,16000)+'…';return s}
 function p0(){return S.route&&typeof currentPlan==='function'&&currentPlan()}
 

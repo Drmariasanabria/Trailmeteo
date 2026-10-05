@@ -139,3 +139,9 @@ Se retiran los avisos de mastines compartidos.
   }
   ```
 4. La misma configuración web de Firebase del Copiloto (`firebase-config.js` o Copiloto → ⚙ Ajustes) sirve para las cuentas.
+
+## Versión 12: carretera, DGT y cadenas
+- **Cómo llegar** (`road.js`, en Más → Carretera, desde Planificar y desde la ficha de cada canal): escribe de dónde sales (o usa tu ubicación) y a dónde vas; por defecto el destino es el inicio de la ruta cargada. Si el nombre es ambiguo, se muestran los lugares candidatos para elegir el exacto (Nominatim/OpenStreetMap). Trayecto por carretera con alternativas (OSRM; Valhalla de respaldo), carreteras usadas, tiempo y hora de llegada, aviso si la carretera termina antes del destino y aparcamiento cartografiado más cercano.
+- **Avisos de la DGT en tu trayecto**: nieve, hielo, **niveles de cadenas** (verde, amarillo, rojo, negro), cortes, obras y accidentes sobre tu recorrido, con su km y la hora a la que pasarías; además, nieve, cadenas y cortes a menos de 25 km. Se marca si un aviso no estará vigente a tu hora y se recomienda la alternativa con menos avisos.
+- **Tiempo en la carretera**: previsión en puntos del trayecto a la hora de paso (temperatura, nieve, hielo probable, niebla, lluvia y viento), perfil coloreado y puntos altos o puertos. «Llegar a la hora de mi ruta» calcula la salida en coche.
+- **Datos DGT**: `scripts/update-dgt.py` lee el feed DATEX II oficial (Punto de Acceso Nacional y, de respaldo, infocar) y publica `data/dgt.json` con las incidencias del norte peninsular en cada despliegue, cada 20 minutos. Si la DGT no responde, la app lo indica en lugar de mostrar datos viejos.

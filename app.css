@@ -773,3 +773,26 @@ footer b{font-family:var(--mono);color:var(--glacier)}
 footer a[data-open-contact]{color:var(--accent)}
 .topbar .status span{display:none}
 [data-theme=night] .backdrop,[data-theme=night] #fxCanvas,[data-theme=contrast] .backdrop,[data-theme=contrast] #fxCanvas{display:none}
+/* ---------- v12: carretera ---------- */
+.road-form{display:grid;gap:12px;max-width:760px}
+.road-form>label{display:grid;gap:6px;font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.road-form input{font:1rem var(--body);letter-spacing:0;text-transform:none;color:var(--ink)}
+.road-input{display:flex;gap:8px}.road-input input{flex:1;min-width:0}.road-input button{min-width:52px}
+.road-cands,.road-quick{display:flex;flex-wrap:wrap;gap:6px}
+.road-cands:empty{display:none}
+.road-cands button,.road-quick button{min-height:34px;padding:4px 12px;border-radius:999px;border:1px solid var(--line-2);background:transparent;font-size:.8rem;color:var(--ink-2);cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.road-cands button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.road-quick button:hover{border-color:var(--accent);color:var(--ink)}
+.road-map{height:min(60vh,500px);border-radius:22px;overflow:hidden;margin-top:14px;background:#dfe6d6}
+.road-inc{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--line)}
+.road-inc.off{opacity:.5}
+.road-inc b{display:block;font-weight:500}
+.road-inc small{display:block;color:var(--muted);font-size:.8rem}
+.road-inc p{margin:4px 0;font-size:.9rem;color:var(--ink-2)}
+.inc-kind{display:inline-block;min-width:84px;text-align:center;padding:3px 9px;border-radius:7px;background:var(--c);color:#fff;font:600 .66rem var(--mono);letter-spacing:.04em;white-space:nowrap}
+.road-levels{margin-top:18px}.road-levels summary{cursor:pointer;font-weight:500}
+.road-levels p{display:flex;gap:10px;align-items:baseline;font-size:.9rem}
+.chain-dot{display:inline-block;flex:none;width:12px;height:12px;border-radius:50%}
+.road-svg{display:block;width:100%;height:150px;margin-top:10px;overflow:visible}
+.road-cta{margin:10px 0 0}.road-cta button{min-height:48px}
+@media (max-width:640px){.inc-kind{min-width:0}.road-inc{grid-template-columns:1fr;gap:6px}}
