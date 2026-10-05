@@ -12,7 +12,7 @@
 --dock:78px;font-family:var(--body);font-size:18px}
 *,*:before,*:after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100vh;overflow-x:hidden;font-weight:400}
+body{margin:0;background:transparent;color:var(--ink);line-height:1.6;min-height:100vh;overflow-x:hidden;font-weight:400}
 [hidden],.pane[hidden]{display:none!important}
 ::selection{background:rgba(29,142,163,.25)}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -67,10 +67,10 @@ small,.small{font-size:.82rem}
 
 /* ---------- Cine: foto difuminada a pantalla completa + partículas ---------- */
 .backdrop{position:fixed;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#c9d6dc 0%,#e4e9e8 45%,var(--bg) 100%);pointer-events:none}
-.bd-img{position:absolute;inset:-6%;background-size:cover;background-position:center 35%;opacity:0;filter:blur(18px) saturate(1.05) brightness(1.04);transform:scale(1.08);transition:opacity 2.2s ease}
-.bd-img.on{opacity:.62;animation:push 60s ease-in-out infinite alternate}
+.bd-img{position:absolute;inset:-6%;background-size:cover;background-position:center 40%;opacity:0;filter:blur(7px) saturate(.92) brightness(1.05) contrast(.96);transform:scale(1.08);transition:opacity 2.2s ease}
+.bd-img.on{opacity:.85;animation:push 60s ease-in-out infinite alternate}
 @keyframes push{from{transform:scale(1.08) translate3d(0,0,0)}to{transform:scale(1.2) translate3d(-2.5%,-1.5%,0)}}
-.bd-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(238,241,239,.22) 0,rgba(238,241,239,.62) 38vh,rgba(238,241,239,.9) 85vh,var(--bg) 140vh)}
+.bd-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(238,241,239,.18) 0,rgba(238,241,239,.5) 30vh,rgba(238,241,239,.8) 62vh,rgba(238,241,239,.92) 100vh)}
 .bd-veil:after{content:'';position:absolute;inset:-50%;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.35) 50%,transparent 58%);animation:sweep 18s ease-in-out infinite;mix-blend-mode:soft-light}
 @keyframes sweep{0%,60%{transform:translateX(-40%)}100%{transform:translateX(40%)}}
 .bd-grid{position:absolute;inset:0;opacity:.07;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(6) infinite}
@@ -772,3 +772,4 @@ footer b{font-family:var(--mono);color:var(--glacier)}
 .fb-form input{width:100%}
 footer a[data-open-contact]{color:var(--accent)}
 .topbar .status span{display:none}
+[data-theme=night] .backdrop,[data-theme=night] #fxCanvas,[data-theme=contrast] .backdrop,[data-theme=contrast] #fxCanvas{display:none}
