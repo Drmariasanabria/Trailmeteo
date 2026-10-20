@@ -17,6 +17,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -26,6 +27,7 @@ jobs:
         with:
           node-version: 22
       - name: Comprobar aplicación
+        timeout-minutes: 6
         run: |
           npm install --ignore-scripts
           npm test
@@ -34,9 +36,22 @@ jobs:
           python3 tests/dgt.test.py
           python3 tests/ai.test.py
           python3 tests/aludes.test.py
+          pip install -q --break-system-packages rasterio pillow numpy || pip install -q rasterio pillow numpy
+          python3 tests/snowmap.test.py
       - name: Fecha para cachés diarias
         id: day
         run: echo "day=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+      - name: Nieve observada Sentinel-2 y validación (caché diaria)
+        id: snowmap
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/snow-s2.png
+            data/snow-s2-data.png
+            data/snow-s2.json
+            data/validation.json
+          key: snowmap-${{ steps.day.outputs.day }}
+          restore-keys: snowmap-
       - name: Catálogo de canales (OpenStreetMap, una vez al día)
         id: canales
         uses: actions/cache@v4
@@ -45,16 +60,23 @@ jobs:
           key: canales-${{ steps.day.outputs.day }}
           restore-keys: canales-
       - name: Obtener boletines oficiales
+        timeout-minutes: 5
         run: |
           python3 scripts/update-mountain.py
           python3 scripts/update-alerts.py
           python3 scripts/update-dgt.py || true
           command -v pdftotext >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils) || true
-          python3 scripts/update-aludes.py || true
+          timeout 120 python3 scripts/update-aludes.py || true
       - name: Actualizar canales si la copia no es de hoy
         if: steps.canales.outputs.cache-hit != 'true'
-        run: python3 scripts/update-canales.py || true
+        timeout-minutes: 4
+        run: timeout 200 python3 scripts/update-canales.py || true
+      - name: Nieve observada Sentinel-2 si la copia no es de hoy
+        if: steps.snowmap.outputs.cache-hit != 'true'
+        timeout-minutes: 9
+        run: timeout 480 python3 scripts/update-snowmap.py || true
       - name: Parte de montaña con IA (GitHub Models)
+        timeout-minutes: 3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/update-ai.py || true

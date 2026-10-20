@@ -139,3 +139,23 @@ td.snowday{color:var(--glacier);font-weight:700}
 .np-acc>.card>.viz-title h2{font-size:1.15rem}
 @media (max-width:640px){.np-sum-list li{grid-template-columns:1fr}.np-tiles{grid-template-columns:1fr 1fr}}
 .ens-bars.snow i{background:#4fb0ef}
+.watch{border:1px solid var(--line-2);border-radius:16px;padding:14px 16px!important;margin:10px 0;background:var(--glass-2)}
+.watch-alert{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:10px 12px;margin:6px 0;border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 8%,transparent);border-radius:0 10px 10px 0}
+.watch-alert span{grid-column:1;color:var(--ink-2);font-size:.9rem}.watch-alert button{grid-row:1/3;grid-column:2;align-self:center}
+.watch-list{list-style:none;padding:0;margin:6px 0;display:grid;gap:4px}
+.watch-list li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;font-size:.86rem;padding:6px 0;border-top:1px solid var(--line)}
+.watch-list small{color:var(--muted)}
+.np-lines{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;margin:8px 0}
+.np-lines div{background:var(--fill);border-radius:10px;padding:6px;text-align:center}
+.np-lines span{display:block;font-size:.66rem;color:var(--muted);font-weight:700}
+.np-lines strong{font-size:.95rem}
+@media (max-width:640px){.np-lines{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* Accesibilidad: contraste AA para texto (los colores de marca se mantienen en gráficos y fondos) */
+:root{--muted:#5f6b71;--accent-ink:#c2410c;--danger-ink:#b42b2b;--warn-ink:#8a5208;--pv-mod:#4a5a63;--pv-est:#8a5208;--pv-obs:#146f80}
+footer a,a[href="#"],.route-hero h2 b{color:var(--accent-ink)}
+.rs-risks b,.pill.high,.rs-kpi.bad strong{color:var(--danger-ink)}
+.rs-kpi.warn strong,.pill.medium{color:var(--warn-ink)}
+#photoCredit{color:var(--ink-2)}
+:focus-visible{outline:3px solid var(--accent-ink);outline-offset:2px}
+.pv.pv-est{color:#7a4807}.pv.pv-mod{color:#45545c}.pv.pv-obs{color:#0f6474}
+body a[href="#"]:not(.primary):not(.quiet){color:var(--accent-ink)}

@@ -1,4 +1,4 @@
-# TrailMeteo 15
+# TrailMeteo 16
 
 **https://wilderwests.github.io/Trailmeteo/** · PWA estática de meteorología y planificación de rutas de montaña. Abre `index.html` desde un servidor HTTP/HTTPS o publica todos los archivos de la raíz en GitHub Pages.
 
@@ -18,6 +18,17 @@ Los modelos no certifican seguridad en montaña. La concordancia no se convierte
 
 ## Licencia y autoría
 © 2026 María Sanabria (wilderwests). **Todos los derechos reservados.** El código, el diseño, los textos y el nombre «TrailMeteo» no se pueden copiar, modificar, redistribuir ni usar comercialmente sin permiso por escrito. Que el repositorio sea público no concede licencia. Detalles y componentes de terceros en [`LICENSE`](LICENSE). Para pedir permiso, usa el contacto de la web.
+
+## Versión 16: observado, validado y documentado
+- **Nieve por hora en la comparación de modelos** (Cielo → Previsión): filas de nevada (cm/h) y cota de nieve estimada por modelo (ECMWF, ICON, GFS, Météo-France, UKMO, GEM), en el lugar o en la cota alta de la ruta; probabilidad de nieve en los conjuntos y variable «Nieve» en el meteograma. La lectura de cada sector cuenta ya la nevada (≥0,2 cm/h precaución; ≥2 cm/h exigente).
+- **Nieve observada por Sentinel-2** (`scripts/update-snowmap.py`, una vez al día): compuesto de 20 m con la última observación sin nubes de cada píxel en 30 días (capa SCL vía Earth Search), capa en el mapa de pendientes, lectura sobre la ruta y por sector, y **cota de nieve observada por orientación** con el MDT.
+- **Validación continua** (`data/validation.json`): cota observada frente a la estimada (isoterma − 300 m) y espesor modelado frente a nieve observada (POD, FAR, aciertos). Con ≥5 comparaciones, la app **corrige la cota estimada** con el sesgo medido.
+- **MDT05 del IGN** (5 m, OGC API Coverages) para la pendiente y orientación de cada sector, con respaldo automático a AWS Terrain Tiles; la tabla indica la fuente usada.
+- **Metodología** (`metodologia.html`): fuentes, fórmulas y umbrales, validación en vivo, **estado de los datos** (antigüedad de cada fuente), limitaciones, aviso legal, privacidad y cómo citar (`CITATION.cff`, `.zenodo.json` para DOI en Zenodo).
+- **Seguimiento de la previsión** (`seguimiento.js`): avisa si cambia la previsión de una ruta planificada (rachas, precipitación, nieve, isoterma, tormenta, sectores exigentes); se comprueba al abrir la app y cada 30 min con ella abierta.
+- **Mapa IGN sin conexión**: guarda el topográfico del corredor de la ruta (zoom 12–15, máx. 450 teselas) y el service worker lo sirve sin cobertura.
+- **Accesibilidad**: auditoría axe-core (WCAG 2 A/AA) sin errores salvo el logotipo; contraste AA, roles ARIA correctos en pestañas y zonas desplazables accesibles con teclado.
+- **Fiabilidad de la publicación**: límites de tiempo por paso y por trabajo; una fuente lenta ya no bloquea la web.
 
 ## Versión 15: qué sabemos y qué no
 - **Veredicto con estado INFO · «Información insuficiente»** (`quality.js`, único para decisión, resultados, tarjeta y copiloto). STOP/OJO/GO valoran solo la meteorología; INFO aparece si la previsión cubre menos del 75 % de los puntos o si hay posible nieve en la ruta sin boletín de aludes vigente. GO pasa a llamarse «Meteo favorable» y recuerda que no certifica la ruta. Panel «Qué sabemos y qué no» bajo el veredicto.
