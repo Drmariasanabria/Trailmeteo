@@ -5,7 +5,7 @@
 const NAV=[
  ['Ruta',[['route','Planificar'],['library','Mis rutas'],['fuel','¿Qué como?'],['road','Carretera']]],
  ['Tiempo',[['now','Previsión'],['radar','Radar'],['models','Modelos'],['mountain','AEMET montaña']]],
- ['Montaña',[['terrain','Terreno'],['canales','Canales de Picos']]],
+ ['Montaña',[['terrain','Terreno'],['nieve','Nieve y aludes'],['canales','Canales de Picos']]],
  ['Ayuda',[['copilot','Copiloto IA'],['guide','Instrucciones'],['account','Cuenta'],['contact','Buzón'],['home','Inicio']]]];
 const ACT={
  library:()=>enterApp('route',true),

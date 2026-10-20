@@ -32,7 +32,7 @@ function knowHTML(p,v){const s=globalThis.TMSnow?.state?.(),av=s?.av||{},row=(ok
   row(av.status==='valid'?'ok':'gap','Boletín de aludes',av.status==='valid'?`Nivel ${av.level} · ${av.zone} · ${av.issued}`:av.status==='off'?'Fuera de temporada: sin boletín vigente':av.status==='nozone'?'AEMET no cubre esta zona':'No disponible')+
   row(s?.steep?'warn':s?.known?'ok':'gap','Terreno',s?.known?`${s.steep} sectores con nieve posible junto a laderas ≥30° (MDT)`:'Pendientes sin calcular')+
   row(s?.obs?'ok':'gap','Observaciones de campo',s?.obs?`${s.obs} propias en 10 días`:'Ninguna reciente')
- }</ul></details>`}
+ }</ul><button type="button" class="quiet" data-go-nieve>❄ Ver nieve y aludes</button></details>`}
 function apply(p=typeof currentPlan==='function'?currentPlan():null){const el=document.getElementById('goMeter');if(!el||!p)return null;const v=verdict(p);el.className='go-meter '+v.level;el.innerHTML=`<div class="dial">${v.word}</div><div><h3>${esc(v.title)}</h3><p>${esc(v.text)}</p>${knowHTML(p,v)}</div>`;try{globalThis.TMResults?.summary?.()}catch{}return v}
 let t=0;function refresh(){clearTimeout(t);t=setTimeout(()=>{if(S.route?.data)apply()},150)}
 globalThis.TMVerdict=Object.assign(verdict,{apply,refresh,WORD,COLOR,TITLE});
