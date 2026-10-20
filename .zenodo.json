@@ -1,0 +1,21 @@
+{
+  "title": "TrailMeteo: planificación meteorológica y nival de rutas de montaña",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Sanabria Barba, María",
+      "orcid": "0000-0002-9844-4923",
+      "affiliation": "Universidad de Cantabria"
+    }
+  ],
+  "description": "Aplicación web para planificar rutas de montaña con la meteorología a la hora de paso, boletines oficiales de AEMET, nieve observada por Sentinel-2, pendientes con el MDT del IGN y validación continua del modelo. Metodología: https://wilderwests.github.io/Trailmeteo/metodologia.html",
+  "keywords": [
+    "meteorología de montaña",
+    "aludes",
+    "nieve",
+    "Sentinel-2",
+    "Picos de Europa"
+  ],
+  "language": "spa",
+  "access_right": "closed"
+}

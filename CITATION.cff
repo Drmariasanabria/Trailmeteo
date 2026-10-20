@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "Si usas TrailMeteo en un trabajo, cítalo así."
+title: "TrailMeteo: planificación meteorológica y nival de rutas de montaña"
+type: software
+authors:
+  - family-names: "Sanabria Barba"
+    given-names: "María"
+    orcid: "https://orcid.org/0000-0002-9844-4923"
+    affiliation: "Universidad de Cantabria"
+version: "16"
+date-released: "2026-10-20"
+url: "https://wilderwests.github.io/Trailmeteo/"
+repository-code: "https://github.com/wilderwests/Trailmeteo"
+license: "LicenseRef-All-Rights-Reserved"
+keywords: [meteorología de montaña, aludes, nieve, Sentinel-2, Picos de Europa, planificación de rutas]

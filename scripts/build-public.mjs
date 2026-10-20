@@ -18,7 +18,7 @@ for(const f of files){
   fs.writeFileSync(dst,r.code);before+=code.length;after+=r.code.length;
 }
 fs.cpSync(path.join(root,'img'),path.join(out,'img'),{recursive:true});
-for(const f of fs.readdirSync(path.join(root,'data')).filter(f=>f.endsWith('.json')))fs.copyFileSync(path.join(root,'data',f),path.join(out,'data',f));
+for(const f of fs.readdirSync(path.join(root,'data')).filter(f=>/\.(json|png)$/.test(f)))fs.copyFileSync(path.join(root,'data',f),path.join(out,'data',f));
 console.log(`Web preparada en ${path.relative(root,out)||'.'}: ${files.length} archivos, JS/CSS propio ${Math.round(before/1024)} KB → ${Math.round(after/1024)} KB.`);
 if(test){
   const t=path.join(out,'tests');fs.cpSync(path.join(root,'tests'),t,{recursive:true});

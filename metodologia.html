@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Metodología · TrailMeteo</title>
+<meta name="description" content="Fuentes, métodos, validación, limitaciones, estado de los datos, aviso legal y cita de TrailMeteo.">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#eef1ef;--paper:#f8faf9;--ink:#10161a;--ink-2:#2d383e;--muted:#5f6b71;--line:rgba(16,22,26,.12);--accent:#ff5a1f;--ok:#1d9b72;--warn:#b46a10;--bad:#c53030;--font:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1417;--paper:#151c20;--ink:#e8eef0;--ink-2:#c9d3d7;--muted:#93a0a6;--line:rgba(232,238,240,.14)}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font)}
+main{max-width:860px;margin:0 auto;padding:28px 16px 80px}
+a{color:inherit;text-decoration-color:var(--accent);text-underline-offset:3px}
+header p{margin:0;color:var(--muted)}
+h1{font-size:clamp(2rem,6vw,3rem);line-height:1.05;letter-spacing:-.03em;margin:.2em 0 .3em}
+h2{font-size:1.4rem;letter-spacing:-.02em;margin:2.2em 0 .5em;padding-top:.6em;border-top:1px solid var(--line)}
+h3{font-size:1.05rem;margin:1.5em 0 .3em}
+.eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#c2410c;font-weight:700}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.9rem;margin:18px 0}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+code{font-size:.86em;background:var(--paper);padding:1px 5px;border-radius:5px}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:12px 0}
+.note{border-left:3px solid var(--warn);padding:8px 14px;background:var(--paper);border-radius:0 10px 10px 0}
+.st{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--muted)}
+.st.ok{background:var(--ok)}.st.warn{background:var(--warn)}.st.bad{background:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.grid div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.grid span{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.grid strong{font-size:1.3rem}
+footer{margin-top:50px;font-size:.85rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<header><p class="eyebrow">TrailMeteo · documentación técnica</p><h1>Metodología</h1><p>Qué datos usa la app, cómo los combina, cuánto acierta y qué no puede saber. Versión <b id="ver">16</b>.</p>
+<nav class="toc" aria-label="Contenido"><a href="#estado">Estado de los datos</a><a href="#fuentes">Fuentes</a><a href="#metodos">Métodos</a><a href="#nieve">Nieve y aludes</a><a href="#validacion">Validación</a><a href="#limites">Limitaciones</a><a href="#cita">Cómo citar</a><a href="#legal">Aviso legal</a><a href="#privacidad">Privacidad</a><a href="./">← Volver a la app</a></nav></header>
+
+<div class="note"><b>TrailMeteo no certifica la seguridad de ninguna ruta.</b> Resume previsiones, boletines y observaciones con su procedencia e incertidumbre. La decisión, el material, la formación y la vuelta a tiempo son responsabilidad de quien sale a la montaña.</div>
+
+<h2 id="estado">Estado de los datos</h2>
+<p>Antigüedad de cada fuente que la app publica. Se actualizan con un proceso automático cada 20 minutos (boletines y tráfico) o una vez al día (canales y Sentinel-2).</p>
+<div class="tw" tabindex="0" role="region" aria-label="Tabla"><table><thead><tr><th>Fuente</th><th>Archivo</th><th>Actualizado</th><th>Estado</th></tr></thead><tbody id="status"><tr><td colspan="4">Consultando…</td></tr></tbody></table></div>
+
+<h2 id="fuentes">Fuentes</h2>
+<div class="tw" tabindex="0" role="region" aria-label="Tabla"><table><thead><tr><th>Fuente</th><th>Qué aporta</th><th>Resolución / frecuencia</th><th>Licencia</th></tr></thead><tbody>
+<tr><td>Open-Meteo</td><td>Previsión horaria (temperatura, precipitación, nieve, isoterma 0 °C, viento, nubes, visibilidad, UV, espesor de nieve) de ECMWF IFS, DWD ICON, NOAA GFS, Météo-France, UKMO, GEM y otros; conjuntos ECMWF/GFS/ICON</td><td>1–25 km según modelo; horaria</td><td>CC BY 4.0</td></tr>
+<tr><td>MET Norway</td><td>Segundo proveedor de previsión</td><td>Horaria</td><td>CC BY 4.0</td></tr>
+<tr><td>AEMET · predicción de montaña</td><td>Boletines de 9 zonas (XML)</td><td>Diaria</td><td>Reutilización con cita</td></tr>
+<tr><td>AEMET · avisos CAP</td><td>Avisos oficiales cruzados con la geometría y la hora de la ruta</td><td>Cuando se emiten</td><td>Reutilización con cita</td></tr>
+<tr><td>AEMET · boletines de peligro de aludes</td><td>Nivel, problemas, cota, isoterma y viento (Picos, Cordel–Peña Labra, Pirineos, Guadarrama), extraídos del PDF</td><td>Diaria o semanal en temporada</td><td>Reproducción autorizada citando la fuente</td></tr>
+<tr><td>Copernicus Sentinel-2 L2A</td><td>Nieve observada (capa de clasificación de escena) vía Earth Search (AWS)</td><td>20 m; cada 2–5 días; compuesto diario</td><td>Datos Copernicus, uso libre con atribución</td></tr>
+<tr><td>NASA GIBS · MODIS/VIIRS</td><td>Imagen de satélite diaria en color real y NDSI</td><td>250–500 m; diaria</td><td>Uso libre con atribución</td></tr>
+<tr><td>IGN · MDT05</td><td>Pendiente y orientación por tramo (OGC API Coverages)</td><td>5 m</td><td>CC BY 4.0 (scne.es)</td></tr>
+<tr><td>AWS Terrain Tiles</td><td>Relieve 3D, sombreado de pendientes y respaldo del MDT</td><td>≈30 m de origen en Europa</td><td>Atribuciones de Mapzen/AWS</td></tr>
+<tr><td>IGN · MTN y PNOA</td><td>Mapa topográfico y ortofoto</td><td>Hasta 0,25 m</td><td>CC BY 4.0</td></tr>
+<tr><td>OpenStreetMap (Overpass)</td><td>Caminos, escala SAC, canales, refugios, fuentes</td><td>Comunitaria</td><td>ODbL</td></tr>
+<tr><td>RainViewer</td><td>Radar observado, últimas 2 h</td><td>Zoom nativo 7; 10 min; 100 peticiones/min por IP</td><td>Uso personal/educativo</td></tr>
+<tr><td>DGT · DATEX II</td><td>Nieve, cadenas, cortes en carretera</td><td>Cada 20 min</td><td>Datos abiertos DGT</td></tr>
+</tbody></table></div>
+
+<h2 id="metodos">Métodos generales</h2>
+<h3>Horario de paso</h3>
+<p>Para cada punto del GPX: <code>hora = salida + (km × ritmo en llano + ascenso acumulado / 100 × minutos por cada 100 m)</code>. Por defecto 8 min/km y 10 min/100 m. No incluye paradas ni terreno técnico. Como referencia se muestra el horario MIDE: <code>máx(Th, Tv) + mín(Th, Tv) / 2</code>, con Th = km / 4 km/h y Tv = subida / 400 m/h + bajada / 600 m/h.</p>
+<h3>Lectura de cada sector (hasta 16 por ruta)</h3>
+<div class="tw" tabindex="0" role="region" aria-label="Tabla"><table><thead><tr><th>Variable a la hora de paso</th><th>Precaución (OJO)</th><th>Exigente (STOP)</th></tr></thead><tbody>
+<tr><td>Tormenta</td><td>—</td><td>código WMO ≥ 95</td></tr>
+<tr><td>Rachas</td><td>≥ 35 km/h</td><td>≥ 60 km/h</td></tr>
+<tr><td>Precipitación</td><td>≥ 0,3 mm/h</td><td>≥ 4 mm/h</td></tr>
+<tr><td>Nevada</td><td>≥ 0,2 cm/h</td><td>≥ 2 cm/h</td></tr>
+<tr><td>Temperatura aparente</td><td>≤ 0 °C o ≥ 26 °C</td><td>≥ 30 °C</td></tr>
+<tr><td>Visibilidad</td><td>&lt; 3 km</td><td>&lt; 1 km</td></tr>
+<tr><td>Índice UV</td><td>≥ 7</td><td>—</td></tr>
+</tbody></table></div>
+<h3>Veredicto</h3>
+<p><b>STOP</b> si algún sector es exigente. <b>INFO · información insuficiente</b> si la previsión cubre menos del 75 % de los sectores, o si hay nieve posible en la ruta sin boletín de aludes vigente (o la nieve está sin evaluar en temporada invernal por encima de 1.500 m). <b>OJO</b> si hay señales de precaución, peligro de aludes ≥ 3 en el boletín o nieve posible junto a laderas ≥ 30°. <b>GO · meteo favorable</b> en el resto: solo valora la meteorología y nunca certifica la ruta.</p>
+
+<h2 id="nieve">Nieve y aludes</h2>
+<h3>Procedencia de cada dato</h3>
+<p>Cada cifra lleva una etiqueta: <b>Oficial</b> (AEMET), <b>Observado</b> (Sentinel-2, MODIS/VIIRS o observaciones propias), <b>Modelo</b> (Open-Meteo) o <b>Estimado</b> (cálculo de la app a partir de los anteriores).</p>
+<h3>Cota de nieve</h3>
+<p>Estimada como isoterma de 0 °C − 300 m, con una franja de ±150 m. Cuando hay al menos 5 comparaciones con Sentinel-2, el desfase medio observado corrige ese valor (ver Validación). El espesor de nieve del modelo es el de la celda (no se corrige por altitud): en Picos puede subestimar la nieve en cumbres, canales y neveros.</p>
+<h3>Nieve por sector</h3>
+<p><b>Probable</b>: el satélite vio nieve en los últimos 10 días, o el modelo da ≥ 5 cm, o nevada a la hora de paso por encima de la franja. <b>Posible</b>: algo de nieve en el modelo, sector dentro de la franja, o umbría (N, NE, NO) por encima de la cota de las nevadas de la última semana. «Sin indicios» no significa sin nieve.</p>
+<h3>Pendiente y terreno de aludes</h3>
+<p>Pendiente y orientación con el operador de Horn sobre el MDT05 del IGN (espaciado de 10 m) y, si no está disponible, sobre AWS Terrain Tiles (≈30 m). Para cada sector se toma la pendiente máxima en un radio de 100 m. Clases del mapa: 27, 30, 35, 40 y 45°. Exposición orientativa inspirada en ATES (no oficial): <i>Simple</i> si menos del 5 % del recorrido está junto a laderas ≥ 30° y ninguna llega a 35°; <i>Complejo</i> si ≥ 25 % está junto a laderas ≥ 30°, ≥ 5 % junto a ≥ 40° o hay ≥ 0,5 km continuos junto a ≥ 35°; <i>Exigente</i> en el resto. No evalúa zonas de salida por encima de la ruta ni trampas del terreno.</p>
+<h3>Puntos de decisión, reloj de la nieve y material</h3>
+<p>Un punto de decisión se sitúa unos 150 m antes de cada tramo continuo junto a laderas ≥ 30° con nieve posible. El reloj marca la primera hora en que la temperatura de la cota alta supera +1 °C tras una noche bajo cero; se avisa si hay solanas empinadas con nieve que se pasarían después. El material se sugiere por reglas explícitas (crampones y piolet con nieve en ≥ 25°; ARVA, pala, sonda y casco con nieve junto a ≥ 30°; raquetas con ≥ 30 cm modelados).</p>
+<h3>Historia del manto (30 días)</h3>
+<p>Indicios a partir del modelo en la cota alta: nevadas ≥ 5 cm/día; nieve con rachas ≥ 50 km/h; lluvia sobre nieve y rehielo posterior (costra); ≥ 3 noches seguidas despejadas (nubosidad &lt; 30 %) y ≤ −4 °C con nieve en el suelo (escarcha de superficie o facetado) y su enterramiento por ≥ 10 cm en los 10 días siguientes (posible capa débil persistente); ≥ 3 días sin helar (manto húmedo). Son indicios para saber qué observar, no diagnósticos.</p>
+<h3>Viento con nieve</h3>
+<p>Durante las horas con nevada: dirección media ponderada por la velocidad, viento máximo y rachas. Si las rachas llegan a 40 km/h o el viento medio a 25 km/h, se señala la orientación de sotavento como posible zona de acumulación. Las placas solo las confirma el boletín o la observación.</p>
+<h3>Boletín de peligro de aludes</h3>
+<p>El PDF de AEMET se convierte a texto y se extraen la fecha, los niveles de cada día (débil = 1 … muy fuerte = 5), los problemas de aludes citados fuera de la leyenda de la escala, la cota de nieve, la isoterma, el viento y los espesores. Estados: vigente (≤ 8 días y con nivel), caducado, fuera de temporada o ilegible. Siempre se enlaza el original.</p>
+<h3>Nieve observada por Sentinel-2</h3>
+<p>Cada día se buscan las escenas Sentinel-2 L2A de los últimos 30 días sobre Picos (Earth Search). Para cada píxel de 20 m se conserva la última observación sin nubes de la capa SCL: 11 = nieve; 2, 4, 5, 6 y 7 = sin nieve; el resto (nubes, sombras, sin dato) no cuenta. La <b>cota observada</b> por orientación es la banda de 50 m más baja desde la que la nieve cubre ≥ 50 % de los píxeles observados durante 3 bandas seguidas (solo observaciones de ≤ 10 días y pendientes &lt; 45°).</p>
+
+<h2 id="validacion">Validación</h2>
+<p>Con cada nueva imagen útil se compara: (1) la cota observada con la estimada por el modelo (isoterma − 300 m) en el centro de Picos ese día a las 11 UTC; (2) el espesor modelado (≥ 1 cm) con la nieve observada en hasta 80 píxeles repartidos por altitud. Métricas: sesgo y error medio absoluto de la cota; tasa de aciertos, probabilidad de detección (POD) y tasa de falsas alarmas (FAR) del espesor.</p>
+<div id="val" class="box">Consultando…</div>
+
+<h2 id="limites">Limitaciones</h2>
+<ul>
+<li>Los modelos meteorológicos tienen celdas de 1–25 km: no resuelven canales, collados ni inversiones locales.</li>
+<li>El satélite no ve bajo las nubes ni bajo el bosque; 20 m no basta para neveros muy estrechos.</li>
+<li>El MDT suaviza resaltes: la pendiente real puede ser mayor que la calculada.</li>
+<li>La extracción del boletín es automática: ante cualquier duda manda el PDF de AEMET.</li>
+<li>El radar público tiene zoom nativo 7 y límite de uso; las zonas vacías no equivalen a ausencia de precipitación.</li>
+<li>La app funciona en el navegador: sin conexión solo dispone de lo guardado.</li>
+</ul>
+
+<h2 id="cita">Cómo citar</h2>
+<div class="box">Sanabria Barba, M. (2026). <i>TrailMeteo: planificación meteorológica y nival de rutas de montaña</i> (versión <span class="v">16</span>) [Software]. https://wilderwests.github.io/Trailmeteo/</div>
+<p>El repositorio incluye <code>CITATION.cff</code> y metadatos para Zenodo, que asigna un DOI a cada versión publicada.</p>
+
+<h2 id="legal">Aviso legal y responsabilidad</h2>
+<p>TrailMeteo es una herramienta informativa gratuita. La información procede de terceros y de cálculos automáticos que pueden contener errores, retrasos u omisiones. No sustituye a los boletines oficiales, a la formación en montaña y aludes, al material adecuado ni al juicio en el terreno. El uso de la app es responsabilidad exclusiva de cada persona; la autora no responde de daños derivados de decisiones tomadas con ella. Ante una emergencia, llama al <b>112</b>.</p>
+<p>© 2026 María Sanabria (wilderwests). Todos los derechos reservados sobre el código, el diseño y los textos; los datos de terceros conservan sus licencias.</p>
+
+<h2 id="privacidad">Privacidad</h2>
+<ul>
+<li>El GPX se procesa en tu dispositivo. A los servicios meteorológicos se envían solo coordenadas de los puntos consultados.</li>
+<li>Rutas guardadas, observaciones de nieve y preferencias se guardan en tu navegador.</li>
+<li>Si inicias sesión con Google (Firebase), tus rutas pueden sincronizarse en tu cuenta.</li>
+<li>El buzón envía tu mensaje por correo mediante FormSubmit y, si está configurado, lo guarda en Firebase.</li>
+<li>El copiloto de IA envía tu pregunta y los datos de la app al proveedor elegido (Gemini vía Firebase o un servicio comunitario).</li>
+<li>No hay publicidad ni seguimiento con fines comerciales.</li>
+</ul>
+<footer>TrailMeteo · <a href="./">Volver a la app</a></footer>
+</main>
+<script>
+(function(){
+const fmt=(v,d=0)=>v==null||!isFinite(v)?'—':Number(v).toLocaleString('es-ES',{maximumFractionDigits:d,minimumFractionDigits:d});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SRC=[['Boletines de montaña AEMET','data/mountain.json','fetched',3],['Avisos AEMET','data/alerts.json','fetched',3],['Tráfico DGT','data/dgt.json','fetched',3],['Boletines de aludes AEMET','data/aludes.json','fetched',3],['Canales (OpenStreetMap)','data/canales.json','fetched',72],['Nieve observada Sentinel-2','data/snow-s2.json','fetched',72],['Validación','data/validation.json','updated',72]];
+const get=u=>fetch(u,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null);
+Promise.all(SRC.map(s=>get(s[1]))).then(rs=>{document.getElementById('status').innerHTML=SRC.map(([n,f,k,h],i)=>{const d=rs[i],t=d&&Date.parse(d[k]),age=t?(Date.now()-t)/3600000:null,cls=age==null?'bad':age<=h?'ok':age<=h*4?'warn':'bad';return`<tr><td>${n}</td><td><code>${f}</code></td><td>${t?new Date(t).toLocaleString('es-ES',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' · hace '+(age<1?Math.max(1,Math.round(age*60))+' min':age<48?Math.round(age)+' h':Math.round(age/24)+' d'):'no disponible'}</td><td><span class="st ${cls}"></span>${age==null?'Sin datos':cls==='ok'?'Al día':cls==='warn'?'Con retraso':'Desactualizado'}</td></tr>`}).join('');
+ const v=rs[6],s=v?.summary,m=rs[5],p=x=>x==null?'—':Math.round(x*100)+' %';const el=document.getElementById('val');
+ if(!s){el.innerHTML='Aún no hay comparaciones publicadas: el registro empieza con la primera imagen útil de Sentinel-2 y se amplía cada día.';return}
+ el.innerHTML=`<div class="grid"><div><span>Comparaciones de cota</span><strong>${s.n_line}</strong></div><div><span>Sesgo (observada − estimada)</span><strong>${s.bias==null?'—':(s.bias>0?'+':'')+fmt(s.bias)+' m'}</strong></div><div><span>Error medio absoluto</span><strong>${s.mae==null?'—':fmt(s.mae)+' m'}</strong></div><div><span>Aciertos del espesor</span><strong>${p(s.acc)}</strong></div><div><span>POD</span><strong>${p(s.pod)}</strong></div><div><span>FAR</span><strong>${p(s.far)}</strong></div></div><p>${s.points} píxeles comparados. ${s.n_line>=5?'La app aplica la corrección de sesgo a la cota estimada.':'La corrección se aplica a partir de 5 comparaciones.'} ${m?`Último compuesto: ${m.scenes?.length||0} escenas, la más reciente del ${new Date(m.newest).toLocaleDateString('es-ES')}, ${Math.round((m.coverage||0)*100)} % de Picos observado.`:''}</p>
+ <div class="tw" tabindex="0" role="region" aria-label="Tabla"><table><thead><tr><th>Imagen</th><th>Cota observada</th><th>Estimada</th><th>Diferencia</th><th>Aciertos espesor</th></tr></thead><tbody>${(v.history||[]).slice(-15).reverse().map(h=>`<tr><td>${esc(h.date)}</td><td>${fmt(h.observed_line)} m</td><td>${h.model_line!=null?fmt(h.model_line)+' m':'—'}</td><td>${h.err!=null?(h.err>0?'+':'')+fmt(h.err)+' m':'—'}</td><td>${h.points?Math.round((h.hit+h.neg)/h.points*100)+' %':'—'}</td></tr>`).join('')}</tbody></table></div>`});
+})();
+</script>
+</body>
+</html>

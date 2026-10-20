@@ -1,4 +1,4 @@
-globalThis.TM_VERSION='15';
+globalThis.TM_VERSION='16';
 /* Pure calculations shared by the app and regression checks. */
 (function(root){
 const finite=v=>typeof v==='number'&&Number.isFinite(v);
@@ -10,6 +10,7 @@ function assess(h){if(!h)return{level:'unknown',label:'Sin datos',risks:['Previs
 if(!finite(h.temperature_2m)||!finite(h.precipitation)||!finite(h.wind_gusts_10m))return{level:'unknown',label:'Datos incompletos',risks:['Faltan temperatura, lluvia o rachas']};
 if(h.weather_code>=95){risks.push('Tormenta prevista');severe=true}if(h.wind_gusts_10m>=60){risks.push('Rachas fuertes');severe=true}else if(h.wind_gusts_10m>=35)risks.push('Viento en zonas expuestas');
 if(h.precipitation>=4){risks.push('Precipitación intensa');severe=true}else if(h.precipitation>=.3)risks.push('Lluvia y terreno mojado');
+if(finite(h.snowfall)&&h.snowfall>=2){risks.push('Nevada intensa');severe=true}else if(finite(h.snowfall)&&h.snowfall>=.2)risks.push('Nevando');
 const t=finite(h.apparent_temperature)?h.apparent_temperature:h.temperature_2m;if(t<=0)risks.push('Frío y posible hielo');if(t>=30){risks.push('Calor intenso');severe=true}else if(t>=26)risks.push('Calor');
 if(finite(h.visibility)&&h.visibility<1000){risks.push('Visibilidad muy reducida');severe=true}else if(finite(h.visibility)&&h.visibility<3000)risks.push('Visibilidad reducida');
 if(finite(h.uv_index)&&h.uv_index>=7)risks.push('Radiación UV alta');return{level:severe?'high':risks.length?'medium':'low',label:severe?'Condiciones exigentes':risks.length?'Con precauciones':'Sin señal adversa destacada',risks}}

@@ -12,7 +12,7 @@ MIRRORS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.
 
 def query():
     b = ','.join(map(str, PICOS))
-    return f"""[out:json][timeout:90];
+    return f"""[out:json][timeout:55];
 (way["name"~{RE}]["waterway"!~"."]["man_made"!~"."]["highway"!~"^(motorway|trunk|primary|secondary|tertiary|residential|unclassified)$"]({b});
 relation["name"~{RE}]["waterway"!~"."]({b});
 node["name"~{RE}]["natural"]({b});
@@ -27,7 +27,7 @@ def main():
     for url in MIRRORS:
         try:
             req = urllib.request.Request(url, data=data, headers={'User-Agent': 'TrailMeteo/15 (https://github.com/wilderwests/Trailmeteo)'})
-            with urllib.request.urlopen(req, timeout=120) as r:
+            with urllib.request.urlopen(req, timeout=60) as r:
                 d = json.load(r)
             els = d.get('elements') or []
             if not els:
