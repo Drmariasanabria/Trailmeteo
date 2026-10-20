@@ -28,6 +28,8 @@ Los modelos no certifican seguridad en montaña. La concordancia no se convierte
 - **Canales**: catálogo precalculado a diario (`scripts/update-canales.py` → `data/canales.json`), consulta ampliada (topónimos `place=locality`, «La Canal…»), tres servidores Overpass y canales documentadas de Ándara (Jidiellu, Grajas, Vacas).
 - **Radar**: imágenes de 512 px y control de cupo (RainViewer gratuito: 100 peticiones/min por IP); pausa automática antes del límite y fotogramas cargados reutilizados.
 - **Contacto**: envío por correo (FormSubmit) y guardado en Firestore en paralelo, con estados reales (enviado, pendiente de activación, fallo → correo del usuario). La primera vez FormSubmit envía a la dirección de contacto un correo «Activate Form» que hay que pulsar.
+- **Sección Nieve propia** (barra inferior, menú, `#nieve`): resumen en lenguaje claro arriba (aludes, nieve en la ruta, cota, nevadas, terreno, dónde decidir, qué llevar), mapa de pendientes y detalle plegable. `nieve-pro.js`: sombreado de pendiente (27/30/35/40/45°) calculado con el MDT, exposición orientativa inspirada en ATES, puntos de decisión, reloj de calentamiento, material según la nieve, rosa de orientaciones y cotas con las del boletín, nivograma de 14 días, historia del manto de 30 días con indicios de capas débiles, costras y nieve húmeda, y comparación de cinco modelos.
+- **Previsión de nieve en Cielo**: nevada por hora, cota de nieve estimada, tarjeta de nieve a 24/72 h/7 días y columnas de nieve y cota en la tabla de 7 días.
 - Corregido: el perfil de la ruta y el de carretera compartían nombre de función (`renderProfile`); modelo Gemini inexistente en la cadena de respaldo.
 
 ## Datos y licencias de terceros
