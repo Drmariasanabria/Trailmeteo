@@ -138,3 +138,4 @@ td.snowday{color:var(--glacier);font-weight:700}
 .np-acc>.card{padding-top:0}
 .np-acc>.card>.viz-title h2{font-size:1.15rem}
 @media (max-width:640px){.np-sum-list li{grid-template-columns:1fr}.np-tiles{grid-template-columns:1fr 1fr}}
+.ens-bars.snow i{background:#4fb0ef}
