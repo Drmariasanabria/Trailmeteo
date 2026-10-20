@@ -2,7 +2,7 @@
 /* Presentación: arranque, sonido sintetizado con sala, viento ambiente, partículas cinematográficas y fotografía de fondo con atribución. */
 const FX={ctx:null,muted:false,themes:{},current:null,layer:0,photoSeq:0};
 try{FX.muted=localStorage.getItem('tm.sound')==='off'}catch{}
-const TAB_IDS=['route','now','terrain','canales','radar','models','mountain'];
+const TAB_IDS=['route','now','terrain','nieve','canales','radar','models','mountain'];
 
 /* ---------- Sonido: Web Audio, sin archivos ---------- */
 function audio(){if(FX.muted)return null;const AC=globalThis.AudioContext||globalThis.webkitAudioContext;if(!AC)return null;try{if(!FX.ctx)FX.ctx=new AC();if(FX.ctx.state==='suspended')FX.ctx.resume();return FX.ctx}catch{return null}}
@@ -35,7 +35,7 @@ $('#soundToggle')?.addEventListener('click',e=>{e.stopPropagation();setMuted(!FX
 document.addEventListener('click',e=>{const b=e.target.closest('button,.dropzone,.file-button');if(!b||b.id==='soundToggle'||b.id==='splashMute'||b.id==='splashEnter')return;if(b.dataset.tab||b.dataset.go){sfx('tab');buzz(8)}else if(b.classList.contains('primary')){sfx('ok');buzz(14)}else sfx('tap')},true);
 
 /* ---------- Fotografía de fondo: Wikimedia Commons, con autor y licencia ---------- */
-const PHOTO_QUERIES={terrain:'Picos de Europa roca caliza',splash:'Picos de Europa',home:'Picos de Europa macizo',route:'Ruta del Cares',now:'Picos de Europa nubes',radar:'Picos de Europa niebla',mountain:'Naranjo de Bulnes',canales:'Garganta del Cares',models:'Lagos de Covadonga'};
+const PHOTO_QUERIES={terrain:'Picos de Europa roca caliza',splash:'Picos de Europa',home:'Picos de Europa macizo',route:'Ruta del Cares',now:'Picos de Europa nubes',radar:'Picos de Europa niebla',mountain:'Naranjo de Bulnes',canales:'Garganta del Cares',nieve:'Picos de Europa nieve invierno',models:'Lagos de Covadonga'};
 const stripHTML=s=>String(s||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
 function photoCache(){try{return JSON.parse(localStorage.getItem('tm.photos.v1'))||{}}catch{return{}}}
 function savePhotoCache(c){try{localStorage.setItem('tm.photos.v1',JSON.stringify(c))}catch{}}
@@ -49,7 +49,7 @@ function creditHTML(p){if(!p)return'';if(p.local)return `📷 ${esc(p.title)} ·
 function preload(src){return new Promise((res,rej)=>{const img=new Image();img.referrerPolicy='no-referrer';img.onload=()=>res(src);img.onerror=rej;img.src=src;setTimeout(()=>rej(Error('timeout')),15000)})}
 /* Fotografías propias (Picos de Europa), servidas con la app: funcionan sin conexión y no dependen de bancos de imágenes. */
 const LOCAL_PHOTOS={canal:{local:true,url:'img/canal.jpg',title:'Mar de nubes desde una canal'},niebla:{local:true,url:'img/niebla.jpg',title:'Niebla en la cresta'},nieve:{local:true,url:'img/nieve.jpg',title:'Nieve recién caída'}};
-const LOCAL_BY_THEME={splash:'canal',home:'canal',route:'canal',canales:'canal',now:'niebla',radar:'niebla',models:'niebla',mountain:'niebla',terrain:'nieve',road:'nieve'};
+const LOCAL_BY_THEME={splash:'canal',home:'canal',route:'canal',canales:'canal',now:'niebla',radar:'niebla',models:'niebla',mountain:'niebla',terrain:'nieve',nieve:'nieve',road:'nieve'};
 function localPhoto(theme){let k=LOCAL_BY_THEME[theme];if(theme==='now'&&typeof pxMode==='function'&&pxMode()==='snow')k='nieve';return k?LOCAL_PHOTOS[k]:null}
 async function pickPhoto(theme){const own=localPhoto(theme);if(own)return own;const items=FX.themes[theme]||(FX.themes[theme]=await commonsPhotos(PHOTO_QUERIES[theme]||PHOTO_QUERIES.home));if(!items.length)return null;const day=Math.floor(Date.now()/86400000);return items[(day+(theme.length*7))%items.length]}
 async function showBackdrop(theme){if(FX.current===theme)return;const prevUrl=FX.currentUrl;FX.current=theme;const seq=++FX.photoSeq;const p=await pickPhoto(theme);if(seq!==FX.photoSeq||!p)return;if(p.url===prevUrl){const credit=$('#photoCredit');if(credit)credit.innerHTML=creditHTML(p);const home=$('.home-photo');if(theme==='home'&&home){home.style.backgroundImage=`url("${p.url}")`;home.classList.add('on')}return}FX.currentUrl=p.url;try{await preload(p.url)}catch{return}if(seq!==FX.photoSeq)return;const layers=$$('.bd-img');if(layers.length<2)return;const next=layers[FX.layer^1];next.style.backgroundImage=`url("${p.url.replace(/"/g,'%22')}")`;next.classList.add('on');layers[FX.layer].classList.remove('on');FX.layer^=1;const credit=$('#photoCredit');if(credit)credit.innerHTML=creditHTML(p);const home=$('.home-photo');if(theme==='home'&&home){home.style.backgroundImage=next.style.backgroundImage;home.classList.add('on');home.title=stripHTML(creditHTML(p))}}
@@ -104,7 +104,7 @@ globalThis.TMTheme={apply:applyTheme,get current(){return currentTheme()},openMo
 
 /* ---------- Partículas cinematográficas: nieve, lluvia o motas de luz según el tiempo del lugar ---------- */
 const PX={cv:null,c:null,parts:[],mode:'snow',w:0,h:0,dpr:1,raf:0,last:0,wind:0,windTarget:.25,sprites:{},boost:0};
-function pxMode(){const c=S.forecast?.current||{},code=c.weather_code,t=c.temperature_2m;if(currentTheme()==='night')return'motes';if(code>=71&&code<=86||((code>=51&&code<=67||code>=80)&&finite(t)&&t<=1))return'snow';if(code>=51&&code<=67||code>=80&&code<=82||code>=95)return'rain';if(code===45||code===48)return'fog';if(finite(t)&&t<=2)return'snow';return['canales','terrain'].includes(document.body.dataset.tab)?'snow':'motes'}
+function pxMode(){const c=S.forecast?.current||{},code=c.weather_code,t=c.temperature_2m;if(currentTheme()==='night')return'motes';if(code>=71&&code<=86||((code>=51&&code<=67||code>=80)&&finite(t)&&t<=1))return'snow';if(code>=51&&code<=67||code>=80&&code<=82||code>=95)return'rain';if(code===45||code===48)return'fog';if(finite(t)&&t<=2)return'snow';return['canales','terrain','nieve'].includes(document.body.dataset.tab)?'snow':'motes'}
 function pxSprite(r,blur){const k=r+'|'+blur;if(PX.sprites[k])return PX.sprites[k];const s=Math.ceil((r+blur)*2+2),cv=document.createElement('canvas');cv.width=cv.height=s;const c=cv.getContext('2d');if(!c)return null;const g=c.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);g.addColorStop(0,'rgba(255,255,255,.95)');g.addColorStop(Math.max(.05,r/(r+blur))*.9,'rgba(255,255,255,.55)');g.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=g;c.fillRect(0,0,s,s);return PX.sprites[k]=cv}
 function pxSpawn(p,top){const depth=Math.random(),mode=PX.mode;p.z=depth;p.x=Math.random()*PX.w;p.y=top?-20-Math.random()*PX.h*.2:Math.random()*PX.h;p.ph=Math.random()*6.28;
  if(mode==='rain'){p.r=.6+depth*.9;p.vy=520+depth*700;p.len=10+depth*22;p.a=.12+depth*.28}

@@ -71,3 +71,7 @@
 .obs-list li span{color:var(--muted)}
 .obs-list li.old{opacity:.55}
 @media (max-width:640px){.snow-split{grid-template-columns:1fr;gap:14px}.know-list li{grid-template-columns:auto 1fr}.know-list li span{grid-column:2}.know-panel .know-list li{grid-template-columns:1fr}.day-cycles li{grid-template-columns:1fr 5rem}.day-cycles li p{grid-column:1/-1}.sat-strip{grid-template-columns:repeat(5,minmax(0,1fr))}.av-dial{width:56px;height:56px;font-size:1.6rem}}
+.snow-link{border-top:1px solid var(--line)}
+.snow-link h2{margin:4px 0}
+.snow-target{margin-top:10px;font-size:.92rem;color:var(--ink-2)}
+.know-panel [data-go-nieve]{margin-top:10px}
