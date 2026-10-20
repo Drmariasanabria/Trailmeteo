@@ -8,8 +8,13 @@ authors:
     orcid: "https://orcid.org/0000-0002-9844-4923"
     affiliation: "Universidad de Cantabria"
 version: "16"
+doi: "10.5281/zenodo.23507525"
 date-released: "2026-10-20"
 url: "https://wilderwests.github.io/Trailmeteo/"
 repository-code: "https://github.com/wilderwests/Trailmeteo"
 license: "LicenseRef-All-Rights-Reserved"
 keywords: [meteorología de montaña, aludes, nieve, Sentinel-2, Picos de Europa, planificación de rutas]
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23507525"
+    description: "DOI de Zenodo (todas las versiones)"

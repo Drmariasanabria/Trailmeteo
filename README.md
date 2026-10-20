@@ -1,5 +1,7 @@
 # TrailMeteo 16
 
+[![DOI](https://zenodo.org/badge/1362436649.svg)](https://doi.org/10.5281/zenodo.23507525)
+
 **https://wilderwests.github.io/Trailmeteo/** · PWA estática de meteorología y planificación de rutas de montaña. Abre `index.html` desde un servidor HTTP/HTTPS o publica todos los archivos de la raíz en GitHub Pages.
 
 ## Funciones
@@ -15,6 +17,9 @@
 
 ## Límites reales
 Los modelos no certifican seguridad en montaña. La concordancia no se convierte en un porcentaje inventado de confianza. El radar público RainViewer tiene zoom nativo máximo 7 y mosaicos cada 10 minutos; no ofrece una garantía de disponibilidad. Las zonas vacías no equivalen a cielo despejado. El GPX necesita altitudes para estimar desnivel y penalización de ascenso. Las ventanas no evalúan terreno, luz solar o preparación personal. Las fuentes gratuitas tienen límites de uso.
+
+## Cómo citar
+Sanabria Barba, M. (2026). *TrailMeteo: planificación meteorológica y nival de rutas de montaña* [Software]. Zenodo. https://doi.org/10.5281/zenodo.23507525
 
 ## Licencia y autoría
 © 2026 María Sanabria (wilderwests). **Todos los derechos reservados.** El código, el diseño, los textos y el nombre «TrailMeteo» no se pueden copiar, modificar, redistribuir ni usar comercialmente sin permiso por escrito. Que el repositorio sea público no concede licencia. Detalles y componentes de terceros en [`LICENSE`](LICENSE). Para pedir permiso, usa el contacto de la web.
