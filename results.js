@@ -4,7 +4,7 @@
 (function(){
 const RS={built:false,alarmExtra:90};
 const GROUPS=[['decision','Decisión'],['map','Track'],['sectors','Tiempo por tramo y hora'],['when','Cuándo salir'],['risks','Riesgos y avisos'],['pack','Mochila y agua'],['onroute','En ruta y seguridad']];
-const VERDICT={high:['STOP','Replantea la salida'],medium:['OJO','Sal con precauciones'],low:['GO','Ventana favorable'],unknown:['?','Datos incompletos']};
+const VERDICT={high:['STOP','Replantea la salida'],medium:['OJO','Sal con precauciones'],low:['GO','Meteo favorable'],info:['INFO','Información insuficiente'],unknown:['?','Datos incompletos']};
 const tm=t=>finite(t)?new Date(t).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}):'—';
 const dayTm=t=>finite(t)?new Date(t).toLocaleString('es-ES',{weekday:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
 const dur=min=>{if(!finite(min))return'—';const m=Math.round(min);return `${Math.floor(m/60)} h ${String(m%60).padStart(2,'0')}`};
@@ -16,7 +16,7 @@ function topRisks(p){const map=new Map();for(const q of p.rows){for(const risk o
 function bestDeparture(r,p){try{const all=Expedition.departures(r,r.start,Number($('#pace').value),Number($('#climb').value))||[];const list=all.filter(x=>{const h=new Date(x.start).getHours();return h>=6&&h<=16&&x.arrivalLight?.day!==false});if(!list.length)return null;return[...list].sort((a,b)=>(a.high-b.high)||((b.arrivalLight?.day?1:0)-(a.arrivalLight?.day?1:0))||((a.maxGust||0)-(b.maxGust||0)))[0]}catch{return null}}
 function turnaround(r,p){const L=p.arrivalLight;if(!L||!finite(L.sunset)||L.sunset<p.start)return null;const rows=p.rows.filter(q=>finite(q.ele));if(!rows.length)return null;const top=rows.reduce((a,b)=>b.ele>a.ele?b:a);const back=p.arrival-top.eta;const limit=L.sunset-30*60000-back;return{top,limit,margin:(limit-top.eta)/60000}}
 function water(p,mins){const temps=p.rows.map(q=>q.h?.temperature_2m).filter(finite),hot=temps.length&&Math.max(...temps)>=24;const l=mins/60*(hot?.75:.5);return Math.max(.5,Math.round(l*2)/2)}
-function level(){return($('#goMeter')?.className.match(/\b(high|medium|low|unknown)\b/)||[])[1]||'unknown'}
+function level(){return($('#goMeter')?.className.match(/\b(high|medium|low|info|unknown)\b/)||[])[1]||'unknown'}
 
 /* ---------- Estructura ---------- */
 function build(){if(RS.built)return true;const rc=$('#routeContent');const anchor=$('#paceCard')||rc?.querySelector('.route-settings');if(!rc||!anchor)return false;
@@ -42,7 +42,7 @@ function renderSummary(){const r=S.route,p=typeof currentPlan==='function'?curre
  const planMin=(p.arrival-p.start)/60000,mide=mideMinutes(st),eles=r.points.map(q=>q.ele).filter(finite),top=eles.length?Math.max(...eles):null,temps=p.rows.map(q=>q.h?.temperature_2m).filter(finite),iso=p.rows.map(q=>q.h?.freezing_level_height).filter(finite),isoMin=iso.length?Math.min(...iso):null;
  const risks=topRisks(p),best=bestDeparture(r,p),turn=turnaround(r,p),L=p.arrivalLight;
  const kpi=(v,l,cls='')=>`<div class="rs-kpi ${cls}"><strong>${v}</strong><span>${l}</span></div>`;
- const reason=lv==='high'?`${p.high} puntos con condiciones exigentes a tu hora de paso.`:lv==='medium'?`Atento a: ${risks.slice(0,3).map(x=>x.risk.toLowerCase()).join(', ')}.`:lv==='low'?'Sin señales meteorológicas adversas en los puntos consultados. No certifica el estado del terreno.':`${p.known}/${p.rows.length} puntos con previsión. Elige una salida más próxima o actualiza.`;
+ const V=globalThis.TMVerdict?.(p),reason=V&&V.level===lv?V.text:lv==='high'?`${p.high} puntos con condiciones exigentes a tu hora de paso.`:lv==='medium'?`Atento a: ${risks.slice(0,3).map(x=>x.risk.toLowerCase()).join(', ')}.`:lv==='low'?'Sin señales meteorológicas adversas en los puntos consultados. No certifica el estado del terreno.':`${p.known}/${p.rows.length} puntos con previsión. Elige una salida más próxima o actualiza.`;
  el.innerHTML=`<div class="rs-verdict ${lv}"><div class="rs-dial" aria-hidden="true">${word}</div><div class="rs-vtext"><span class="rs-kicker">Veredicto para ${esc(r.name)}</span><h3>${title}</h3><p>${esc(reason)}</p><p class="rs-times"><b>${dayTm(p.start)}</b> → llegada ≈ <b>${tm(p.arrival)}</b> · ${dur(planMin)} en marcha</p></div></div>
  <div class="rs-groups-k">${[['Recorrido',[kpi(fmt(st.km,1)+' km','Distancia'),kpi(st.elevationComplete?'+'+fmt(st.up)+' m':'—',st.elevationComplete?'Desnivel · −'+fmt(st.down)+' m':'Desnivel'),kpi(top!==null?fmt(top)+' m':'—','Cota máxima')]],['Duración',[kpi(dur(planMin),'Tu estimación'),kpi(dur(mide),'Horario MIDE','soft')]],['Meteorología en ruta',[kpi(temps.length?fmt(Math.min(...temps))+'…'+fmt(Math.max(...temps))+' °C':'—','Temperatura'),kpi(fmt(p.maxGust)+' km/h','Racha máx.',p.maxGust>=60?'bad':p.maxGust>=35?'warn':''),kpi(fmt(p.maxRain,1)+' mm/h','Lluvia máx.',p.maxRain>=4?'bad':p.maxRain>=.3?'warn':''),kpi(isoMin!==null?fmt(isoMin)+' m':'—','Isoterma 0 °C',isoMin!==null&&top!==null&&isoMin<top+200?'warn':'')]],['Agua',[kpi(fmt(water(p,planMin),1)+' L','Recomendada')]]].map(([t,cells])=>`<section class="rs-kg"><h4>${t}</h4><div class="rs-kpis">${cells.join('')}</div></section>`).join('')}</div>
  <div class="rs-cols"><div class="rs-box"><h4>Lo que más vigilar</h4>${risks.length?`<ul class="rs-risks">${risks.slice(0,5).map(x=>`<li class="${x.level}"><b>${esc(x.risk)}</b><span>desde km ${fmt(x.first.km,1)} · ${tm(x.first.eta)}${x.count>1?` · ${x.count} tramos`:''}</span></li>`).join('')}</ul>`:'<p class="muted">Ninguna señal meteorológica destacada en los tramos.</p>'}</div>
@@ -66,5 +66,5 @@ document.addEventListener('click',e=>{if(e.target.closest('#analyze,[data-depart
 const prevAnalyze=analyzeRoute;analyzeRoute=function(){RS.jump=true;return prevAnalyze.apply(this,arguments)};
 const prev=renderRouteForecast;renderRouteForecast=function(){prev.apply(this,arguments);render()};
 const prevImport=importRoute;importRoute=async function(){const out=await prevImport.apply(this,arguments);if(!S.route?.rows)show(false);return out};
-globalThis.TMResults={render,mideMinutes,topRisks,turnaround,safetyText,ics};
+globalThis.TMResults={summary:renderSummary,render,mideMinutes,topRisks,turnaround,safetyText,ics};
 })();

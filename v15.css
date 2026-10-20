@@ -1,0 +1,73 @@
+/* TrailMeteo 15 · procedencia del dato, información insuficiente, aludes y nieve */
+:root{--info:#5d6f7a;--pv-off:#0f6b5a;--pv-obs:#1d8ea3;--pv-mod:#5d6f7a;--pv-est:#b46a10}
+.pv{display:inline-flex;align-items:center;vertical-align:middle;margin:0 4px 0 0;padding:1px 7px;border-radius:999px;font-family:var(--body);font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.6;border:1px solid currentColor;white-space:nowrap}
+.pv-off{color:var(--pv-off);background:color-mix(in srgb,var(--pv-off) 9%,transparent)}
+.pv-obs{color:var(--pv-obs);background:color-mix(in srgb,var(--pv-obs) 9%,transparent)}
+.pv-mod{color:var(--pv-mod);background:color-mix(in srgb,var(--pv-mod) 8%,transparent)}
+.pv-est{color:var(--pv-est);background:color-mix(in srgb,var(--pv-est) 9%,transparent)}
+.pv-none{color:var(--dim);border-style:dashed}
+.go-meter.info .dial{color:var(--info)}
+.go-meter .dial{font-size:.95rem}
+.rs-verdict.info .rs-dial{background:var(--info);box-shadow:0 0 0 6px color-mix(in srgb,var(--info) 18%,transparent),0 18px 40px -16px var(--info)}
+.know-panel{margin-top:10px}
+.know-panel summary{cursor:pointer;font-weight:700;font-size:.82rem;color:var(--ink-2)}
+.know-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.know-list li{display:grid;grid-template-columns:auto 9.5rem 1fr;gap:8px;align-items:baseline;font-size:.84rem;padding:6px 0;border-top:1px solid var(--line)}
+.know-list li b{font-weight:700}
+.know-list li span{color:var(--muted)}
+.know-panel .know-list li{grid-template-columns:9.5rem 1fr;padding-left:14px;position:relative}
+.know-panel .know-list li:before{content:'';position:absolute;left:0;top:.75em;width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.know-panel .know-list li.ok:before{background:var(--ok)}
+.know-panel .know-list li.warn:before{background:var(--warn)}
+.know-panel .know-list li.gap:before{background:transparent;border:1.5px solid var(--info)}
+.know{margin:4px 0 18px}
+.av-head{display:flex;gap:18px;align-items:center;margin:6px 0 14px}
+.av-head h3{margin:0 0 4px;font-size:1.3rem}
+.av-head p{margin:0;color:var(--muted);font-size:.86rem}
+.av-dial{flex:none;width:68px;height:68px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-size:2rem;font-weight:700;color:#10161a;background:var(--av);box-shadow:inset 0 0 0 1px rgba(16,22,26,.15)}
+.av-none .av-dial{color:#fff;background:var(--dim)}
+.av-days{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:8px}
+.av-days li{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--fill)}
+.av-days li b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--av);color:#10161a}
+.av-days small{color:var(--muted)}
+.av-facts{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))!important;gap:16px!important}
+.av-facts strong{font-size:1.5rem!important}
+.av-note{margin:12px 0;padding:10px 14px;border-left:3px solid var(--warn);background:color-mix(in srgb,var(--warn) 8%,transparent);font-size:.88rem}
+.av-text{white-space:pre-line;font-size:.86rem;color:var(--ink-2)}
+.snow-split{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:12px 0}
+.snow-split h4{margin:0 0 6px;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.snow-split .big{display:block;font-family:var(--display);font-size:2rem;font-weight:500;letter-spacing:-.03em}
+.snow-split p{margin:4px 0 0;font-size:.82rem;color:var(--muted)}
+.mini{border-collapse:collapse;font-size:.86rem;width:100%}
+.mini th,.mini td{padding:3px 6px;text-align:right;border-bottom:1px solid var(--line)}
+.mini th:first-child,.mini td:first-child{text-align:left;color:var(--muted)}
+.sl-band{fill:rgba(29,142,163,.22);stroke:none}
+.day-cycles{list-style:none;margin:6px 0;padding:0;display:grid;gap:8px}
+.day-cycles li{display:grid;grid-template-columns:9rem 7rem 1fr;gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);font-size:.86rem}
+.day-cycles li p{margin:0;color:var(--ink-2)}
+.day-cycles li span{color:var(--muted)}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.snow-tab{border-collapse:collapse;width:100%;font-size:.82rem;min-width:620px}
+.snow-tab th{text-align:left;font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:6px;border-bottom:1px solid var(--line-2)}
+.snow-tab td{padding:6px;border-bottom:1px solid var(--line)}
+.snow-tab tr.st-probable td:last-child b{color:var(--glacier)}
+.snow-tab tr.st-possible td:last-child b{color:#3f8fa0}
+.snow-tab tr.st-none td:last-child b{color:var(--muted);font-weight:500}
+.snow-tab tr.st-probable{background:color-mix(in srgb,var(--glacier) 7%,transparent)}
+.snow-tab td.steep{color:var(--danger);font-weight:700}
+.load-fail{color:var(--danger)}
+.load-fail button{margin-left:6px}
+.sat-warn{margin:6px 0 10px;font-size:.86rem;color:var(--ink-2)}
+.sat-strip{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin:0 0 10px}
+.sat-strip button{padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;background:var(--fill);cursor:pointer;display:grid}
+.sat-strip button[aria-pressed=true]{border-color:var(--accent)}
+.sat-strip img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.sat-strip small{font-size:.58rem;padding:2px 0;text-align:center;color:var(--muted)}
+.obs-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end;margin-top:10px}
+.obs-form label{display:grid;gap:4px;font-size:.78rem;color:var(--muted)}
+.obs-list{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.obs-list li{display:grid;grid-template-columns:auto 1fr auto auto;gap:8px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);font-size:.86rem}
+.obs-list li p{grid-column:2/-1;margin:0;color:var(--ink-2)}
+.obs-list li span{color:var(--muted)}
+.obs-list li.old{opacity:.55}
+@media (max-width:640px){.snow-split{grid-template-columns:1fr;gap:14px}.know-list li{grid-template-columns:auto 1fr}.know-list li span{grid-column:2}.know-panel .know-list li{grid-template-columns:1fr}.day-cycles li{grid-template-columns:1fr 5rem}.day-cycles li p{grid-column:1/-1}.sat-strip{grid-template-columns:repeat(5,minmax(0,1fr))}.av-dial{width:56px;height:56px;font-size:1.6rem}}
