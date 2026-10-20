@@ -43,7 +43,7 @@ if(home){home.innerHTML=`<div class="hm">
 <div><dt>¿Qué como?</dt><dd>Calorías, hidratos y sales de lo que llevas, con datos reales de cada producto.</dd></div>
 <div><dt>Copiloto IA</dt><dd>Pregunta lo que quieras sobre tu salida; responde con los datos de la app.</dd></div>
 <div><dt>Sin cobertura</dt><dd>Guarda el plan en el móvil y recalcula la llegada en marcha.</dd></div></dl></section>
-<p class="hm-note">Gratis, sin cuenta y con datos abiertos (Open-Meteo, AEMET, DGT, OpenStreetMap, Open Food Facts). La información es orientativa: decide siempre con lo que veas en el terreno. Emergencias: 112.</p><footer class="hm-foot"><span>TrailMeteo 14</span><a href="#" data-open-contact>Buzón de sugerencias</a><a href="mailto:${esc(globalThis.TMContact?.email||'mariawilderwest@gmail.com')}">${esc(globalThis.TMContact?.email||'mariawilderwest@gmail.com')}</a></footer></div>`}
+<p class="hm-note">Gratis, sin cuenta y con datos abiertos (Open-Meteo, AEMET, DGT, OpenStreetMap, Open Food Facts). La información es orientativa: decide siempre con lo que veas en el terreno. Emergencias: 112.</p><footer class="hm-foot"><span>TrailMeteo 14 · © 2026 María Sanabria · Todos los derechos reservados</span><a href="#" data-open-contact>Buzón de sugerencias</a><a href="mailto:${esc(globalThis.TMContact?.email||'mariawilderwest@gmail.com')}">${esc(globalThis.TMContact?.email||'mariawilderwest@gmail.com')}</a></footer></div>`}
 
 /* ---------- Planificar: primero el GPX, después la búsqueda ---------- */
 (function reorder(){const hero=$('.route-hero'),head=$('.route-import-head'),drop=$('#dropzone'),foot=drop?.nextElementSibling,status=$('#routeStatus'),finder=$('#routeFinder'),road=$('.road-cta');if(!hero||!head||!drop||!finder)return;

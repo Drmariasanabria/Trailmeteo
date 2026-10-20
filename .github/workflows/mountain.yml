@@ -29,6 +29,7 @@ jobs:
         run: |
           npm install --ignore-scripts
           npm test
+          node scripts/build-public.mjs public --test
           python3 tests/alerts.test.py
           python3 tests/dgt.test.py
           python3 tests/ai.test.py
@@ -41,12 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 scripts/update-ai.py || true
-      - name: Preparar web
-        run: |
-          mkdir -p public/data
-          cp *.html *.css *.js *.png manifest.webmanifest public/
-          cp -r img public/
-          cp data/*.json public/data/
+      - name: Preparar web (JS/CSS minificado, con aviso de copyright)
+        run: node scripts/build-public.mjs public
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public
