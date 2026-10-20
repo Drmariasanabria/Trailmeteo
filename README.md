@@ -16,7 +16,10 @@
 ## Límites reales
 Los modelos no certifican seguridad en montaña. La concordancia no se convierte en un porcentaje inventado de confianza. El radar público RainViewer tiene zoom nativo máximo 7 y mosaicos cada 10 minutos; no ofrece una garantía de disponibilidad. Las zonas vacías no equivalen a cielo despejado. El GPX necesita altitudes para estimar desnivel y penalización de ascenso. Las ventanas no evalúan terreno, luz solar o preparación personal. Las fuentes gratuitas tienen límites de uso.
 
-## Datos y licencias
+## Licencia y autoría
+© 2026 María Sanabria (wilderwests). **Todos los derechos reservados.** El código, el diseño, los textos y el nombre «TrailMeteo» no se pueden copiar, modificar, redistribuir ni usar comercialmente sin permiso por escrito. Que el repositorio sea público no concede licencia. Detalles y componentes de terceros en [`LICENSE`](LICENSE). Para pedir permiso, usa el contacto de la web.
+
+## Datos y licencias de terceros
 - Open-Meteo, uso personal/no comercial: https://open-meteo.com/en/terms ; datos CC BY 4.0.
 - MET Norway: https://api.met.no/doc/TermsOfService ; CC BY 4.0. Puede compartir modelos de origen con otros proveedores. Viento medio y rachas separados.
 - RainViewer: https://www.rainviewer.com/api/weather-maps-api.html ; uso personal/educativo y atribución.

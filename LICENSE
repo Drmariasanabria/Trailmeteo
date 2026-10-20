@@ -1,21 +1,41 @@
-MIT License
+TrailMeteo
+Copyright © 2026 María Sanabria (wilderwests). Todos los derechos reservados.
+All rights reserved.
 
-Copyright (c) 2026 wilderwests
+El código fuente, el diseño, la interfaz, los textos, el nombre «TrailMeteo»,
+los logotipos e iconos propios y el resto de elementos originales de este
+proyecto son obra de su autora y están protegidos por la legislación de
+propiedad intelectual (Real Decreto Legislativo 1/1996, Ley de Propiedad
+Intelectual) y por los tratados internacionales aplicables.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Que este repositorio y la web https://wilderwests.github.io/Trailmeteo/ sean
+públicos NO concede ninguna licencia. Sin autorización previa y por escrito de
+la autora queda prohibido:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+  - copiar, reproducir o descargar el código para reutilizarlo, total o
+    parcialmente;
+  - modificarlo, adaptarlo, traducirlo o crear obras derivadas;
+  - distribuirlo, publicarlo, alojarlo o ponerlo a disposición de terceros;
+  - usarlo con fines comerciales;
+  - usar el nombre «TrailMeteo» o su imagen para otro producto o servicio.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Sí se permite usar la aplicación web publicada para consultarla de forma
+personal, y ver el código en GitHub según los Términos de Servicio de GitHub.
+
+Componentes de terceros (se rigen por sus propias licencias, no por esta):
+  - Leaflet 1.9.4 (leaflet.js, leaflet.css): BSD-2-Clause.
+  - Datos de Open-Meteo, MET Norway, AEMET, DGT, RainViewer, OpenStreetMap,
+    Open Food Facts y otras fuentes citadas en README.md: según sus términos.
+  - Fotografías de Wikimedia Commons: según la licencia y autoría indicadas en
+    la propia aplicación.
+
+Las versiones publicadas antes del 20 de octubre de 2026 bajo licencia MIT
+mantienen esa licencia para quien las obtuvo entonces. Desde esa fecha, todas
+las versiones nuevas quedan bajo esta licencia.
+
+Permisos y contacto: a través del buzón de sugerencias o el correo de contacto
+que aparecen en la aplicación web.
+
+EL SOFTWARE SE PROPORCIONA «TAL CUAL», SIN GARANTÍA DE NINGÚN TIPO. La
+información meteorológica es orientativa y no certifica la seguridad de
+ninguna ruta.
