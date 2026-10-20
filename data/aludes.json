@@ -1,0 +1,94 @@
+{
+ "fetched": "2026-10-20T16:00:00+00:00",
+ "source": "AEMET · Boletines de peligro de aludes",
+ "license": "AEMET autoriza la reproducción citando la fuente",
+ "zones": [
+  {
+   "code": "picos",
+   "name": "Picos de Europa",
+   "bbox": [
+    42.95,
+    -5.3,
+    43.4,
+    -4.45
+   ],
+   "period": "semanal",
+   "pdf": "https://www.aemet.es/documentos/es/eltiempo/prediccion/montana/boletin_peligro_aludes/BPA_PN_Picos_Europa.pdf",
+   "page": "https://www.aemet.es/es/eltiempo/prediccion/montana/boletin_peligro_aludes",
+   "status": "off",
+   "issued": "2026-04-20",
+   "days": [],
+   "level_max": null,
+   "problems": [],
+   "snowline": null,
+   "freezing": null,
+   "winds": [],
+   "snowpack": [],
+   "excerpt": "lunes, 20 de abril de 2026 El 20 de abril se da por finalizada la campaña de predicción del peligro de aludes en Picos de Europa.",
+   "flags": [
+    "Campaña de predicción finalizada"
+   ],
+   "aspects": null
+  },
+  {
+   "code": "cordel",
+   "name": "Sierra del Cordel y Peña Labra",
+   "bbox": [
+    42.9,
+    -4.6,
+    43.15,
+    -4.05
+   ],
+   "period": "semanal",
+   "pdf": "https://www.aemet.es/documentos/es/eltiempo/prediccion/montana/boletin_peligro_aludes/BPA_sierra_Cordel_PLabra.pdf",
+   "page": "https://www.aemet.es/es/eltiempo/prediccion/montana/boletin_peligro_aludes",
+   "status": "error",
+   "error": "pendiente de la primera lectura automática"
+  },
+  {
+   "code": "pir_nav_ara",
+   "name": "Pirineo navarro y aragonés",
+   "bbox": [
+    42.45,
+    -1.4,
+    43.0,
+    0.8
+   ],
+   "period": "diario",
+   "pdf": "https://www.aemet.es/documentos/es/eltiempo/prediccion/montana/boletin_peligro_aludes/BPA_Pirineo_Nav_Ara.pdf",
+   "page": "https://www.aemet.es/es/eltiempo/prediccion/montana/boletin_peligro_aludes",
+   "status": "error",
+   "error": "pendiente de la primera lectura automática"
+  },
+  {
+   "code": "pir_cat",
+   "name": "Pirineo catalán",
+   "bbox": [
+    42.15,
+    0.6,
+    42.9,
+    2.6
+   ],
+   "period": "diario",
+   "pdf": "https://www.aemet.es/documentos/es/eltiempo/prediccion/montana/boletin_peligro_aludes/BPA_Pirineo_Cat.pdf",
+   "page": "https://www.aemet.es/es/eltiempo/prediccion/montana/boletin_peligro_aludes",
+   "status": "error",
+   "error": "pendiente de la primera lectura automática"
+  },
+  {
+   "code": "guadarrama",
+   "name": "Sierra de Guadarrama",
+   "bbox": [
+    40.65,
+    -4.3,
+    41.1,
+    -3.6
+   ],
+   "period": "semanal",
+   "pdf": "https://www.aemet.es/documentos/es/eltiempo/prediccion/montana/boletin_peligro_aludes/BPA_PN_Guadarrama.pdf",
+   "page": "https://www.aemet.es/es/eltiempo/prediccion/montana/boletin_peligro_aludes",
+   "status": "error",
+   "error": "pendiente de la primera lectura automática"
+  }
+ ]
+}

@@ -1,4 +1,4 @@
-# TrailMeteo 14
+# TrailMeteo 15
 
 **https://wilderwests.github.io/Trailmeteo/** · PWA estática de meteorología y planificación de rutas de montaña. Abre `index.html` desde un servidor HTTP/HTTPS o publica todos los archivos de la raíz en GitHub Pages.
 
@@ -18,6 +18,19 @@ Los modelos no certifican seguridad en montaña. La concordancia no se convierte
 
 ## Licencia y autoría
 © 2026 María Sanabria (wilderwests). **Todos los derechos reservados.** El código, el diseño, los textos y el nombre «TrailMeteo» no se pueden copiar, modificar, redistribuir ni usar comercialmente sin permiso por escrito. Que el repositorio sea público no concede licencia. Detalles y componentes de terceros en [`LICENSE`](LICENSE). Para pedir permiso, usa el contacto de la web.
+
+## Versión 15: qué sabemos y qué no
+- **Veredicto con estado INFO · «Información insuficiente»** (`quality.js`, único para decisión, resultados, tarjeta y copiloto). STOP/OJO/GO valoran solo la meteorología; INFO aparece si la previsión cubre menos del 75 % de los puntos o si hay posible nieve en la ruta sin boletín de aludes vigente. GO pasa a llamarse «Meteo favorable» y recuerda que no certifica la ruta. Panel «Qué sabemos y qué no» bajo el veredicto.
+- **Boletín de peligro de aludes de AEMET** (`scripts/update-aludes.py` → `data/aludes.json`): Picos de Europa, Cordel–Peña Labra, Pirineos y Guadarrama. Estado (vigente, caducado, fuera de temporada), nivel por día, problemas de aludes citados fuera de la leyenda, cota de nieve, isoterma, viento y extracto literal. Siempre con enlace al PDF; AEMET autoriza la reproducción citando la fuente.
+- **Nieve con procedencia en cada dato** (Oficial · Observado · Modelo · Estimado): nieve en el suelo (modelo, con su limitación de celda) separada de la nieve nueva 24/72 h/7 d; cota de nieve como franja ±150 m; rehielo, fusión y lluvia sobre nieve como indicadores; viento durante las nevadas y orientación de sotavento sin afirmar placas.
+- **Nieve sobre el recorrido**: por sector, hora de paso, orientación (umbría/solana) y pendiente máxima en 100 m con el MDT AWS Terrain Tiles; marca laderas ≥30° con nieve posible y las pinta en el mapa de satélite.
+- **Satélite**: aviso de resolución, tira de los últimos 10 días para elegir la última observación útil y enlace a Sentinel-2 (Copernicus). **Observaciones propias** fechadas (local) que cuentan como dato observado.
+- **Canales**: catálogo precalculado a diario (`scripts/update-canales.py` → `data/canales.json`), consulta ampliada (topónimos `place=locality`, «La Canal…»), tres servidores Overpass y canales documentadas de Ándara (Jidiellu, Grajas, Vacas).
+- **Radar**: imágenes de 512 px y control de cupo (RainViewer gratuito: 100 peticiones/min por IP); pausa automática antes del límite y fotogramas cargados reutilizados.
+- **Contacto**: envío por correo (FormSubmit) y guardado en Firestore en paralelo, con estados reales (enviado, pendiente de activación, fallo → correo del usuario). La primera vez FormSubmit envía a la dirección de contacto un correo «Activate Form» que hay que pulsar.
+- **Sección Nieve propia** (barra inferior, menú, `#nieve`): resumen en lenguaje claro arriba (aludes, nieve en la ruta, cota, nevadas, terreno, dónde decidir, qué llevar), mapa de pendientes y detalle plegable. `nieve-pro.js`: sombreado de pendiente (27/30/35/40/45°) calculado con el MDT, exposición orientativa inspirada en ATES, puntos de decisión, reloj de calentamiento, material según la nieve, rosa de orientaciones y cotas con las del boletín, nivograma de 14 días, historia del manto de 30 días con indicios de capas débiles, costras y nieve húmeda, y comparación de cinco modelos.
+- **Previsión de nieve en Cielo**: nevada por hora, cota de nieve estimada, tarjeta de nieve a 24/72 h/7 días y columnas de nieve y cota en la tabla de 7 días.
+- Corregido: el perfil de la ruta y el de carretera compartían nombre de función (`renderProfile`); modelo Gemini inexistente en la cadena de respaldo.
 
 ## Datos y licencias de terceros
 - Open-Meteo, uso personal/no comercial: https://open-meteo.com/en/terms ; datos CC BY 4.0.

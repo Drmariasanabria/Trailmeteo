@@ -33,11 +33,27 @@ jobs:
           python3 tests/alerts.test.py
           python3 tests/dgt.test.py
           python3 tests/ai.test.py
+          python3 tests/aludes.test.py
+      - name: Fecha para cachés diarias
+        id: day
+        run: echo "day=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+      - name: Catálogo de canales (OpenStreetMap, una vez al día)
+        id: canales
+        uses: actions/cache@v4
+        with:
+          path: data/canales.json
+          key: canales-${{ steps.day.outputs.day }}
+          restore-keys: canales-
       - name: Obtener boletines oficiales
         run: |
           python3 scripts/update-mountain.py
           python3 scripts/update-alerts.py
           python3 scripts/update-dgt.py || true
+          command -v pdftotext >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils) || true
+          python3 scripts/update-aludes.py || true
+      - name: Actualizar canales si la copia no es de hoy
+        if: steps.canales.outputs.cache-hit != 'true'
+        run: python3 scripts/update-canales.py || true
       - name: Parte de montaña con IA (GitHub Models)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
