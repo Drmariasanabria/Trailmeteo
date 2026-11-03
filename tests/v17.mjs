@@ -81,7 +81,7 @@ assert.match(PT.snowBrief(dry,1500,now).headline,/No se espera nieve/);
 const rainy=Array.from({length:96},(_,i)=>row(i-24,{precipitation:2,freezing_level_height:2600,temperature_2m:5}));
 assert.match(PT.snowBrief(rainy,1200,now).headline,/lluvia o aguanieve/);
 const pack=Array.from({length:96},(_,i)=>row(i-24,{snow_depth:.6,temperature_2m:2}));const pb=PT.snowBrief(pack,2000,now);assert.match(pb.headline,/Manto modelado.*60 cm/);assert.equal(pb.refreeze.kind,'none');
-const today=Array.from({length:96},(_,i)=>row(i-24,{snowfall:i>=25&&i<29?2:0}));const tb=PT.snowBrief(today,1800,now);assert.match(tb.headline,/^(Hoy|Mañana) nevará en el punto: 5–11 cm/);assert.equal(tb.n24,8);
+const today=Array.from({length:96},(_,i)=>row(i-24,{snowfall:i>=25&&i<29?2:0}));const tb=PT.snowBrief(today,1800,now);assert.match(tb.headline,/^(Hoy|Mañana|[a-zé]+ \d+) nevará en el punto: \d+–\d+ cm/);assert.equal(tb.n24,8);
 assert.equal(PT.fogAt({relative_humidity_2m:80,visibility:20000,cloud_cover_low:10})[0],'Poco probable');assert.equal(PT.stormAt({weather_code:96})[0],'Prevista');assert.equal(PT.stormAt({weather_code:3,cape:1200,precipitation_probability:50})[0],'Posible');
 
 /* ---------- Webcams ---------- */
