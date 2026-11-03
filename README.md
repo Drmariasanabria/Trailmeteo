@@ -1,4 +1,4 @@
-# TrailMeteo 16
+# TrailMeteo 17
 
 [![DOI](https://zenodo.org/badge/1362436649.svg)](https://doi.org/10.5281/zenodo.23507525)
 
@@ -23,6 +23,13 @@ Sanabria Barba, M. (2026). *TrailMeteo: planificación meteorológica y nival de
 
 ## Licencia y autoría
 © 2026 María Sanabria (wilderwests). **Todos los derechos reservados.** El código, el diseño, los textos y el nombre «TrailMeteo» no se pueden copiar, modificar, redistribuir ni usar comercialmente sin permiso por escrito. Que el repositorio sea público no concede licencia. Detalles y componentes de terceros en [`LICENSE`](LICENSE). Para pedir permiso, usa el contacto de la web.
+
+## Versión 17: sitios concretos, mapa del tiempo con senderos y webcams
+- **Buscador de montaña**: picos, refugios, collados, majadas, canales, lagos y fuentes («pico urriellu», «casetón de ándara», «refugio de cabrones»), con variantes en asturiano, sin tildes y con erratas. Nomenclátor diario de OpenStreetMap (`scripts/update-lugares.py`) más Photon y Nominatim en directo. El tiempo se pide **a la altitud del lugar**. Favoritos y recientes.
+- **Tiempo en el punto** en Cielo, con o sin ruta: viento y dirección, niebla probable, visibilidad, isoterma, cota de nieve, tormenta, nieve en el suelo, tres días con su mejor ventana y la nieve en frases (caída y prevista, rehielo y ablandamiento, transporte por viento y orientación de las placas, boletín de aludes).
+- **Mapa** híbrido (ortofoto PNOA, satélite, IGN, OpenTopoMap) con todos los senderos y pistas de OSM por dificultad SAC, esquí de montaña en abierto (Camptocamp CC BY-SA, OSM y tus GPX; `scripts/update-skitour.py`), pendientes ≥30°, picos, refugios y webcams. Capa del tiempo por rejilla a la altitud del terreno (temperatura, viento, rachas, lluvia, nieve, nieve 24 h, nubes, cota) con **selector de día y hora** de 7 días, y nieve estimada en cada itinerario a la hora elegida.
+- **Webcams** de Picos y la Cordillera dentro de la app, sin ventanas emergentes: estado comprobado cada 20 min (`scripts/update-webcams.py`), visor con refresco cada minuto, emisiones de YouTube integradas, tiempo actual en cada cámara y, opcionalmente, cámaras de Windy con tu clave.
+- Pruebas: `tests/v17.mjs` (navegador simulado) y `tests/v17.test.py` (recolectores sin red).
 
 ## Versión 16: observado, validado y documentado
 - **Nieve por hora en la comparación de modelos** (Cielo → Previsión): filas de nevada (cm/h) y cota de nieve estimada por modelo (ECMWF, ICON, GFS, Météo-France, UKMO, GEM), en el lugar o en la cota alta de la ruta; probabilidad de nieve en los conjuntos y variable «Nieve» en el meteograma. La lectura de cada sector cuenta ya la nevada (≥0,2 cm/h precaución; ≥2 cm/h exigente).

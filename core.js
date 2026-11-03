@@ -1,4 +1,4 @@
-globalThis.TM_VERSION='16';
+globalThis.TM_VERSION='17';
 /* Pure calculations shared by the app and regression checks. */
 (function(root){
 const finite=v=>typeof v==='number'&&Number.isFinite(v);

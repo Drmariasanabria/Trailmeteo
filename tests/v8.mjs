@@ -17,14 +17,14 @@ w.fetch=async(url,opts={})=>{const u=new URL(url,'http://localhost:8765');let d;
  else if(u.hostname==='r.jina.ai')return{ok:true,text:async()=>String(url).includes('duckduckgo')?'## [Canal de Trea - Wikiloc | Ruta Senderismo](https://es.wikiloc.com/rutas-senderismo/canal-de-trea-12345678)\nDistancia 8,5 km · Desnivel positivo 1.250 m · Difícil\n## [Otra](https://blog.example/x)':'<html><title>Canal de Trea | Wikiloc</title><script>var d={"geometry":{"coordinates":['+Array.from({length:40},(_,i)=>`[${(-4.87+i*.001).toFixed(5)},${(43.22+i*.0008).toFixed(5)}]`).join(',')+']}}</script></html>'};
  else if(u.hostname==='api.open-meteo.com'&&u.pathname.includes('elevation'))d={elevation:u.searchParams.get('latitude').split(',').map((_,i)=>500+i*20)};
  else d=forecast(u);return{ok:true,status:200,json:async()=>d,text:async()=>JSON.stringify(d)}};
-const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','copilot-expert.js','parte.js','wikiloc.js','canales.js','gear.js','field-core.js','pois.js','relief.js','sky.js','week.js','pace.js','flyover.js','card.js','modelsx.js','snow.js','quality.js','nieve-pro.js','seguimiento.js','trails.js','account.js','contact.js','road.js','finder.js','results.js','palette.js','shell.js','fuel.js','meteogrid.js','radarfc.js'];
+const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','copilot-expert.js','parte.js','wikiloc.js','canales.js','gear.js','field-core.js','pois.js','relief.js','sky.js','week.js','pace.js','flyover.js','card.js','modelsx.js','snow.js','quality.js','nieve-pro.js','seguimiento.js','trails.js','account.js','contact.js','road.js','finder.js','results.js','palette.js','shell.js','fuel.js','meteogrid.js','radarfc.js','lugares.js','punto.js','webcams.js','mapa.js'];
 w.eval(scripts.map(s=>fs.readFileSync(s,'utf8')).join('\n')+'\nglobalThis.T={get route(){return S.route},importRoute,enterApp,showTab,get S(){return S}};');
 await new Promise(r=>setTimeout(r,150));
 const $=s=>w.document.querySelector(s),$$=s=>[...w.document.querySelectorAll(s)];
 // Arranque y navegación
 assert.ok($('#splash'),'splash visible al cargar');assert.equal($('#main').hidden,true);
 $('#splashEnter').click();await new Promise(r=>setTimeout(r,800));assert.equal($('#splash'),null,'splash retirado');assert.equal($('#main').hidden,false);assert.equal($('#pane-route').hidden,false,'el arranque lleva al planificador');
-assert.equal($$('.tabs [data-tab]')[0].dataset.tab,'route');assert.ok($('[data-tab="canales"]'));
+assert.equal($$('.tabs [data-tab]')[0].dataset.tab,'route');assert.ok($('.tabs [data-tab="mapa"]'),'Mapa en la barra');assert.ok($('[data-nav="canales"]'),'Canales en el menú');
 w.T.showTab('canales');assert.equal($('#pane-canales').hidden,false);
 // Fotos con atribución
 assert.ok(commons>0);const photos=await w.TMPhotos.commonsPhotos('Picos de Europa');assert.equal(photos.length,1,'filtra verticales y sin licencia');assert.equal(photos[0].artist,'Autora');assert.match(w.TMPhotos.creditHTML(photos[0]),/CC BY-SA 4\.0/);
