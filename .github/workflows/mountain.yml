@@ -36,6 +36,7 @@ jobs:
           python3 tests/dgt.test.py
           python3 tests/ai.test.py
           python3 tests/aludes.test.py
+          python3 tests/v17.test.py
           pip install -q --break-system-packages rasterio pillow numpy || pip install -q rasterio pillow numpy
           python3 tests/snowmap.test.py
       - name: Fecha para cachés diarias
@@ -59,6 +60,21 @@ jobs:
           path: data/canales.json
           key: canales-${{ steps.day.outputs.day }}
           restore-keys: canales-
+      - name: Nomenclátor y esquí de montaña (caché diaria)
+        id: lugares
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/lugares.json
+            data/skitour.json
+          key: lugares-${{ steps.day.outputs.day }}
+          restore-keys: lugares-
+      - name: Estado anterior de las webcams
+        uses: actions/cache@v4
+        with:
+          path: data/webcams-live.json
+          key: webcams-${{ github.run_id }}
+          restore-keys: webcams-
       - name: Obtener boletines oficiales
         timeout-minutes: 5
         run: |
@@ -71,6 +87,15 @@ jobs:
         if: steps.canales.outputs.cache-hit != 'true'
         timeout-minutes: 4
         run: timeout 200 python3 scripts/update-canales.py || true
+      - name: Nomenclátor de montaña y esquí de montaña si la copia no es de hoy
+        if: steps.lugares.outputs.cache-hit != 'true'
+        timeout-minutes: 6
+        run: |
+          timeout 150 python3 scripts/update-lugares.py || true
+          timeout 200 python3 scripts/update-skitour.py || true
+      - name: Webcams activas
+        timeout-minutes: 3
+        run: timeout 150 python3 scripts/update-webcams.py || true
       - name: Nieve observada Sentinel-2 si la copia no es de hoy
         if: steps.snowmap.outputs.cache-hit != 'true'
         timeout-minutes: 9
