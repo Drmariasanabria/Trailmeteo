@@ -15,13 +15,14 @@ w.fetch=async(url,opts={})=>{const u=new URL(url,'http://localhost:8765');calls.
  else if(u.pathname.endsWith('data/webcams-live.json'))d={fetched:new Date(Date.now()-600000).toISOString(),cams:{'refugio-urriellu':{status:'live',img:'https://cams.example/urriellu.jpg',modified:new Date(Date.now()-300000).toISOString()},'sotres':{status:'down',error:'x'},'valdeon':{status:'stream'},'lago-enol':{status:'link'}}};
  else if(u.pathname.endsWith('data/aludes.json'))d=JSON.parse(fs.readFileSync('data/aludes.json'));
  else if(u.pathname.endsWith('data/skitour.json'))d={routes:[],outings:[]};
+ else if(u.pathname.endsWith('data/refugios.json'))d=JSON.parse(fs.readFileSync('data/refugios.json'));
  else if(u.pathname.includes('data/'))return{ok:false,status:404,json:async()=>({}),text:async()=>''};
  else if(u.hostname==='photon.komoot.io')d={features:[{properties:{name:'Refugio de Áliva',osm_value:'alpine_hut',state:'Cantabria'},geometry:{coordinates:[-4.77,43.19]}}]};
  else if(u.hostname==='geocoding-api.open-meteo.com')d={results:[{name:'Sotres',latitude:43.231,longitude:-4.748,elevation:1045,admin1:'Asturias',country:'España'}]};
  else if(u.hostname==='nominatim.openstreetmap.org')d=[{name:'Pico Tesorero',lat:'43.19',lon:'-4.79',type:'peak',extratags:{ele:'2570'},display_name:'Pico Tesorero, Camaleño, Cantabria'}];
  else if(u.hostname==='api.open-meteo.com'||u.hostname==='ensemble-api.open-meteo.com')d=forecast(u);
  else d={};return{ok:true,status:200,json:async()=>d,text:async()=>JSON.stringify(d)}};
-const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','copilot-expert.js','parte.js','wikiloc.js','canales.js','gear.js','field-core.js','pois.js','relief.js','sky.js','week.js','pace.js','flyover.js','card.js','modelsx.js','snow.js','quality.js','nieve-pro.js','seguimiento.js','trails.js','account.js','contact.js','road.js','finder.js','results.js','palette.js','shell.js','fuel.js','meteogrid.js','radarfc.js','lugares.js','punto.js','webcams.js','mapa.js'];
+const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','copilot-expert.js','parte.js','wikiloc.js','canales.js','gear.js','field-core.js','pois.js','relief.js','sky.js','week.js','pace.js','flyover.js','card.js','modelsx.js','snow.js','quality.js','nieve-pro.js','seguimiento.js','trails.js','account.js','contact.js','road.js','finder.js','results.js','palette.js','shell.js','fuel.js','meteogrid.js','radarfc.js','lugares.js','punto.js','webcams.js','mapa.js','refugios.js'];
 w.eval(scripts.map(s=>fs.readFileSync(s,'utf8')).join('\n')+'\nglobalThis.T={enterApp,showTab,setLocation,forecastURL,get S(){return S}};');
 const $=s=>w.document.querySelector(s),$$=s=>[...w.document.querySelectorAll(s)],wait=ms=>new Promise(r=>setTimeout(r,ms));
 await wait(200);
@@ -113,5 +114,21 @@ assert.ok($('#mainNav [data-nav="mapa"]')&&$('#mainNav [data-nav="webcams"]'),'e
 $('#dockMore').click();await wait(20);assert.ok($('#moreSheet [data-more="mapa"]')&&$('#moreSheet [data-more="webcams"]')&&$('#moreSheet [data-more="canales"]'),'Más: mapa, webcams y canales');w.document.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape'}));
 assert.ok($$('#pane-guide .g-sec').some(s=>/Mapa del tiempo con senderos/.test(s.textContent))&&$$('#pane-guide .g-sec').some(s=>/Buscar sitios concretos/.test(s.textContent)),'instrucciones nuevas');
 assert.equal(w.eval('TM_VERSION'),'17');
-console.log('v17 checks passed: mountain place search (peaks, huts, cols, canals, Asturian variants, typos, coordinates), point weather at real altitude with fog/storm/snow brief/refreeze/wind loading/best window, favourites, webcams (status, inline viewer, YouTube, filters, weather per cam), map grid/ramp/bilinear/snow state/resample, menus.');
+/* ---------- Refugios ---------- */
+const RF=w.TMRefugios;await RF.load();assert.equal(RF.list.length,10);
+const ur=RF.list.find(r=>r.id==='urriellu');assert.equal(ur.ele,1960);assert.ok(ur.prices.pernocta[0]===15&&ur.prices.pernocta[1]===20);
+assert.equal(RF.openStatus(ur,new Date(2026,10,4)).open,true);assert.match(RF.openStatus(ur,new Date(2026,11,10)).label,/cierra el 15 de diciembre/);assert.match(RF.openStatus(ur,new Date(2026,0,10)).label,/abre el 15 de marzo/);
+const vb=RF.list.find(r=>r.id==='vegarredonda');assert.equal(RF.openStatus(vb,new Date(2026,11,20)).open,false);assert.match(RF.openStatus(vb,new Date(2026,11,20)).label,/abre el 1 de marzo/);
+assert.ok(RF.palette({current:{cloud_cover:10,weather_code:0}},{altitude:-20}).night);assert.ok(RF.palette({current:{cloud_cover:95,weather_code:73}},{altitude:30}).snowing);
+const fakeH={h0:1960,bands:[0,1,2].map(k=>Array.from({length:360},(_,a)=>(k+1)*2+Math.sin(a/20)*3)),tops:[0,1,2].map(()=>Array.from({length:360},(_,a)=>a%2?2600:1500)),dist:[0,1,2].map(()=>new Array(360).fill(3000))};
+const svg=RF.panoSVG(fakeH,ur,{wx:{current:{cloud_cover:10,weather_code:0}},cota:2000,peaks:[{name:'Torre de Cerredo',ele:2648,az:200,ang:8}]});
+assert.match(svg,/<svg class="rf-pano"/);assert.ok((svg.match(/<path /g)||[]).length>=6,'tres planos de relieve + nieve');assert.match(svg,/Torre de Cerredo/);assert.match(svg,/feGaussianBlur/);
+T.enterApp('refugios');await wait(600);assert.ok(!$('#pane-refugios').hidden);assert.equal($$('#rfGrid .rf-card').length,10);assert.equal($$('#rfCmp tbody tr').length,10);
+assert.ok($('#mainNav [data-nav="refugios"]'),'Refugios en el menú');
+$('#rfMassif [data-massif="Oriental"]').click();await wait(50);assert.equal($$('#rfGrid .rf-card').length,1);assert.match($('#rfGrid').textContent,/Casetón de Ándara/);
+$('#rfMassif [data-massif="all"]').click();await wait(50);
+$('[data-rf-open="urriellu"]').click();await wait(700);const det=$('#rfd-urriellu');assert.ok(det&&!det.hidden);assert.match(det.textContent,/Tiempo en el refugio/);assert.match(det.textContent,/Comparación de modelos/);assert.match(det.textContent,/Pernocta/);assert.match(det.textContent,/Collado de Pandébano/);assert.match(det.textContent,/Webcam del refugio/);
+assert.ok(calls.some(c=>c.includes('models=ecmwf_ifs025')&&c.includes('elevation=1960')),'modelos a la altitud del refugio');
+assert.ok(calls.some(c=>c.includes('api.open-meteo.com')&&decodeURIComponent(c).includes('elevation=1630,1460')||decodeURIComponent(c).split('elevation=')[1]?.split('&')[0].split(',').length===10),'una sola consulta para los 10 refugios');
+console.log('v17 checks passed: mountain place search (peaks, huts, cols, canals, Asturian variants, typos, coordinates), point weather at real altitude with fog/storm/snow brief/refreeze/wind loading/best window, favourites, webcams (status, inline viewer, YouTube, filters, weather per cam), map grid/ramp/bilinear/snow state/resample, menus, refuges (season, prices, real-horizon panorama, models, comparison table).');
 await w.happyDOM.close();
