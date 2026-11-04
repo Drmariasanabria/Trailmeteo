@@ -66,9 +66,15 @@ jobs:
         with:
           path: |
             data/lugares.json
-            data/skitour.json
-          key: lugares-${{ steps.day.outputs.day }}
-          restore-keys: lugares-
+          key: lugares2-${{ steps.day.outputs.day }}
+          restore-keys: lugares2-
+      - name: Esquí de montaña (caché diaria)
+        id: skitour
+        uses: actions/cache@v4
+        with:
+          path: data/skitour.json
+          key: skitour-${{ steps.day.outputs.day }}
+          restore-keys: skitour-
       - name: Precios y plazas de refugios (caché diaria)
         id: refugios
         uses: actions/cache@v4
@@ -102,11 +108,13 @@ jobs:
         timeout-minutes: 4
         run: timeout 200 python3 scripts/update-canales.py || true
       - name: Nomenclátor de montaña y esquí de montaña si la copia no es de hoy
-        if: steps.lugares.outputs.cache-hit != 'true'
-        timeout-minutes: 6
-        run: |
-          timeout 150 python3 scripts/update-lugares.py || true
-          timeout 200 python3 scripts/update-skitour.py || true
+        if: steps.lugares.outputs.cache-hit != 'true' || hashFiles('data/lugares.json') == ''
+        timeout-minutes: 9
+        run: timeout 500 python3 scripts/update-lugares.py || true
+      - name: Esquí de montaña si la copia no es de hoy
+        if: steps.skitour.outputs.cache-hit != 'true' || hashFiles('data/skitour.json') == ''
+        timeout-minutes: 4
+        run: timeout 200 python3 scripts/update-skitour.py || true
       - name: Refugios si la copia no es de hoy
         if: steps.refugios.outputs.cache-hit != 'true'
         timeout-minutes: 3

@@ -11,20 +11,49 @@ MIRRORS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.
 NAME_KEYS = ('name', 'name:es', 'name:ast', 'alt_name', 'alt_name:es', 'loc_name', 'old_name', 'official_name', 'short_name')
 
 
-def query():
-    b = ','.join(map(str, BBOX))
-    return f"""[out:json][timeout:90];
-(
-node["natural"~"^(peak|saddle|spring|cave_entrance|ridge|valley|arete)$"]["name"]({b});
-node["mountain_pass"="yes"]["name"]({b});
-nwr["tourism"~"^(alpine_hut|wilderness_hut|viewpoint)$"]["name"]({b});
-nwr["amenity"="shelter"]["name"]({b});
-nwr["natural"="water"]["name"]({b});
-node["place"~"^(town|village|hamlet|locality|isolated_dwelling)$"]["name"]({b});
-nwr["aerialway"="station"]["name"]({b});
-nwr["landuse"="meadow"]["name"~"^(Vega|Majada|Braña|Invernal)",i]({b});
-);
-out center tags qt;"""
+BOXES = [(42.80, -6.10, 43.12, -4.90), (42.80, -4.90, 43.12, -3.70), (43.12, -6.10, 43.45, -4.90), (43.12, -4.90, 43.45, -3.70)]
+GROUPS = [
+    'node["natural"~"^(peak|saddle|ridge|arete)$"]["name"]({b});node["mountain_pass"="yes"]["name"]({b});',
+    'nwr["tourism"~"^(alpine_hut|wilderness_hut|viewpoint)$"]["name"]({b});nwr["amenity"="shelter"]["name"]({b});nwr["aerialway"="station"]["name"]({b});node["natural"~"^(spring|cave_entrance|valley)$"]["name"]({b});',
+    'nwr["natural"="water"]["name"]({b});node["place"~"^(town|village|hamlet|locality|isolated_dwelling)$"]["name"]({b});nwr["landuse"="meadow"]["name"~"^(Vega|Majada|Braña|Invernal)",i]({b});',
+]
+
+
+def query(box=BBOX, group=None):
+    """Consulta Overpass. Sin grupo: la consulta completa (pruebas); con grupo: un trozo pequeño que no agota el tiempo."""
+    b = ','.join(map(str, box))
+    body = ''.join(g.format(b=b) for g in GROUPS) if group is None else GROUPS[group].format(b=b)
+    return f"[out:json][timeout:60];({body});out center tags qt;"
+
+
+def fetch_all():
+    """Descarga por trozos (4 zonas × 3 grupos) con reintento en cada servidor; devuelve los elementos y los trozos fallidos."""
+    import time
+    els, failed = [], []
+    for box in BOXES:
+        for g in range(len(GROUPS)):
+            data = urllib.parse.urlencode({'data': query(box, g)}).encode()
+            ok = False
+            for attempt in range(2):
+                for url in MIRRORS:
+                    try:
+                        req = urllib.request.Request(url, data=data, headers={'User-Agent': 'TrailMeteo/17 (https://github.com/wilderwests/Trailmeteo)'})
+                        with urllib.request.urlopen(req, timeout=75) as r:
+                            els += json.load(r).get('elements') or []
+                        ok = True
+                        break
+                    except Exception as e:
+                        print('Overpass', url, box, g, 'falló:', e, file=sys.stderr)
+                if ok:
+                    break
+                time.sleep(5)
+            if not ok:
+                failed.append((box, g))
+                if len(failed) >= 3 and not els:
+                    print('Overpass no responde: se aborta para no bloquear la publicación', file=sys.stderr)
+                    return els, failed + [(b, k) for b in BOXES for k in range(len(GROUPS))][len(failed):]
+            time.sleep(1)
+    return els, failed
 
 
 def kind(t):
@@ -100,27 +129,22 @@ def build(elements):
 
 
 def main():
-    data = urllib.parse.urlencode({'data': query()}).encode()
-    last = None
-    for url in MIRRORS:
-        try:
-            req = urllib.request.Request(url, data=data, headers={'User-Agent': 'TrailMeteo/17 (https://github.com/wilderwests/Trailmeteo)'})
-            with urllib.request.urlopen(req, timeout=100) as r:
-                d = json.load(r)
-            places = build(d.get('elements') or [])
-            if len(places) < 200:
-                raise ValueError(f'solo {len(places)} lugares')
-            dest = pathlib.Path(__file__).resolve().parents[1] / 'data/lugares.json'
-            dest.write_text(json.dumps({'fetched': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                                        'source': 'OpenStreetMap contributors (ODbL)', 'bbox': BBOX,
-                                        'fields': ['nombre', 'otros nombres', 'tipo', 'lat', 'lon', 'altitud', 'id OSM'],
-                                        'places': places}, ensure_ascii=False, separators=(',', ':')))
-            print('Lugares OSM:', len(places), 'desde', url)
-            return
-        except Exception as e:
-            last = e
-            print('Overpass', url, 'falló:', e, file=sys.stderr)
-    sys.exit(f'Sin nomenclátor nuevo ({last}); se conserva el anterior')
+    dest = pathlib.Path(__file__).resolve().parents[1] / 'data/lugares.json'
+    els, failed = fetch_all()
+    places = build(els)
+    if len(places) < 200:
+        sys.exit(f'Sin nomenclátor nuevo ({len(places)} lugares, {len(failed)} trozos fallidos); se conserva el anterior')
+    if failed and dest.exists():
+        try:  # completa con el anterior lo que no haya llegado hoy
+            old = json.loads(dest.read_text()).get('places', [])
+            have = {(p[0].lower(), p[2], round(p[3], 3), round(p[4], 3)) for p in places}
+            places += [p for p in old if (p[0].lower(), p[2], round(p[3], 3), round(p[4], 3)) not in have]
+        except Exception:
+            pass
+    dest.write_text(json.dumps({'fetched': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'source': 'OpenStreetMap contributors (ODbL)', 'bbox': BBOX,
+                                'partial': bool(failed), 'fields': ['nombre', 'otros nombres', 'tipo', 'lat', 'lon', 'altitud', 'id OSM'],
+                                'places': places}, ensure_ascii=False, separators=(',', ':')))
+    print('Lugares OSM:', len(places), '·', len(failed), 'trozos fallidos')
 
 
 if __name__ == '__main__':
