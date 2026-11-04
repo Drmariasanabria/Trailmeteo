@@ -100,4 +100,16 @@ assert 'picnic' not in got['prices'], 'solo si están los dos precios'
 assert got['beds'] == 96 and got['phone'] == ['984 090 981']
 assert ref.parse('<p>Página en obras</p>') == {}
 assert 'prices' not in ref.parse('<p>Federated Overnight 900€ Non federated Overnight 950€</p>'), 'precios inverosímiles'
+
+# ---------- Refugios libres (v17.1) ----------
+lib = load('update-refugios-libres')
+assert lib.condition({'name': 'Chozo Bernabé (semi-derruido)'})[0] == 'ruina'
+assert lib.condition({'name': 'Refugio Montañeros de Liébana', 'description': 'LLave de acceso en el Bar de Somaniezo'})[0] == 'llave'
+assert lib.condition({'name': 'Refugio del Berbegón', 'description': 'En buen estado, cuenta con todo'})[0] == 'bueno'
+assert lib.condition({'name': 'Refugio de Vega Huerta'})[0] is None
+assert lib.distinctive('Refugio de Vega Huerta') == 'vega huerta' and lib.distinctive('Chozo de Pastores') == '' and lib.distinctive('Cabaña del ICONA') == ''
+assert lib.tone('Vandalizan y queman un refugio de la Montaña Palentina') == 'aviso' and lib.tone('Rehabilitan el refugio del Frade') == 'mejora' and lib.tone('La vida en los refugios') == 'info'
+q = lib.query('palentina')
+assert 'wilderness_hut' in q and 'basic_hut' in q and '"Palencia"' in q and '(area.z)(42.78' in q and 'out center meta' in q
+assert 'national_park' in lib.query('picos')
 print('v17 recolectores: OK')

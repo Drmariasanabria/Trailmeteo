@@ -24,6 +24,12 @@ Sanabria Barba, M. (2026). *TrailMeteo: planificación meteorológica y nival de
 ## Licencia y autoría
 © 2026 María Sanabria (wilderwests). **Todos los derechos reservados.** El código, el diseño, los textos y el nombre «TrailMeteo» no se pueden copiar, modificar, redistribuir ni usar comercialmente sin permiso por escrito. Que el repositorio sea público no concede licencia. Detalles y componentes de terceros en [`LICENSE`](LICENSE). Para pedir permiso, usa el contacto de la web.
 
+## Versión 17.1: mapa 3D de verdad, Ándara, Montaña Palentina y refugios libres
+- **Mapa en un solo motor (MapLibre GL) para 2D y 3D**: se acabó el mapa Leaflet con un 3D superpuesto. Satélite, ortofoto PNOA, MTN o OpenTopoMap con **todos los senderos y pistas de OpenStreetMap en vectorial** (OpenFreeMap) desde el zoom 11, también sobre el relieve en 3D; encima, la dificultad SAC (T1–T6) y las vías ferratas de Overpass al acercarse. Picos con nombre y altitud, refugios, webcams, pendientes ≥30° (calculadas en el dispositivo), esquí de montaña y capa del tiempo. El buscador y los enlaces vuelan al sitio también en 3D; la vista (inclinación y giro incluidos) se recuerda.
+- **Ficha del Casetón de Ándara** con foto propia: nítida en la cabecera y difuminada de fondo en toda la ficha, «Alrededor del refugio» y el horizonte real dentro de la ficha.
+- **Montaña Palentina en Webcams**: cinco cámaras nuevas (Pico Tres Mares, Brañosera, Barruelo, Cervera y Salinas, de MeteoCampoo) y un panel de **condiciones ahora** con Peña Prieta, Curavacas, Espigüete, Tres Mares, Valdecebollas, San Glorio, Piedrasluengas y Cervera a su altitud real: temperatura, viento, cota de nieve, nieve 24 h y 72 h, espesor del modelo, boletín de aludes de AEMET (Cordel–Peña Labra) e incidencias DGT.
+- **Refugios libres · estado actual** (Refugios → Libres), Picos de Europa y Montaña Palentina: `scripts/update-refugios-libres.py` → `data/refugios-libres.json` una vez al día con OpenStreetMap (cabañas y chozos libres, plazas, chimenea, revisión) y las noticias del último año (Google News: solo titular, medio, fecha y enlace) asignadas a cada refugio y clasificadas como aviso o mejora. La app añade la parte libre de los refugios guardados y el tiempo de esta noche a la altitud de cada uno, y enlaza a OpenStreetMap para avisar del estado.
+
 ## Versión 17: sitios concretos, mapa del tiempo con senderos y webcams
 - **Buscador de montaña**: picos, refugios, collados, majadas, canales, lagos y fuentes («pico urriellu», «casetón de ándara», «refugio de cabrones»), con variantes en asturiano, sin tildes y con erratas. Nomenclátor diario de OpenStreetMap (`scripts/update-lugares.py`) más Photon y Nominatim en directo. El tiempo se pide **a la altitud del lugar**. Favoritos y recientes.
 - **Tiempo en el punto** en Cielo, con o sin ruta: viento y dirección, niebla probable, visibilidad, isoterma, cota de nieve, tormenta, nieve en el suelo, tres días con su mejor ventana y la nieve en frases (caída y prevista, rehielo y ablandamiento, transporte por viento y orientación de las placas, boletín de aludes).
@@ -61,6 +67,9 @@ Sanabria Barba, M. (2026). *TrailMeteo: planificación meteorológica y nival de
 - MET Norway: https://api.met.no/doc/TermsOfService ; CC BY 4.0. Puede compartir modelos de origen con otros proveedores. Viento medio y rachas separados.
 - RainViewer: https://www.rainviewer.com/api/weather-maps-api.html ; uso personal/educativo y atribución.
 - OpenStreetMap: https://www.openstreetmap.org/copyright ; CARTO: https://carto.com/attributions
+- Mapa: MapLibre GL JS (BSD-3) · teselas vectoriales OpenFreeMap / OpenMapTiles (datos OSM, ODbL) · imágenes Esri World Imagery · relieve AWS Terrain Tiles.
+- Webcams de la Montaña Palentina: MeteoCampoo (https://www.meteocampoo.es/webcams.html), mostradas desde su web con crédito y enlace.
+- Noticias de refugios: Google News (solo titular, medio, fecha y enlace a la noticia original).
 - Leaflet 1.9.4: https://github.com/Leaflet/Leaflet/blob/v1.9.4/LICENSE ; BSD-2-Clause.
 - WebLLM: https://webllm.mlc.ai/ ; Qwen: https://huggingface.co/mlc-ai/Qwen2.5-0.5B-Instruct-q4f16_1-MLC
 

@@ -90,7 +90,22 @@
    "looks": "Al pie de la Pica del Mancondiú, donde acaba la Canal de las Vacas",
    "pin": 1,
    "groups": "Posible apertura en fines de semana para grupos grandes: consúltalo con el guarda",
-   "art": "skier-dog"
+   "photo": {
+    "src": "img/andara.jpg",
+    "small": "img/andara-900.jpg",
+    "blur": "img/andara-blur.jpg",
+    "pos": "72% 46%",
+    "alt": "Perro tumbado sobre la nieve recién caída en Ándara, entre crestas de caliza escarchadas y niebla",
+    "credit": "Foto: María Sanabria"
+   },
+   "tagline": "El único refugio guardado del Macizo Oriental",
+   "highlights": [
+    ["Morra de Lechugales", "techo del Macizo Oriental"],
+    ["Pica del Mancondiú", "sobre el refugio"],
+    ["Canal de las Vacas", "acaba junto al Casetón"],
+    ["Minas de Ándara", "patrimonio minero del siglo XIX"],
+    ["Pozo de Ándara", "antiguo lago, vaciado por la minería"]
+   ]
   },
   {
    "id": "urriellu",

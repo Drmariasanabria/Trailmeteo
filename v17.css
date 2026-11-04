@@ -342,3 +342,101 @@ body.mp-fullscreen{overflow:hidden}
 .rf-note{color:var(--ink-2)}
 .mp-map{z-index:0}.mp-3dmap{z-index:1}
 .mp-wrap .mp-3dmap{position:absolute!important;inset:0;width:100%;height:100%}
+
+/* ---------- v17.1 · Ándara: foto propia, nítida en la cabecera y difuminada de fondo en toda la ficha ---------- */
+.rf-card--photo{grid-column:1/-1;isolation:isolate;background:#0b1216;border-color:rgba(255,255,255,.14);color:#eef3f5;
+ --paper:rgba(12,20,25,.42);--ink:#f3f7f9;--ink-2:#d5dfe4;--muted:#a9bac2;--line:rgba(255,255,255,.12);--line-2:rgba(255,255,255,.22);--fill:rgba(255,255,255,.07);--fill-2:rgba(255,255,255,.12);
+ box-shadow:0 40px 90px -50px rgba(4,8,12,.9),inset 0 1px 0 rgba(255,255,255,.08)}
+.rf-card--photo::before{content:'';position:absolute;inset:-60px;z-index:-2;background:var(--rf-bg) center/cover no-repeat;filter:blur(34px) saturate(1.25) brightness(.62);transform:translateZ(0)}
+.rf-card--photo::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(8,14,18,.05),rgba(8,14,18,.55) 55%,rgba(8,14,18,.78));pointer-events:none}
+.rf-card--photo .rf-hero-photo{aspect-ratio:16/7;min-height:260px;background:#1c262b}
+.rf-card--photo.is-open .rf-hero-photo{aspect-ratio:21/8}
+.rf-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transform-origin:72% 50%;animation:rfDrift 28s ease-in-out infinite alternate}
+@keyframes rfDrift{from{transform:scale(1.02)}to{transform:scale(1.09) translate(-1.2%,-.6%)}}
+@media (prefers-reduced-motion:reduce){.rf-photo{animation:none}}
+.rf-hero-photo::after{background:linear-gradient(180deg,rgba(6,10,14,.45) 0,rgba(6,10,14,0) 26%,rgba(6,10,14,0) 48%,rgba(6,10,14,.82) 100%)}
+.rf-card--photo .rf-hero-bot{bottom:26px;left:22px;right:22px}
+.rf-card--photo .rf-hero-bot h3{font-size:clamp(1.8rem,5vw,3rem);letter-spacing:-.035em;font-weight:800}
+.rf-tagline{margin:0 0 6px!important;font-size:.68rem!important;font-weight:800;letter-spacing:.16em;text-transform:uppercase;opacity:.92}
+.rf-credit{position:absolute;z-index:2;right:12px;bottom:8px;font-size:.6rem;color:rgba(255,255,255,.7);letter-spacing:.04em}
+.rf-card--photo .rf-now{background:rgba(255,255,255,.05);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.rf-card--photo .rf-now b{color:#fff}
+.rf-card--photo .rf-looks{color:var(--ink-2);font-size:.9rem}
+.rf-card--photo .rf-detail{background:transparent}
+.rf-card--photo .rf-sec{border-color:var(--line)}
+.rf-card--photo .rf-day,.rf-card--photo .rf-access li,.rf-card--photo .rf-snow{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.rf-card--photo .rf-snow svg{stroke:#7fe3f2}
+.rf-card--photo .rf-chart{background:linear-gradient(180deg,rgba(255,255,255,.07),transparent)}
+.rf-card--photo a{color:#9fe0ff}
+.rf-card--photo .rf-acts .primary{background:#fff;color:#0b1216;border-color:#fff}
+.rf-card--photo .rf-acts .quiet{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.2)}
+.rf-card--photo .rf-sec .rf-status{background:rgba(255,255,255,.1);color:#fff}
+.rf-card--photo .footnote,.rf-card--photo .muted{color:var(--muted)}
+.rf-hero-pano{aspect-ratio:18/5;min-height:140px;border-radius:14px}
+.rf-hl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.rf-hl li{display:grid;gap:2px;padding:10px 12px;border-radius:12px;background:var(--fill);border:1px solid var(--line)}
+.rf-hl b{font-size:.86rem}.rf-hl small{font-size:.72rem;color:var(--muted)}
+@media (max-width:720px){.rf-card--photo .rf-hero-photo,.rf-card--photo.is-open .rf-hero-photo{aspect-ratio:4/3;min-height:0}.rf-card--photo .rf-hero-bot{left:16px;right:16px;bottom:22px}}
+
+/* ---------- v17.1 · Condiciones de la Montaña Palentina en Webcams ---------- */
+.wc-cond{margin:0 0 16px;padding:18px 18px 14px;border-radius:20px;background:linear-gradient(160deg,color-mix(in srgb,#1d8ea3 9%,var(--paper)),var(--paper) 60%)}
+.wc-cond h2{margin:2px 0 2px;font-size:1.35rem;letter-spacing:-.02em}
+.wc-cond-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:flex-start}
+.wc-cond-acts{display:flex;gap:6px;flex-wrap:wrap}.wc-cond-acts button{min-height:34px;padding:5px 12px;font-size:.78rem}
+.wc-cond-sum{margin:10px 0 12px;font-size:.92rem;line-height:1.45}
+.wc-cond-t{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.wc-cond-t table{width:100%;border-collapse:collapse;font-size:.8rem;font-variant-numeric:tabular-nums;min-width:660px}
+.wc-cond-t th,.wc-cond-t td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+.wc-cond-t thead th{font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.wc-cond-t tbody tr:last-child>*{border-bottom:0}
+.wc-cond-t tbody th button{min-height:0;padding:0;border:0;background:none;font-weight:800;font-size:.84rem;color:var(--ink)}
+.wc-cond-t small{display:block;color:var(--muted);font-size:.68rem;font-weight:500}
+.wc-cond-t td.cold b{color:#2f6fd0}.wc-cond-t td.warn{color:#b8701a;font-weight:700}.wc-cond-t td.bad{color:#d6303a;font-weight:800}.wc-cond-t td.snow{color:#3170e8;font-weight:800}
+.wc-cond-l{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px;font-size:.82rem;line-height:1.4}
+.wc-cond-l small{color:var(--muted)}
+
+/* ---------- v17.1 · Refugios libres: estado actual ---------- */
+.rf-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px}
+.rf-views{display:inline-flex;padding:4px;border-radius:999px;background:var(--fill);border:1px solid var(--line);gap:2px}
+.rf-views button{min-height:36px;padding:6px 16px;border:0;border-radius:999px;background:none;font-weight:800;font-size:.82rem;color:var(--ink-2)}
+.rf-views button.on{background:var(--ink);color:var(--paper);box-shadow:0 6px 16px -10px rgba(0,0,0,.6)}
+.rf-lbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 14px}.rf-lbar .wc-search{flex:1 1 260px}
+.rf-lbar button{min-height:38px;padding:6px 14px;font-size:.8rem}.rf-lbar button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+#rfLZone small{opacity:.6;font-weight:600;margin-left:3px}
+.rf-lsum{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px;margin:0 0 16px;padding:18px;border-radius:20px}
+.rf-lbig{margin:4px 0;font-size:1.1rem}.rf-lbig b{font-size:1.9rem;letter-spacing:-.03em;margin-right:4px}.rf-lwarn{color:#d6303a;font-weight:800}
+.rf-lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.rf-lcard{display:flex;flex-direction:column;gap:6px;padding:14px 14px 4px;border:1px solid var(--line);border-radius:18px;background:var(--paper);box-shadow:0 18px 40px -36px rgba(16,22,26,.6);border-top:4px solid #9aa4a8}
+.rf-lcard.rf-l-bad{border-top-color:#d6303a}.rf-lcard.rf-l-ok{border-top-color:#1d9b72}.rf-lcard.rf-l-warn{border-top-color:#e0a11b}.rf-lcard.rf-l-info{border-top-color:#1d8ea3}
+.rf-lcard header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rf-lcard .rf-alt{background:var(--fill-2);color:var(--ink)}
+.rf-lcard h3{margin:2px 0 0;font-size:1.02rem;letter-spacing:-.01em;line-height:1.2}
+.rf-lstate{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 8px;border-radius:999px;background:var(--fill-2);font-size:.68rem;font-weight:800;letter-spacing:.02em}
+.rf-lstate i{width:8px;height:8px;border-radius:50%;background:#9aa4a8}.rf-l-bad .rf-lstate i{background:#d6303a}.rf-l-ok .rf-lstate i{background:#1d9b72}.rf-l-warn .rf-lstate i{background:#e0a11b}.rf-l-info .rf-lstate i{background:#1d8ea3}
+.rf-lmeta{margin:0;font-size:.76rem;color:var(--muted)}
+.rf-lwhy{margin:0;font-size:.8rem;font-weight:600;line-height:1.35}.rf-l-bad .rf-lwhy{color:#b4232c}
+.rf-lnote{margin:0;font-size:.78rem;color:var(--ink-2);line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.rf-lwx{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;padding:8px 10px;border-radius:12px;background:var(--fill);font-size:.78rem}
+.rf-lwx span{display:grid}.rf-lwx b{font-size:.98rem;font-variant-numeric:tabular-nums}.rf-lwx small{font-size:.62rem;color:var(--muted)}
+.rf-lwx .cold b{color:#2f6fd0}.rf-lwx .snow b{color:#3170e8}
+.rf-lchip{font-style:normal;align-self:center;padding:2px 8px;border-radius:999px;font-size:.64rem;font-weight:800}.rf-lchip.is-snow{background:color-mix(in srgb,#3170e8 14%,var(--paper));color:#2456b8}
+.rf-lnews{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.rf-lnews li{padding:6px 9px;border-radius:10px;background:var(--fill);border-left:3px solid #9aa4a8;font-size:.78rem;line-height:1.35}
+.rf-lnews li.t-aviso{border-left-color:#d6303a}.rf-lnews li.t-mejora{border-left-color:#1d9b72}
+.rf-lnews a{color:var(--ink);font-weight:700;text-decoration:none}.rf-lnews a:hover{text-decoration:underline}.rf-lnews small{display:block;color:var(--muted);font-size:.66rem;margin-top:1px}
+.rf-lsrc{margin:0;font-size:.66rem;color:var(--muted)}
+.rf-lcard .rf-acts{padding:4px 0 10px;margin-top:auto}
+#rfLMore{display:flex;justify-content:center;margin:14px 0}
+@media (max-width:720px){.rf-lsum{grid-template-columns:minmax(0,1fr)}.rf-views{width:100%}.rf-views button{flex:1}}
+
+/* ---------- v17.1 · Mapa en MapLibre (2D y 3D con el mismo motor) ---------- */
+.mp-map .maplibregl-ctrl-bottom-right,.mp-map .maplibregl-ctrl-bottom-left{bottom:96px}
+.mp-map .maplibregl-ctrl-attrib{font-size:9px}
+.mp-map .maplibregl-ctrl-group{border-radius:12px;overflow:hidden;box-shadow:0 8px 20px -10px rgba(0,0,0,.6)}
+.mp-map .maplibregl-ctrl-scale{background:rgba(10,14,18,.55);color:#fff;border-color:rgba(255,255,255,.7);font-size:10px}
+.mp-map canvas{outline:none}
+.mp-wrap.is-3d .mp-3d{background:var(--accent,#ff5a1f);color:#fff;border-color:transparent}
+.mp-nogl{position:absolute;inset:0;display:grid;place-content:center;gap:8px;padding:24px;text-align:center;color:#e8eef1;background:#1b2428}
+.mp-nogl p{margin:0;max-width:420px;color:#b8c6cc;font-size:.88rem}.mp-nogl button{justify-self:center}
+.mp-wrap .mp-map,.mp-wrap .mp-map.maplibregl-map{position:absolute!important;inset:0;width:100%;height:100%}
+.rf-card--photo .pv{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.25)}

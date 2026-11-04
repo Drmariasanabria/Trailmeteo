@@ -76,6 +76,13 @@ jobs:
           path: data/refugios-live.json
           key: refugios-${{ steps.day.outputs.day }}
           restore-keys: refugios-
+      - name: Refugios libres y su estado (caché diaria)
+        id: libres
+        uses: actions/cache@v4
+        with:
+          path: data/refugios-libres.json
+          key: libres-${{ steps.day.outputs.day }}
+          restore-keys: libres-
       - name: Estado anterior de las webcams
         uses: actions/cache@v4
         with:
@@ -104,6 +111,10 @@ jobs:
         if: steps.refugios.outputs.cache-hit != 'true'
         timeout-minutes: 3
         run: timeout 150 python3 scripts/update-refugios.py || true
+      - name: Refugios libres (OpenStreetMap y noticias) si la copia no es de hoy
+        if: steps.libres.outputs.cache-hit != 'true'
+        timeout-minutes: 6
+        run: timeout 330 python3 scripts/update-refugios-libres.py || true
       - name: Webcams activas
         timeout-minutes: 3
         run: timeout 150 python3 scripts/update-webcams.py || true
