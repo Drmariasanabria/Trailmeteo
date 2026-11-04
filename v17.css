@@ -230,3 +230,16 @@ body[data-tab=mapa] .locationbar,body[data-tab=webcams] .locationbar{display:non
 /* En el mapa el botón del copiloto sube para no tapar el selector de hora */
 body[data-tab=mapa] #copilotFab{bottom:calc(var(--dock) + 132px)}
 @media (min-width:1000px){body[data-tab=mapa] #copilotFab{bottom:118px}}
+/* Capas a la vista: interruptores rápidos y avisos */
+.mp-quick{position:absolute;z-index:999;top:146px;left:12px;right:12px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.mp-quick button{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:3px 11px 3px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(11,17,20,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#c9d6da;font-size:.72rem;font-weight:700}
+.mp-quick button i{width:9px;height:9px;border-radius:50%;border:1.5px solid currentColor;flex:none}
+.mp-quick button.on{color:#fff;border-color:rgba(255,255,255,.4)}
+.mp-quick button.on i{background:#2ee59d;border-color:#2ee59d;box-shadow:0 0 8px rgba(46,229,157,.7)}
+.mp-quick [data-ov="ski"].on i{background:#38d6ff;border-color:#38d6ff;box-shadow:0 0 8px rgba(56,214,255,.7)}
+.mp-quick [data-ov="trails"].on i{background:#ff5a1f;border-color:#ff5a1f;box-shadow:0 0 8px rgba(255,90,31,.7)}
+.mp-quick .mp-more-l{color:#fff;background:rgba(255,90,31,.85);border-color:#ff5a1f}
+.mp-hint{position:absolute;z-index:1001;left:50%;bottom:104px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:7px 14px;border-radius:999px;background:rgba(11,17,20,.82);color:#e8f1f4;font-size:.76rem;font-weight:600;text-align:center;box-shadow:0 10px 24px -12px rgba(0,0,0,.7)}
+.mp-hint button{min-height:0;margin-left:6px;padding:2px 10px;border:1px solid #ff5a1f;border-radius:999px;background:#ff5a1f;color:#fff;font-size:.72rem}
+.mp-search .mp-lbtn{position:relative}
+.mp-quick{top:108px}.mp-legend{top:146px}
