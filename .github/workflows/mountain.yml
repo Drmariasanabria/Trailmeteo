@@ -109,8 +109,10 @@ jobs:
         run: timeout 200 python3 scripts/update-canales.py || true
       - name: Nomenclátor de montaña y esquí de montaña si la copia no es de hoy
         if: steps.lugares.outputs.cache-hit != 'true' || hashFiles('data/lugares.json') == ''
-        timeout-minutes: 9
-        run: timeout 500 python3 scripts/update-lugares.py || true
+        timeout-minutes: 12
+        run: |
+          timeout 400 node scripts/update-lugares.mjs || true
+          timeout 300 python3 scripts/update-lugares.py || true
       - name: Esquí de montaña si la copia no es de hoy
         if: steps.skitour.outputs.cache-hit != 'true' || hashFiles('data/skitour.json') == ''
         timeout-minutes: 4

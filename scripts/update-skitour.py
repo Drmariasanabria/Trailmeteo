@@ -11,7 +11,7 @@ import datetime, json, math, pathlib, sys, time, urllib.parse, urllib.request
 
 BBOX = (42.70, -6.70, 43.45, -3.30)  # sur, oeste, norte, este
 C2C = 'https://api.camptocamp.org'
-MIRRORS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter']
+MIRRORS = ['https://maps.mail.ru/osm/tools/overpass/api/interpreter', 'https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter']
 UA = {'User-Agent': 'TrailMeteo/17 (https://github.com/wilderwests/Trailmeteo)', 'Accept': 'application/json'}
 R = 6378137.0
 LANGS = ('es', 'en', 'fr', 'it', 'ca', 'eu', 'de')

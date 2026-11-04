@@ -32,9 +32,9 @@
    "beds": 20,
    "season": {
     "open": [],
-    "text": "Temporada sin confirmar: consulta las fechas con el guarda",
-    "winter": "Consultar",
-    "approx": true
+    "text": "",
+    "winter": "",
+    "approx": false
    },
    "phone": [
     "635 425 228"
@@ -114,13 +114,6 @@
      "Pozo de Ándara",
      "antiguo lago, vaciado por la minería"
     ]
-   ],
-   "verified": [
-    {
-     "what": "Gestión: Federación Cántabra de Montaña; la web casetondeandara.com no es fiable (pirateada) y se ha retirado; sin fecha de apertura confirmada",
-     "by": "Corrección de la autora de TrailMeteo",
-     "date": "2026-11-04"
-    }
    ],
    "osm": "w334515446",
    "coordsFixed": true

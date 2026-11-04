@@ -17,7 +17,7 @@ import datetime, html, json, pathlib, re, sys, time, urllib.parse, urllib.reques
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 UA = {'User-Agent': 'Mozilla/5.0 (compatible; TrailMeteo/17; +https://github.com/wilderwests/Trailmeteo)', 'Accept-Language': 'es,en;q=0.8'}
 OSM_UA = {'User-Agent': 'TrailMeteo/17 (https://github.com/wilderwests/Trailmeteo)'}
-MIRRORS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter']
+MIRRORS = ['https://maps.mail.ru/osm/tools/overpass/api/interpreter', 'https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter']
 CONCEPTS = [  # clave, patrón del concepto
     ('desayuno', r'^(?:breakfast|desayuno)$'),
     ('comida', r'^(?:lunch\s*/\s*dinner|comida\s*/\s*cena|lunch|comida)$'),
