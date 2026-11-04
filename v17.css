@@ -320,3 +320,25 @@ body[data-tab=refugios] .locationbar{display:none}
 .rf-hero-bot h3{color:#fff}.rf-hero-bot p{color:#fff}
 .rf-sec p,.rf-sec li{font-size:.86rem;line-height:1.5}
 .rf-sec p{margin:6px 0}
+.mp-layers{padding-top:16px}.mp-layers .mp-x{top:8px;right:8px}
+.mp-layers .mp-h:first-of-type{margin-right:40px}
+/* Mapa más grande, pantalla completa y 3D */
+@media (min-width:1000px){.mp-wrap{height:max(560px,calc(100vh - 190px))}}
+.mp-wrap.is-full{position:fixed;inset:0;z-index:3000;height:100dvh!important;min-height:0;margin:0!important;border-radius:0!important}
+body.mp-fullscreen .tabs,body.mp-fullscreen #copilotFab{display:none!important}
+body.mp-fullscreen{overflow:hidden}
+.mp-3dmap{position:absolute;inset:0;z-index:500;background:#1b2428}
+.mp-3dmap .maplibregl-ctrl-bottom-right{bottom:96px}
+.mp-ibtn.mp-3d{width:auto;padding:0 10px;font-size:.78rem;font-weight:800;letter-spacing:.02em}
+.mp-ibtn.mp-3d[aria-pressed=true],#mpFull[aria-pressed=true]{background:#ff5a1f;color:#fff}
+.mp-wrap.is-3d .mp-quick [data-ov="slope"],.mp-wrap.is-3d .mp-quick [data-ov="cams"]{display:none}
+@media (max-width:420px){.mp-search{gap:2px;padding-left:10px}.mp-ibtn{width:36px}.mp-ibtn.mp-3d{padding:0 8px}}
+.rf-ast{color:#ff5a1f;font-weight:900;margin-left:2px}.rf-ast-l{color:#1d8ea3}
+.rf-cmp .rf-ast{font-size:.9rem;vertical-align:super;line-height:0}
+.rf-legend{margin:0 0 10px;font-size:.74rem;color:var(--muted)}
+.rf-stars{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.rf-star{padding:2px 9px;border-radius:999px;background:rgba(255,90,31,.88);color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.02em;text-shadow:none}
+.rf-star-l{background:rgba(29,142,163,.9)}
+.rf-note{color:var(--ink-2)}
+.mp-map{z-index:0}.mp-3dmap{z-index:1}
+.mp-wrap .mp-3dmap{position:absolute!important;inset:0;width:100%;height:100%}

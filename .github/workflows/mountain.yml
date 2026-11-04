@@ -69,6 +69,13 @@ jobs:
             data/skitour.json
           key: lugares-${{ steps.day.outputs.day }}
           restore-keys: lugares-
+      - name: Precios y plazas de refugios (caché diaria)
+        id: refugios
+        uses: actions/cache@v4
+        with:
+          path: data/refugios-live.json
+          key: refugios-${{ steps.day.outputs.day }}
+          restore-keys: refugios-
       - name: Estado anterior de las webcams
         uses: actions/cache@v4
         with:
@@ -93,6 +100,10 @@ jobs:
         run: |
           timeout 150 python3 scripts/update-lugares.py || true
           timeout 200 python3 scripts/update-skitour.py || true
+      - name: Refugios si la copia no es de hoy
+        if: steps.refugios.outputs.cache-hit != 'true'
+        timeout-minutes: 3
+        run: timeout 150 python3 scripts/update-refugios.py || true
       - name: Webcams activas
         timeout-minutes: 3
         run: timeout 150 python3 scripts/update-webcams.py || true

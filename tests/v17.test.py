@@ -89,4 +89,15 @@ assert len(ids) == len(set(ids)) >= 15
 for c in cams:
     assert c['type'] in ('image', 'youtube') and c['page'].startswith('http') and 42 < c['lat'] < 44 and -7 < c['lon'] < -3, c
     assert c['type'] != 'youtube' or c.get('youtube')
+ref = load('update-refugios')
+page = '''<html><body><h1>Vega de Urriellu</h1><p>Occupancy: 96</p><p>Phone (+34) 984 090 981</p>
+<div><h3>Federated</h3><ul><li>Breakfast 8€</li><li>Lunch/Dinner 19€</li><li>Overnight stay 15€</li></ul>
+<h3>Non federated</h3><ul><li>Breakfast 8 €</li><li>Lunch/Dinner 19 €</li><li>Overnight stay 20,50 €</li><li>Picnic 12€</li></ul></div></body></html>'''
+got = ref.parse(page)
+assert got['prices']['pernocta'] == [15, 20.5] and got['prices']['desayuno'] == [8, 8], got
+assert got['prices']['comida'] == [19, 19] and got['prices']['cena'] == [19, 19]
+assert 'picnic' not in got['prices'], 'solo si están los dos precios'
+assert got['beds'] == 96 and got['phone'] == ['984 090 981']
+assert ref.parse('<p>Página en obras</p>') == {}
+assert 'prices' not in ref.parse('<p>Federated Overnight 900€ Non federated Overnight 950€</p>'), 'precios inverosímiles'
 print('v17 recolectores: OK')
