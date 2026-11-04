@@ -129,6 +129,10 @@ $('#rfMassif [data-massif="Oriental"]').click();await wait(50);assert.equal($$('
 $('#rfMassif [data-massif="all"]').click();await wait(50);
 $('[data-rf-open="urriellu"]').click();await wait(700);const det=$('#rfd-urriellu');assert.ok(det&&!det.hidden);assert.match(det.textContent,/Tiempo en el refugio/);assert.match(det.textContent,/Comparación de modelos/);assert.match(det.textContent,/Pernocta/);assert.match(det.textContent,/Collado de Pandébano/);assert.match(det.textContent,/Webcam del refugio/);
 assert.ok(calls.some(c=>c.includes('models=ecmwf_ifs025')&&c.includes('elevation=1960')),'modelos a la altitud del refugio');
+assert.equal(RF.near(43.2434,-4.8227)?.id,'urriellu');assert.equal(RF.near(43.0,-4.0),null);assert.ok($('[data-rf-share="urriellu"]'),'compartir refugio');
+assert.equal($$('#rfGrid .rf-card')[0].dataset.rf,'andara','Ándara el primero');assert.ok($('#rf-andara .rf-star'),'asterisco de grupos');assert.ok($('#rf-urriellu .rf-star-l'),'asterisco de refugio libre');
+assert.match(RF.panoSVG(fakeH,RF.list.find(r=>r.id==='andara'),{wx:{current:{cloud_cover:10}}}),/rf-buddies/,'esquiadora y perro en Ándara');
+T.enterApp('now');await P.pick({name:'Vega de Urriellu',lat:43.2433,lon:-4.8226,ele:1960,kind:'refugio'});await wait(300);assert.ok($('#ptCard [data-pt="refu"]'),'enlace a la ficha del refugio desde el punto');
 assert.ok(calls.some(c=>c.includes('api.open-meteo.com')&&decodeURIComponent(c).includes('elevation=1630,1460')||decodeURIComponent(c).split('elevation=')[1]?.split('&')[0].split(',').length===10),'una sola consulta para los 10 refugios');
 console.log('v17 checks passed: mountain place search (peaks, huts, cols, canals, Asturian variants, typos, coordinates), point weather at real altitude with fog/storm/snow brief/refreeze/wind loading/best window, favourites, webcams (status, inline viewer, YouTube, filters, weather per cam), map grid/ramp/bilinear/snow state/resample, menus, refuges (season, prices, real-horizon panorama, models, comparison table).');
 await w.happyDOM.close();
