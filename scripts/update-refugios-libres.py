@@ -49,8 +49,13 @@ def dist_m(a, b):
     return 6371000 * math.hypot(x, y)
 
 
-def get(url, timeout=60, data=None):
-    req = urllib.request.Request(url, data=data, headers=UA)
+# Overpass responde 406 a los User-Agent que imitan a un navegador («Mozilla/5.0 …»): para él va uno propio
+OSM_UA = {'User-Agent': 'TrailMeteo/17 (https://github.com/wilderwests/Trailmeteo)', 'Accept': 'application/json'}
+
+
+def get(url, timeout=60, data=None, headers=None):
+    headers = headers or UA
+    req = urllib.request.Request(url, data=data, headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return r.read()
@@ -58,7 +63,7 @@ def get(url, timeout=60, data=None):
         # Algunos Python antiguos (LibreSSL) no negocian TLS con ciertos servidores: se reintenta con curl
         if data is not None or not shutil.which('curl') or 'SSL' not in str(e):
             raise
-        out = subprocess.run(['curl', '-sfL', '-m', str(timeout), '-A', UA['User-Agent'], '-H', 'Accept: ' + UA['Accept'], url], capture_output=True, timeout=timeout + 5)
+        out = subprocess.run(['curl', '-sfL', '-m', str(timeout), '-A', headers['User-Agent'], '-H', 'Accept: ' + headers.get('Accept', '*/*'), url], capture_output=True, timeout=timeout + 5)
         if out.returncode:
             raise
         return out.stdout
@@ -69,7 +74,7 @@ def overpass(q):
     for attempt in range(2):
         for u in MIRRORS:
             try:
-                return json.loads(get(u + '?' + urllib.parse.urlencode({'data': q}), timeout=100))
+                return json.loads(get(u + '?' + urllib.parse.urlencode({'data': q}), timeout=100, headers=OSM_UA))
             except Exception as e:  # noqa: BLE001 — se prueba el siguiente servidor
                 last = e
                 print('  Overpass', u, e, file=sys.stderr)
