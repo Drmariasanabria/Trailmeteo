@@ -19,15 +19,22 @@ DEST = ROOT / 'data' / 'refugios-libres.json'
 UA = {'User-Agent': 'Mozilla/5.0 (compatible; TrailMeteo/17; +https://github.com/wilderwests/Trailmeteo)', 'Accept': 'application/json', 'Accept-Language': 'es,en;q=0.8'}
 MIRRORS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass.kumi.systems/api/interpreter']
 ZONES = {
-    'picos': {'name': 'Picos de Europa', 'area': 'area["boundary"="national_park"]["name"~"Picos de Europa"]->.z;', 'bbox': None,
+    'picos': {'name': 'Picos de Europa', 'area': 'area["name"~"Picos de Europa"]["boundary"~"national_park|protected_area"]->.z;', 'bbox': None,
+              'box': (43.04, -5.22, 43.36, -4.56),
+              # Contorno aproximado del Parque Nacional (lon, lat), solo para cuando Overpass no resuelve el área
+              'poly': [(-5.13, 43.34), (-4.93, 43.34), (-4.75, 43.31), (-4.6, 43.26), (-4.6, 43.11), (-4.75, 43.06), (-4.95, 43.06), (-5.12, 43.11), (-5.2, 43.22)],
               'queries': ['refugio libre "Picos de Europa"', '"Picos de Europa" refugio cerrado OR derrumbe OR quemado OR vandalizado OR rehabilitado OR reabre', '"Picos de Europa" cabaña OR chozo OR vivac refugio montaña']},
     'palentina': {'name': 'Montaña Palentina', 'area': 'area["boundary"="administrative"]["admin_level"="6"]["name"="Palencia"]->.z;', 'bbox': (42.78, -4.98, 43.1, -4.15),
+                  'box': (42.78, -4.98, 43.08, -4.15),
+                  # Norte de Palencia (lon, lat): la raya con León y Cantabria pasa por Peña Prieta, Piedrasluengas y Tres Mares
+                  'poly': [(-4.865, 42.78), (-4.875, 42.97), (-4.82, 43.0), (-4.73, 43.025), (-4.6, 43.035), (-4.46, 43.043), (-4.4, 43.037), (-4.33, 43.0), (-4.25, 42.95), (-4.17, 42.85), (-4.2, 42.78)],
                   'queries': ['refugio "Montaña Palentina"', '"Fuentes Carrionas" refugio OR chozo', 'refugio montaña Velilla OR Cervera OR Brañosera OR Triollo OR Cardaño OR Vidrieros OR Camasobres']},
 }
-WARN = re.compile(r'quem|incendi|vandal|derrumb|hundi|cerrad|clausur|ruina|destroz|da[ñn]os|precint|okupa|robad|desprend', re.I)
+WARN = re.compile(r'quem|incendi|vandal|derrumb|hundi|cerrad|clausur|ruina|destroz|da[ñn]os|precint|okupa|robad|desprend|basur|sucied|peor huella|masific', re.I)
 GOOD = re.compile(r'rehabilit|reform|renov|inaugur|reabr|reapertur|estren|restaur|arregl|limpi|mejora', re.I)
 HUTWORD = re.compile(r'refugio|chozo|caba[ñn]a|caseta|vivac|invernal', re.I)
-NOISE = re.compile(r'refugio clim|refugio fiscal|refugio de animales|perrera|protectora|valor refugio|activo refugio', re.I)
+NOISE = re.compile(r'refugio clim|refugio fiscal|refugio de animales|perrera|protectora|valor refugio|activo refugio|oso|jabal|lobo|fauna|aves|reina|letizia|pueblo que|escapada|casas? rural|hotel|refugio para (los|las)|ni .* ni |bello|oto[ñn]al|ideal para', re.I)
+MOUNTAIN = re.compile(r'monta[ñn]|vivac|guarda|pernoct|sender|cumbre|cima|picos|libre|chozo|caba[ñn]a|majada|rescat|alud|nieve|ruta|travesía|excursion', re.I)
 
 
 def norm(s):
@@ -70,12 +77,32 @@ def overpass(q):
     raise last
 
 
+def inside(poly, lon, lat):
+    """Punto dentro de polígono (rayos), con el polígono en (lon, lat)."""
+    ok = False
+    for (x1, y1), (x2, y2) in zip(poly, poly[1:] + poly[:1]):
+        if (y1 > lat) != (y2 > lat) and lon < (x2 - x1) * (lat - y1) / (y2 - y1) + x1:
+            ok = not ok
+    return ok
+
+
+def box_query(zone):
+    b = '(%s,%s,%s,%s)' % ZONES[zone]['box']
+    return (f'[out:json][timeout:90];(nwr["tourism"="wilderness_hut"]{b};nwr["amenity"="shelter"]["shelter_type"="basic_hut"]{b};'
+            f'nwr["name"~"Cabaña Verónica|Cabana Veronica"]{b};);out center meta;')
+
+
+def in_zone(zone, e):
+    c = e.get('center') or e
+    return 'lat' in c and inside(ZONES[zone]['poly'], c['lon'], c['lat'])
+
+
 def query(zone):
     z = ZONES[zone]
     bb = '(%s,%s,%s,%s)' % z['bbox'] if z['bbox'] else ''
     sel = lambda f: f'nwr{f}(area.z){bb};'
     return ('[out:json][timeout:90];' + z['area'] + '(' + sel('["tourism"="wilderness_hut"]') +
-            sel('["amenity"="shelter"]["shelter_type"="basic_hut"]') + sel('["name"~"Cabaña Verónica|Cabana Veronica"]') + ');out center meta tags;')
+            sel('["amenity"="shelter"]["shelter_type"="basic_hut"]') + sel('["name"~"Cabaña Verónica|Cabana Veronica"]') + ');out center meta;')
 
 
 def condition(t):
@@ -92,10 +119,23 @@ def condition(t):
     return None, ''
 
 
-def huts_for(zone):
-    d = overpass(query(zone))
+def elements_for(zone, local=None):
+    """Elementos de OSM de la zona: por el área administrativa o protegida y, si falla o sale vacía, por caja + contorno."""
+    if local is not None:
+        return [e for e in local.get('elements', []) if in_zone(zone, e)]
+    try:
+        els = overpass(query(zone)).get('elements', [])
+        if els:
+            return els
+        print('  El área no devuelve nada: se usa la caja con el contorno de la zona', file=sys.stderr)
+    except Exception as e:  # noqa: BLE001
+        print('  Área no disponible:', e, file=sys.stderr)
+    return [e for e in overpass(box_query(zone)).get('elements', []) if in_zone(zone, e)]
+
+
+def huts_for(zone, local=None):
     out = []
-    for e in d.get('elements', []):
+    for e in elements_for(zone, local):
         t = e.get('tags', {})
         c = e.get('center') or e
         if 'lat' not in c:
@@ -191,7 +231,7 @@ def attach_news(huts, zone):
     zone_news = []
     for x in items.values():
         tx = x['t']
-        if not HUTWORD.search(tx) or NOISE.search(tx):
+        if not HUTWORD.search(tx) or NOISE.search(tx) or not MOUNTAIN.search(tx):
             continue
         x['tone'] = tone(tx)
         hit = False
@@ -210,6 +250,10 @@ def attach_news(huts, zone):
 
 
 def main():
+    # --osm fichero.json: usa una respuesta de Overpass ya descargada (caja que cubra las dos zonas), p. ej. si Overpass está saturado
+    local = None
+    if '--osm' in sys.argv:
+        local = json.loads(pathlib.Path(sys.argv[sys.argv.index('--osm') + 1]).read_text())
     prev = {}
     if DEST.exists():
         try:
@@ -223,7 +267,7 @@ def main():
     for zone, z in ZONES.items():
         print('Zona', z['name'])
         try:
-            huts = huts_for(zone)
+            huts = huts_for(zone, local)
         except Exception as e:  # noqa: BLE001
             out['errors'].append(f'{z["name"]}: OpenStreetMap no respondió ({e})')
             huts = [h for h in prev.get('huts', []) if h.get('zone') == zone]
