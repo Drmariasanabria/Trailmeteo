@@ -1,6 +1,6 @@
 {
  "checked": "2026-11-04",
- "note": "Datos de cada refugio recogidos de la central de reservas reservarefugios.com, de las webs de los refugios y de la Federación de Montaña del Principado de Asturias (FEMPA), consultados el 4 de noviembre de 2026. Precios en euros por persona; pueden cambiar: confírmalos al reservar. Las coordenadas se ajustan en la app con la posición del refugio en OpenStreetMap.",
+ "note": "Datos de cada refugio recogidos de la central de reservas reservarefugios.com, de las webs de los refugios y de la Federación de Montaña del Principado de Asturias (FEMPA), consultados el 4 de noviembre de 2026. Precios en euros por persona; pueden cambiar: confírmalos al reservar. Coordenadas de cada refugio en OpenStreetMap (comprobadas el 4 de noviembre de 2026).",
  "sources": [
   [
    "Central de reservas de refugios",
@@ -27,26 +27,21 @@
    "massif": "Oriental",
    "region": "Cantabria",
    "lat": 43.21399,
-   "lon": -4.71212,
+   "lon": -4.71211,
    "ele": 1725,
    "beds": 20,
    "season": {
-    "open": [
-     [
-      "05-01",
-      "10-31"
-     ]
-    ],
-    "text": "Temporada de verano: confirma fechas por teléfono",
+    "open": [],
+    "text": "Temporada sin confirmar: consulta las fechas con el guarda",
     "winter": "Consultar",
     "approx": true
    },
    "phone": [
     "635 425 228"
    ],
-   "web": "http://www.casetondeandara.com",
+   "web": null,
    "book": "https://www.reservarefugios.com/en/shelters/caseton-de-andara",
-   "owner": "Gobierno de Cantabria",
+   "owner": "Federación Cántabra de Montaña",
    "prices": {
     "pernocta": [
      12,
@@ -99,12 +94,36 @@
    },
    "tagline": "El único refugio guardado del Macizo Oriental",
    "highlights": [
-    ["Morra de Lechugales", "techo del Macizo Oriental"],
-    ["Pica del Mancondiú", "sobre el refugio"],
-    ["Canal de las Vacas", "acaba junto al Casetón"],
-    ["Minas de Ándara", "patrimonio minero del siglo XIX"],
-    ["Pozo de Ándara", "antiguo lago, vaciado por la minería"]
-   ]
+    [
+     "Morra de Lechugales",
+     "techo del Macizo Oriental"
+    ],
+    [
+     "Pica del Mancondiú",
+     "sobre el refugio"
+    ],
+    [
+     "Canal de las Vacas",
+     "acaba junto al Casetón"
+    ],
+    [
+     "Minas de Ándara",
+     "patrimonio minero del siglo XIX"
+    ],
+    [
+     "Pozo de Ándara",
+     "antiguo lago, vaciado por la minería"
+    ]
+   ],
+   "verified": [
+    {
+     "what": "Gestión: Federación Cántabra de Montaña; la web casetondeandara.com no es fiable (pirateada) y se ha retirado; sin fecha de apertura confirmada",
+     "by": "Corrección de la autora de TrailMeteo",
+     "date": "2026-11-04"
+    }
+   ],
+   "osm": "w334515446",
+   "coordsFixed": true
   },
   {
    "id": "urriellu",
@@ -116,8 +135,8 @@
    ],
    "massif": "Central",
    "region": "Asturias",
-   "lat": 43.2433,
-   "lon": -4.8226,
+   "lat": 43.20272,
+   "lon": -4.82128,
    "ele": 1960,
    "beds": 96,
    "season": {
@@ -181,7 +200,9 @@
    ],
    "webcam": "refugio-urriellu",
    "looks": "Al pie de la cara oeste del Picu Urriellu",
-   "libre": "Zona libre todo el año: 6 literas con mantas"
+   "libre": "Zona libre todo el año: 6 literas con mantas",
+   "osm": "w55685803",
+   "coordsFixed": true
   },
   {
    "id": "cabrones",
@@ -193,8 +214,8 @@
    ],
    "massif": "Central",
    "region": "Asturias",
-   "lat": 43.2115,
-   "lon": -4.856,
+   "lat": 43.21405,
+   "lon": -4.85755,
    "ele": 2034,
    "beds": 16,
    "season": {
@@ -208,7 +229,8 @@
     "winter": "Consulta si queda parte abierta en invierno"
    },
    "phone": [
-    "673 570 548"
+    "673 570 548",
+    "650 780 381"
    ],
    "web": "http://www.refugiojoudeloscabrones.com",
    "book": "https://www.reservarefugios.com/en/shelters/jou-de-los-cabrones",
@@ -258,7 +280,9 @@
      "+2.000 m"
     ]
    ],
-   "looks": "En un jou glaciar bajo la Torre de Cerredo, el techo de la Cordillera"
+   "looks": "En un jou glaciar bajo la Torre de Cerredo, el techo de la Cordillera",
+   "osm": "w301958751",
+   "coordsFixed": true
   },
   {
    "id": "jermoso",
@@ -270,8 +294,8 @@
    ],
    "massif": "Central",
    "region": "León",
-   "lat": 43.1739,
-   "lon": -4.8806,
+   "lat": 43.1729,
+   "lon": -4.86921,
    "ele": 2064,
    "beds": 32,
    "season": {
@@ -330,7 +354,9 @@
     ]
    ],
    "webcam": "collado-jermoso",
-   "looks": "Balcón sobre Valdeón, al pie del Llambrión y famoso por sus atardeceres"
+   "looks": "Balcón sobre Valdeón, al pie del Llambrión y famoso por sus atardeceres",
+   "osm": "w54610228",
+   "coordsFixed": true
   },
   {
    "id": "veronica",
@@ -341,8 +367,8 @@
    ],
    "massif": "Central",
    "region": "Cantabria",
-   "lat": 43.17,
-   "lon": -4.8244,
+   "lat": 43.17612,
+   "lon": -4.83418,
    "ele": 2325,
    "beds": 6,
    "season": {
@@ -390,7 +416,9 @@
      "+550 m"
     ]
    ],
-   "looks": "La cúpula metálica bajo la Torre de los Horcados Rojos"
+   "looks": "La cúpula metálica bajo la Torre de los Horcados Rojos",
+   "osm": "w379713118",
+   "coordsFixed": true
   },
   {
    "id": "terenosa",
@@ -401,8 +429,8 @@
    ],
    "massif": "Central",
    "region": "Asturias",
-   "lat": 43.2475,
-   "lon": -4.8044,
+   "lat": 43.22712,
+   "lon": -4.79273,
    "ele": 1315,
    "beds": 20,
    "season": {
@@ -456,7 +484,9 @@
      "+300 m"
     ]
    ],
-   "looks": "Majada de pastores con vistas al Picu Urriellu"
+   "looks": "Majada de pastores con vistas al Picu Urriellu",
+   "osm": "w293098979",
+   "coordsFixed": true
   },
   {
    "id": "ario",
@@ -468,8 +498,8 @@
    ],
    "massif": "Occidental",
    "region": "Asturias",
-   "lat": 43.2368,
-   "lon": -4.9196,
+   "lat": 43.24294,
+   "lon": -4.92308,
    "ele": 1630,
    "beds": 35,
    "season": {
@@ -530,7 +560,17 @@
    ],
    "webcam": "vega-ario",
    "looks": "El mejor mirador del Macizo Central desde el Occidental",
-   "libre": "Vivac abierto todo el año (4–6 plazas)"
+   "libre": "Vivac abierto todo el año (4–6 plazas)",
+   "verified": [
+    {
+     "what": "«Refugio cerrado hasta primavera de 2027»: cerró el 1 de noviembre de 2026",
+     "by": "Web oficial del refugio",
+     "date": "2026-11-04",
+     "src": "https://www.refugiovegadeario.es"
+    }
+   ],
+   "osm": "w126231110",
+   "coordsFixed": true
   },
   {
    "id": "vegarredonda",
@@ -542,19 +582,19 @@
    ],
    "massif": "Occidental",
    "region": "Asturias",
-   "lat": 43.2405,
-   "lon": -4.9925,
+   "lat": 43.23439,
+   "lon": -4.9929,
    "ele": 1460,
-   "beds": 63,
+   "beds": 55,
    "season": {
     "open": [
      [
-      "03-01",
-      "11-30"
+      "05-01",
+      "10-31"
      ]
     ],
-    "text": "De marzo a noviembre (cerrado en diciembre, enero y febrero)",
-    "winter": "Cerrado de diciembre a febrero"
+    "text": "Abierto de mayo a octubre",
+    "winter": "Cerrado de noviembre a abril"
    },
    "phone": [
     "985 922 952",
@@ -606,7 +646,19 @@
      "+400 m"
     ]
    ],
-   "looks": "Base para la Peña Santa y el Mirador de Ordiales"
+   "looks": "Base para la Peña Santa y el Mirador de Ordiales",
+   "bedsFixed": true,
+   "verified": [
+    {
+     "what": "Cerrado ahora; temporada de mayo a octubre y 55 camas según su web oficial",
+     "by": "Web oficial del refugio",
+     "date": "2026-11-04",
+     "src": "https://www.refugiovegarredonda.com"
+    }
+   ],
+   "osm": "w196553223",
+   "coordsFixed": true,
+   "libre": "Refugio Viejo: abrigo junto al refugio, a unos 230 m (OpenStreetMap)"
   },
   {
    "id": "vegabano",
@@ -617,8 +669,8 @@
    ],
    "massif": "Occidental",
    "region": "León",
-   "lat": 43.1502,
-   "lon": -5.0372,
+   "lat": 43.16607,
+   "lon": -5.00496,
    "ele": 1432,
    "beds": 35,
    "season": {
@@ -670,7 +722,9 @@
      "+350 m"
     ]
    ],
-   "looks": "Pradera rodeada de hayedos, junto al Roblón de Cuesta Fría"
+   "looks": "Pradera rodeada de hayedos, junto al Roblón de Cuesta Fría",
+   "osm": "w667858931",
+   "coordsFixed": true
   },
   {
    "id": "aliva",
@@ -681,8 +735,8 @@
    ],
    "massif": "Central",
    "region": "Cantabria",
-   "lat": 43.184,
-   "lon": -4.7786,
+   "lat": 43.16772,
+   "lon": -4.78683,
    "ele": 1666,
    "beds": 70,
    "season": {
@@ -721,7 +775,9 @@
      "+800 m"
     ]
    ],
-   "looks": "Puertos de Áliva, entre el Macizo Central y el Oriental"
+   "looks": "Puertos de Áliva, entre el Macizo Central y el Oriental",
+   "osm": "w293066624",
+   "coordsFixed": true
   }
  ],
  "asterisks": {

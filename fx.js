@@ -66,7 +66,7 @@ $('.home-art')?.insertAdjacentHTML('afterbegin','<div class="home-photo"></div>'
 /* ---------- Pantalla de arranque ---------- */
 (function splash(){const el=$('#splash');if(!el)return;const lines=['Calibrando sensores…','Leyendo modelos ECMWF · ICON · GFS…','Sincronizando radar…','Trazando curvas de nivel…','Listo para tu ruta'];let i=0;const status=$('#splashStatus');const timer=setInterval(()=>{if(status&&i<lines.length)status.textContent=lines[i++];else clearInterval(timer)},430);
  Promise.resolve([LOCAL_PHOTOS.canal]).then(async items=>{const p=items[0];if(!p||!$('#splash'))return;try{await preload(p.url);const ph=$('.splash-photo');if(ph){ph.style.backgroundImage=`url("${p.url.replace(/"/g,'%22')}")`;ph.classList.add('on')}}catch{}});
- let done=false;function enter(){if(done)return;done=true;clearInterval(timer);sfx('boot');buzz([10,40,18]);gust();if(FX.wind)ambient(true);el.classList.add('leaving');const want=location.hash.slice(1),tab=TAB_IDS.includes(want)?want:'route';setTimeout(()=>{el.remove();document.body.classList.add('booted');enterApp(tab);showBackdrop(tab)},reduce()?10:720)}
+ let done=false;function enter(){if(done)return;done=true;clearInterval(timer);sfx('boot');buzz([10,40,18]);gust();if(FX.wind)ambient(true);el.classList.add('leaving');const want=location.hash.slice(1),tab=TAB_IDS.includes(want)?want:null;setTimeout(()=>{el.remove();document.body.classList.add('booted');if(tab)enterApp(tab);else if(globalThis.TMLauncher)TMLauncher.open();else enterApp('route');showBackdrop(tab||'route')},reduce()?10:720)}
  const reduce=()=>globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
  $('#splashEnter').addEventListener('click',enter);
  $('#splashMute').addEventListener('click',()=>setMuted(!FX.muted));

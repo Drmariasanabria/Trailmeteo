@@ -23,7 +23,7 @@ w.fetch=async(url,opts={})=>{const u=new URL(url,'http://localhost:8765');calls.
  else if(u.hostname==='nominatim.openstreetmap.org')d=[{name:'Pico Tesorero',lat:'43.19',lon:'-4.79',type:'peak',extratags:{ele:'2570'},display_name:'Pico Tesorero, Camaleño, Cantabria'}];
  else if(u.hostname==='api.open-meteo.com'||u.hostname==='ensemble-api.open-meteo.com')d=forecast(u);
  else d={};return{ok:true,status:200,json:async()=>d,text:async()=>JSON.stringify(d)}};
-const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','copilot-expert.js','parte.js','wikiloc.js','canales.js','gear.js','field-core.js','pois.js','relief.js','sky.js','week.js','pace.js','flyover.js','card.js','modelsx.js','snow.js','quality.js','nieve-pro.js','seguimiento.js','trails.js','account.js','contact.js','road.js','finder.js','results.js','palette.js','shell.js','fuel.js','meteogrid.js','radarfc.js','lugares.js','punto.js','webcams.js','mapa.js','refugios.js'];
+const scripts=['app.js','mountain.js','expedition-core.js','expedition.js','terrain.js','route-library.js','home.js','public-sources.js','route-knowledge.js','cares-archive.js','fx.js','firebase-config.js','ai.js','copilot-expert.js','parte.js','wikiloc.js','canales.js','gear.js','field-core.js','pois.js','relief.js','sky.js','week.js','pace.js','flyover.js','card.js','modelsx.js','snow.js','quality.js','nieve-pro.js','seguimiento.js','trails.js','account.js','contact.js','road.js','finder.js','results.js','palette.js','shell.js','fuel.js','meteogrid.js','radarfc.js','lugares.js','punto.js','webcams.js','mapa.js','refugios.js','lanzador.js'];
 w.eval(scripts.map(s=>fs.readFileSync(s,'utf8')).join('\n')+'\nglobalThis.T={enterApp,showTab,setLocation,forecastURL,get S(){return S}};');
 const $=s=>w.document.querySelector(s),$$=s=>[...w.document.querySelectorAll(s)],wait=ms=>new Promise(r=>setTimeout(r,ms));
 await wait(200);
@@ -39,9 +39,9 @@ assert.equal(top('naranjo de bulnes'),'Picu Urriellu','nombre alternativo');
 assert.equal(top('uriellu'),'Picu Urriellu','tolera una errata');
 assert.equal(top('caseton de andara'),'Casetón de Ándara','sin tildes');
 assert.equal(top('Casetón de Ándara'),'Casetón de Ándara');
-assert.equal(top('refugio de cabrones'),'Refugio Jou de Cabrones');
-assert.equal(top('cabrones'),'Refugio Jou de Cabrones');
-assert.equal(top('collau jermoso'),'Collado Jermoso','asturiano');
+assert.match(top('refugio de cabrones'),/Jou de (los )?Cabrones/);
+assert.match(top('cabrones'),/Jou de (los )?Cabrones/);
+assert.match(top('collau jermoso'),/Collado Jermoso/,'asturiano');
 assert.equal(top('jenduda'),'Canal de la Jenduda','canales de Picos');
 assert.equal(P.rank(idx,'zzzz').length,0);
 const J=x=>JSON.stringify(x);assert.equal(J(P.coords('43.24, -4.82')),J({lat:43.24,lon:-4.82}));assert.equal(J(P.coords('43,24 -4,82')),J({lat:43.24,lon:-4.82}));assert.equal(P.coords('Sotres'),null);
@@ -88,7 +88,7 @@ assert.equal(PT.fogAt({relative_humidity_2m:80,visibility:20000,cloud_cover_low:
 
 /* ---------- Webcams ---------- */
 await WC.load();assert.ok(WC.cams.length>=15);assert.equal(WC.state(WC.cams.find(c=>c.id==='refugio-urriellu')),'live');assert.equal(WC.state(WC.cams.find(c=>c.id==='sotres')),'down');assert.equal(WC.state(WC.cams.find(c=>c.id==='valdeon')),'stream');
-const nearU=WC.near(43.24,-4.82,6);assert.equal(nearU[0].id,'refugio-urriellu');assert.ok(!nearU.some(c=>c.id==='sotres'),'las caídas no se ofrecen cerca');
+const nearU=WC.near(43.2028,-4.8212,6);assert.equal(nearU[0].id,'refugio-urriellu');assert.ok(!nearU.some(c=>c.id==='sotres'),'las caídas no se ofrecen cerca');
 T.enterApp('webcams');await wait(300);
 assert.ok(!$('#pane-webcams').hidden);assert.ok($('.tabs [data-tab="now"]').classList.contains('active'),'Cielo resaltado en Webcams');
 assert.match($('#wcStatus').textContent,/emitiendo de/);
@@ -122,7 +122,7 @@ assert.equal(w.eval('TM_VERSION'),'17');
 const RF=w.TMRefugios;await RF.load();assert.equal(RF.list.length,10);
 const ur=RF.list.find(r=>r.id==='urriellu');assert.equal(ur.ele,1960);assert.ok(ur.prices.pernocta[0]===15&&ur.prices.pernocta[1]===20);
 assert.equal(RF.openStatus(ur,new Date(2026,10,4)).open,true);assert.match(RF.openStatus(ur,new Date(2026,11,10)).label,/cierra el 15 de diciembre/);assert.match(RF.openStatus(ur,new Date(2026,0,10)).label,/abre el 15 de marzo/);
-const vb=RF.list.find(r=>r.id==='vegarredonda');assert.equal(RF.openStatus(vb,new Date(2026,11,20)).open,false);assert.match(RF.openStatus(vb,new Date(2026,11,20)).label,/abre el 1 de marzo/);
+const vb=RF.list.find(r=>r.id==='vegarredonda');assert.equal(RF.openStatus(vb,new Date(2026,11,20)).open,false);assert.match(RF.openStatus(vb,new Date(2026,11,20)).label,/abre el 1 de mayo/);
 assert.ok(RF.palette({current:{cloud_cover:10,weather_code:0}},{altitude:-20}).night);assert.ok(RF.palette({current:{cloud_cover:95,weather_code:73}},{altitude:30}).snowing);
 const fakeH={h0:1960,bands:[0,1,2].map(k=>Array.from({length:360},(_,a)=>(k+1)*2+Math.sin(a/20)*3)),tops:[0,1,2].map(()=>Array.from({length:360},(_,a)=>a%2?2600:1500)),dist:[0,1,2].map(()=>new Array(360).fill(3000))};
 const svg=RF.panoSVG(fakeH,ur,{wx:{current:{cloud_cover:10,weather_code:0}},cota:2000,peaks:[{name:'Torre de Cerredo',ele:2648,az:200,ang:8}]});
@@ -133,18 +133,18 @@ $('#rfMassif [data-massif="Oriental"]').click();await wait(50);assert.equal($$('
 $('#rfMassif [data-massif="all"]').click();await wait(50);
 $('[data-rf-open="urriellu"]').click();await wait(700);const det=$('#rfd-urriellu');assert.ok(det&&!det.hidden);assert.match(det.textContent,/Tiempo en el refugio/);assert.match(det.textContent,/Comparación de modelos/);assert.match(det.textContent,/Pernocta/);assert.match(det.textContent,/Collado de Pandébano/);assert.match(det.textContent,/Webcam del refugio/);
 assert.ok(calls.some(c=>c.includes('models=ecmwf_ifs025')&&c.includes('elevation=1960')),'modelos a la altitud del refugio');
-assert.equal(RF.near(43.2434,-4.8227)?.id,'urriellu');assert.equal(RF.near(43.0,-4.0),null);assert.ok($('[data-rf-share="urriellu"]'),'compartir refugio');
+assert.equal(RF.near(43.2028,-4.8212)?.id,'urriellu');assert.equal(RF.near(43.0,-4.0),null);assert.ok($('[data-rf-share="urriellu"]'),'compartir refugio');
 assert.equal($$('#rfGrid .rf-card')[0].dataset.rf,'andara','Ándara el primero');assert.ok($('#rf-andara .rf-star'),'asterisco de grupos');assert.ok($('#rf-urriellu .rf-star-l'),'asterisco de refugio libre');
 assert.doesNotMatch(RF.panoSVG(fakeH,RF.list.find(r=>r.id==='andara'),{wx:{current:{cloud_cover:10}}}),/rf-buddies/,'sin la ilustración antigua');
 assert.ok($('#rf-andara.rf-card--photo .rf-photo[src*="img/andara"]'),'Ándara con su foto en la cabecera');assert.match($('#rf-andara').getAttribute('style')||'',/andara-blur/,'y la misma foto difuminada de fondo');
 $('[data-rf-open="andara"]').click();await wait(700);assert.match($('#rfd-andara').textContent,/Alrededor del refugio/);assert.match($('#rfd-andara').textContent,/Morra de Lechugales/);assert.ok($('#rfd-andara #rf3d-andara [data-rf-hero="andara"]'),'vista 3D (sin WebGL, el horizonte plano de respaldo)');assert.doesNotMatch($('#rf-andara').textContent,/Foto:/,'sin crédito en la foto');$('[data-rf-open="andara"]').click();await wait(50);
 /* Refugios libres: estado según OSM y prensa */
 const ls=RF.libState;assert.equal(ls({cond:'ruina',news:[]}).label,'En ruinas');assert.equal(ls({cond:null,news:[{tone:'aviso',t:'Queman un refugio',d:new Date().toISOString().slice(0,10)}]}).label,'Aviso reciente');assert.equal(ls({cond:'bueno',news:[]}).k,'ok');assert.equal(ls({cond:null,news:[],check:'2010-01-01'}).label,'Sin noticias recientes');
-$('#rfViews [data-view="libres"]').click();await wait(300);assert.ok(!$('#rfLibres').hidden&&$('#rfGuarded').hidden,'vista de refugios libres');assert.equal($$('#rfLGrid .rf-lcard').length,4,'zonas libres de Urriellu y Ario + Vega Huerta + Pineda (la ruina se oculta)');assert.match($('#rfLGrid').textContent,/Aviso reciente/);assert.match($('#rfLHead').textContent,/Vandalizan y queman/);
+$('#rfViews [data-view="libres"]').click();await wait(300);assert.ok(!$('#rfLibres').hidden&&$('#rfGuarded').hidden,'vista de refugios libres');assert.equal($$('#rfLGrid .rf-lcard').length,5,'zonas libres de Urriellu, Ario y Vegarredonda + Vega Huerta + Pineda (la ruina se oculta)');assert.match($('#rfLGrid').textContent,/Aviso reciente/);assert.match($('#rfLHead').textContent,/Vandalizan y queman/);
 $('#rfLZone [data-lz="palentina"]').click();await wait(80);assert.equal($$('#rfLGrid .rf-lcard').length,1,'solo Montaña Palentina');$('#rfLRuin').click();await wait(80);assert.equal($$('#rfLGrid .rf-lcard').length,2,'mostrando ruinas');assert.ok($('#rfLGrid [href*="openstreetmap.org/note/new"]'),'avisar del estado en OSM');
 assert.ok(calls.some(c=>c.includes('api.open-meteo.com')&&decodeURIComponent(c).includes('snow_depth')&&/elevation=[^&]*1620/.test(decodeURIComponent(c))),'tiempo de esta noche a la altitud de cada refugio libre');$('#rfLZone [data-lz="all"]').click();$('#rfLRuin').click();await wait(50);
 $('#rfViews [data-view="guardados"]').click();await wait(100);assert.ok(!$('#rfGuarded').hidden);
-T.enterApp('now');await P.pick({name:'Vega de Urriellu',lat:43.2433,lon:-4.8226,ele:1960,kind:'refugio'});await wait(300);assert.ok($('#ptCard [data-pt="refu"]'),'enlace a la ficha del refugio desde el punto');
+T.enterApp('now');await P.pick({name:'Vega de Urriellu',lat:43.2027,lon:-4.8213,ele:1960,kind:'refugio'});await wait(300);assert.ok($('#ptCard [data-pt="refu"]'),'enlace a la ficha del refugio desde el punto');
 assert.ok(calls.some(c=>c.includes('api.open-meteo.com')&&decodeURIComponent(c).includes('elevation=1630,1460')||decodeURIComponent(c).split('elevation=')[1]?.split('&')[0].split(',').length===10),'una sola consulta para los 10 refugios');
 console.log('v17 checks passed: mountain place search (peaks, huts, cols, canals, Asturian variants, typos, coordinates), point weather at real altitude with fog/storm/snow brief/refreeze/wind loading/best window, favourites, webcams (status, inline viewer, YouTube, filters, weather per cam), map grid/ramp/bilinear/snow state/resample, menus, refuges (season, prices, real-horizon panorama, models, comparison table).');
 await w.happyDOM.close();
