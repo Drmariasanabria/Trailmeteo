@@ -2,80 +2,716 @@
  "checked": "2026-11-04",
  "note": "Datos de cada refugio recogidos de la central de reservas reservarefugios.com, de las webs de los refugios y de la Federación de Montaña del Principado de Asturias (FEMPA), consultados el 4 de noviembre de 2026. Precios en euros por persona; pueden cambiar: confírmalos al reservar. Las coordenadas se ajustan en la app con la posición del refugio en OpenStreetMap.",
  "sources": [
-  ["Central de reservas de refugios", "https://www.reservarefugios.com/en/shelters"],
-  ["FEMPA · Refugios", "https://fempa.net/refugios/"],
-  ["Parque Nacional · Servicios", "https://www.miteco.gob.es/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/picos-europa/guia-visitante/servicios-externos.html"]
+  [
+   "Central de reservas de refugios",
+   "https://www.reservarefugios.com/en/shelters"
+  ],
+  [
+   "FEMPA · Refugios",
+   "https://fempa.net/refugios/"
+  ],
+  [
+   "Parque Nacional · Servicios",
+   "https://www.miteco.gob.es/es/parques-nacionales-oapn/red-parques-nacionales/parques-nacionales/picos-europa/guia-visitante/servicios-externos.html"
+  ]
  ],
  "refugios": [
-  {"id":"urriellu","name":"Vega de Urriellu","official":"Refugio Julián Delgado Úbeda","match":["urriellu","delgado"],"massif":"Central","region":"Asturias","lat":43.2433,"lon":-4.8226,"ele":1960,"beds":96,
-   "season":{"open":[["03-15","12-15"]],"text":"Guardado del 15 de marzo al 15 de diciembre","winter":"Fuera de temporada, zona libre con 6 literas y mantas"},
-   "phone":["984 090 981"],"web":"https://www.refugiodeurriellu.com","book":"https://www.reservarefugios.com/en/shelters/vega-de-urriellu","owner":"FEMPA",
-   "prices":{"pernocta":[15,20],"desayuno":[8,8],"comida":[19,19],"cena":[19,19]},"priceNote":"Menores de 14 años: pernocta 9 € federados y 15 € no federados.",
-   "services":["Comidas y bar","Taquillas para mantas","Agua corriente","Aseos","Radio de emergencia"],
-   "access":[["Collado de Pandébano (pista desde Sotres), por La Terenosa","2 h 30–3 h","+750 m"],["Sotres a pie, por Pandébano","4 h","+1.100 m"],["Poncebos por Bulnes y la Canal de Balcosín","5 h","+1.700 m"]],
-   "webcam":"refugio-urriellu","looks":"Al pie de la cara oeste del Picu Urriellu"},
-  {"id":"cabrones","name":"Jou de los Cabrones","official":"Refugio José Ramón Lueje","match":["cabrones","lueje"],"massif":"Central","region":"Asturias","lat":43.2115,"lon":-4.8560,"ele":2034,"beds":16,
-   "season":{"open":[["05-01","10-31"]],"text":"Guardado de mayo a octubre","winter":"Consulta si queda parte abierta en invierno"},
-   "phone":["673 570 548"],"web":"http://www.refugiojoudeloscabrones.com","book":"https://www.reservarefugios.com/en/shelters/jou-de-los-cabrones","owner":"FEMPA",
-   "prices":{"pernocta":[15,20],"desayuno":[8,8],"comida":[19,19],"cena":[19,19],"picnic":[16,16]},"priceNote":"Alquiler de tienda doble: 30 € federados y 40 € no federados.",
-   "services":["Comidas y picnic","Tiendas de alquiler","Radio de emergencia"],
-   "access":[["Bulnes, por la Canal de Amuesa y el Jou de los Cabrones","4–5 h","+1.400 m"],["Sotres, por Pandébano y Urriellu","6–7 h","+1.300 m"],["Poncebos (con tramos equipados con cable)","8–10 h","+2.000 m"]],
-   "looks":"En un jou glaciar bajo la Torre de Cerredo, el techo de la Cordillera"},
-  {"id":"jermoso","name":"Collado Jermoso","official":"Refugio Diego Mella","match":["jermoso","mella"],"massif":"Central","region":"León","lat":43.1739,"lon":-4.8806,"ele":2064,"beds":32,
-   "season":{"open":[["05-01","10-31"]],"text":"Guardado de mayo a octubre, Semana Santa y puentes","winter":"Fuera de temporada, consulta al guarda"},
-   "phone":["636 998 727"],"web":"http://www.colladojermoso.com","book":"https://www.reservarefugios.com/en/shelters/collado-jermoso","owner":"Junta de Castilla y León",
-   "prices":{"pernocta":[12.5,20],"desayuno":[7,7.5],"comida":[18,18],"cena":[18,18],"picnic":[14,14]},
-   "services":["Comidas y picnic","Radio de emergencia","Webcam y estación meteorológica"],
-   "access":[["Cordiñanes de Valdeón (PR-PNPE 16)","4–5 h","+1.200 m"],["El Cable (teleférico de Fuente Dé), por la Vega de Liordes","4 h","+700 m"]],
-   "webcam":"collado-jermoso","looks":"Balcón sobre Valdeón, al pie del Llambrión y famoso por sus atardeceres"},
-  {"id":"veronica","name":"Cabaña Verónica","official":"Refugio Cabaña Verónica","match":["veronica"],"massif":"Central","region":"Cantabria","lat":43.1700,"lon":-4.8244,"ele":2325,"beds":6,
-   "season":{"open":[["04-01","10-31"]],"text":"De Semana Santa a octubre","winter":"Cerrado en invierno"},
-   "phone":["663 516 456"],"web":"https://www.facebook.com/Refugio.Cabana.Veronica","book":"https://www.reservarefugios.com/en/shelters/cabana-veronica","owner":"Gobierno de Cantabria",
-   "prices":{"pernocta":[12,15],"desayuno":[8,8],"comida":[17,17],"cena":[17,17]},
-   "services":["Comidas","El refugio más alto de Picos (antigua torreta de un portaaviones)"],
-   "access":[["El Cable (teleférico de Fuente Dé), por los Horcados Rojos","2 h","+550 m"]],
-   "looks":"La cúpula metálica bajo la Torre de los Horcados Rojos"},
-  {"id":"terenosa","name":"La Terenosa","official":"Refugio de La Terenosa","match":["terenosa"],"massif":"Central","region":"Asturias","lat":43.2475,"lon":-4.8044,"ele":1315,"beds":20,
-   "season":{"open":[["04-01","10-31"]],"text":"Del 1 de abril al 31 de octubre","winter":"Fuera de temporada, consultar"},
-   "phone":["630 552 016"],"web":"https://www.facebook.com/Refugioterenosa","book":"tel:+34630552016","bookNote":"Reservas solo por teléfono","owner":"FEMPA",
-   "prices":{"pernocta":[15,20],"desayuno":[8,8],"comida":[19,19],"cena":[19,19]},
-   "services":["Comidas","Primera parada camino de Urriellu"],
-   "access":[["Collado de Pandébano","40 min","+100 m"],["Sotres a pie","1 h 30–2 h","+300 m"]],
-   "looks":"Majada de pastores con vistas al Picu Urriellu"},
-  {"id":"ario","name":"Vega de Ario","official":"Refugio Marqués de Villaviciosa","match":["ario","villaviciosa"],"massif":"Occidental","region":"Asturias","lat":43.2368,"lon":-4.9196,"ele":1630,"beds":35,
-   "season":{"open":[["05-01","10-31"]],"text":"Guardado de mayo a octubre, además de Semana Santa y algunos fines de semana","winter":"Fuera de temporada, consultar"},
-   "phone":["984 092 000","656 843 095"],"web":"https://www.refugiovegadeario.es","book":"https://www.reservarefugios.com/en/shelters/vega-de-ario","owner":"FEMPA",
-   "prices":{"pernocta":[15,20],"desayuno":[8,8],"comida":[19,19],"cena":[19,19],"picnic":[10,10]},
-   "services":["Cocina casera","Queso gamonéu y pan ecológico","Bebidas frías y calientes"],
-   "access":[["Lagos de Covadonga (PR-PNPE 4, desde el Lago Ercina)","3 h","+530 m"],["Caín por la Canal de Trea (muy exigente)","5–6 h","+1.150 m"]],
-   "webcam":"vega-ario","looks":"El mejor mirador del Macizo Central desde el Occidental"},
-  {"id":"vegarredonda","name":"Vegarredonda","official":"Refugio José María Remis","match":["vegarredonda","remis"],"massif":"Occidental","region":"Asturias","lat":43.2405,"lon":-4.9925,"ele":1460,"beds":63,
-   "season":{"open":[["03-01","11-30"]],"text":"De marzo a noviembre (cerrado en diciembre, enero y febrero)","winter":"Cerrado de diciembre a febrero"},
-   "phone":["985 922 952","626 343 366"],"web":"http://www.refugiovegarredonda.com","book":"https://www.reservarefugios.com/en/shelters/vegarredonda","owner":"FEMPA",
-   "prices":{"pernocta":[15,20],"desayuno":[8,8],"comida":[19,19],"cena":[19,19],"picnic":[12,12],"media pensión":[42,47],"pensión completa":[56,61]},"priceNote":"Niños: pernocta 10 € federados y 15 € no federados. Pago con tarjeta a partir de 10 €.",
-   "services":["Dos comedores","Comida asturiana y bar","Pago con tarjeta"],
-   "access":[["Lagos de Covadonga (Buferrera), por Pandecarmen","2 h","+400 m"]],
-   "looks":"Base para la Peña Santa y el Mirador de Ordiales"},
-  {"id":"vegabano","name":"Vegabaño","official":"Refugio de Vegabaño","match":["vegabano"],"massif":"Occidental","region":"León","lat":43.1502,"lon":-5.0372,"ele":1432,"beds":35,
-   "season":{"open":[["05-01","10-31"]],"text":"De mayo a octubre; el resto del año, fines de semana con reserva","winter":"Cerrado de mediados de enero a marzo"},
-   "phone":["699 633 244"],"web":"http://www.refugiopicos.com","book":"https://www.reservarefugios.com/en/shelters/vegabano","owner":"Privado",
-   "prices":{"pernocta":[12,18.5],"desayuno":[7,7.5],"comida":[17.5,19.5],"cena":[17.5,19.5],"picnic":[12,13]},
-   "services":["Comidas y picnic","Entre hayedos y robles"],
-   "access":[["Soto de Sajambre (4 km)","1 h 15","+350 m"]],
-   "looks":"Pradera rodeada de hayedos, junto al Roblón de Cuesta Fría"},
-  {"id":"andara","name":"Casetón de Ándara","official":"Refugio Casetón de Ándara","match":["andara","caseton"],"massif":"Oriental","region":"Cantabria","lat":43.21399,"lon":-4.71212,"ele":1725,"beds":20,
-   "season":{"open":[["05-01","10-31"]],"text":"Temporada de verano: confirma fechas por teléfono","winter":"Consultar","approx":true},
-   "phone":["635 425 228"],"web":"http://www.casetondeandara.com","book":"https://www.reservarefugios.com/en/shelters/caseton-de-andara","owner":"Gobierno de Cantabria",
-   "prices":{"pernocta":[12,15],"desayuno":[7,8],"comida":[15,18],"cena":[15,18]},
-   "services":["Comidas","Fuente junto al refugio","El único refugio guardado del Macizo Oriental"],
-   "access":[["Sotres, por el Jito de Escarandi y la pista de Ándara","2–3 h","+700 m"],["Tresviso, por pista","1 h","+300 m"],["Bejes (10 km)","4 h","+1.000 m"]],
-   "looks":"Al pie de la Pica del Mancondiú, donde acaba la Canal de las Vacas"},
-  {"id":"aliva","name":"Áliva","official":"Hotel–Refugio de Áliva","match":["aliva"],"massif":"Central","region":"Cantabria","lat":43.1840,"lon":-4.7786,"ele":1666,"beds":70,
-   "season":{"open":[["06-01","09-30"]],"text":"De junio al final de la temporada de verano","winter":"Cerrado en invierno"},
-   "phone":["942 730 999","942 736 610"],"web":"https://cantur.com/instalaciones/7-hotel-aliva","book":"https://cantur.com/instalaciones/7-hotel-aliva","bookNote":"Hotel de montaña de Cantur, con habitaciones","owner":"Cantur",
-   "prices":null,"priceNote":"Tarifas de hotel: consúltalas en la web de Cantur.",
-   "services":["Habitaciones dobles y de 4 y 6 plazas","Restaurante"],
-   "access":[["El Cable (teleférico de Fuente Dé), por pista","1 h 30","+150 m"],["Espinama, por pista (servicio de todoterrenos en verano)","3 h","+800 m"]],
-   "looks":"Puertos de Áliva, entre el Macizo Central y el Oriental"}
- ]
+  {
+   "id": "andara",
+   "name": "Casetón de Ándara",
+   "official": "Refugio Casetón de Ándara",
+   "match": [
+    "andara",
+    "caseton"
+   ],
+   "massif": "Oriental",
+   "region": "Cantabria",
+   "lat": 43.21399,
+   "lon": -4.71212,
+   "ele": 1725,
+   "beds": 20,
+   "season": {
+    "open": [
+     [
+      "05-01",
+      "10-31"
+     ]
+    ],
+    "text": "Temporada de verano: confirma fechas por teléfono",
+    "winter": "Consultar",
+    "approx": true
+   },
+   "phone": [
+    "635 425 228"
+   ],
+   "web": "http://www.casetondeandara.com",
+   "book": "https://www.reservarefugios.com/en/shelters/caseton-de-andara",
+   "owner": "Gobierno de Cantabria",
+   "prices": {
+    "pernocta": [
+     12,
+     15
+    ],
+    "desayuno": [
+     7,
+     8
+    ],
+    "comida": [
+     15,
+     18
+    ],
+    "cena": [
+     15,
+     18
+    ]
+   },
+   "services": [
+    "Comidas",
+    "Fuente junto al refugio",
+    "El único refugio guardado del Macizo Oriental"
+   ],
+   "access": [
+    [
+     "Sotres, por el Jito de Escarandi y la pista de Ándara",
+     "2–3 h",
+     "+700 m"
+    ],
+    [
+     "Tresviso, por pista",
+     "1 h",
+     "+300 m"
+    ],
+    [
+     "Bejes (10 km)",
+     "4 h",
+     "+1.000 m"
+    ]
+   ],
+   "looks": "Al pie de la Pica del Mancondiú, donde acaba la Canal de las Vacas",
+   "pin": 1,
+   "groups": "Posible apertura en fines de semana para grupos grandes: consúltalo con el guarda",
+   "art": "skier-dog"
+  },
+  {
+   "id": "urriellu",
+   "name": "Vega de Urriellu",
+   "official": "Refugio Julián Delgado Úbeda",
+   "match": [
+    "urriellu",
+    "delgado"
+   ],
+   "massif": "Central",
+   "region": "Asturias",
+   "lat": 43.2433,
+   "lon": -4.8226,
+   "ele": 1960,
+   "beds": 96,
+   "season": {
+    "open": [
+     [
+      "03-15",
+      "12-15"
+     ]
+    ],
+    "text": "Guardado del 15 de marzo al 15 de diciembre",
+    "winter": "Fuera de temporada, zona libre con 6 literas y mantas"
+   },
+   "phone": [
+    "984 090 981"
+   ],
+   "web": "https://www.refugiodeurriellu.com",
+   "book": "https://www.reservarefugios.com/en/shelters/vega-de-urriellu",
+   "owner": "FEMPA",
+   "prices": {
+    "pernocta": [
+     15,
+     20
+    ],
+    "desayuno": [
+     8,
+     8
+    ],
+    "comida": [
+     19,
+     19
+    ],
+    "cena": [
+     19,
+     19
+    ]
+   },
+   "priceNote": "Menores de 14 años: pernocta 9 € federados y 15 € no federados.",
+   "services": [
+    "Comidas y bar",
+    "Taquillas para mantas",
+    "Agua corriente",
+    "Aseos",
+    "Radio de emergencia"
+   ],
+   "access": [
+    [
+     "Collado de Pandébano (pista desde Sotres), por La Terenosa",
+     "2 h 30–3 h",
+     "+750 m"
+    ],
+    [
+     "Sotres a pie, por Pandébano",
+     "4 h",
+     "+1.100 m"
+    ],
+    [
+     "Poncebos por Bulnes y la Canal de Balcosín",
+     "5 h",
+     "+1.700 m"
+    ]
+   ],
+   "webcam": "refugio-urriellu",
+   "looks": "Al pie de la cara oeste del Picu Urriellu",
+   "libre": "Zona libre todo el año: 6 literas con mantas"
+  },
+  {
+   "id": "cabrones",
+   "name": "Jou de los Cabrones",
+   "official": "Refugio José Ramón Lueje",
+   "match": [
+    "cabrones",
+    "lueje"
+   ],
+   "massif": "Central",
+   "region": "Asturias",
+   "lat": 43.2115,
+   "lon": -4.856,
+   "ele": 2034,
+   "beds": 16,
+   "season": {
+    "open": [
+     [
+      "05-01",
+      "10-31"
+     ]
+    ],
+    "text": "Guardado de mayo a octubre",
+    "winter": "Consulta si queda parte abierta en invierno"
+   },
+   "phone": [
+    "673 570 548"
+   ],
+   "web": "http://www.refugiojoudeloscabrones.com",
+   "book": "https://www.reservarefugios.com/en/shelters/jou-de-los-cabrones",
+   "owner": "FEMPA",
+   "prices": {
+    "pernocta": [
+     15,
+     20
+    ],
+    "desayuno": [
+     8,
+     8
+    ],
+    "comida": [
+     19,
+     19
+    ],
+    "cena": [
+     19,
+     19
+    ],
+    "picnic": [
+     16,
+     16
+    ]
+   },
+   "priceNote": "Alquiler de tienda doble: 30 € federados y 40 € no federados.",
+   "services": [
+    "Comidas y picnic",
+    "Tiendas de alquiler",
+    "Radio de emergencia"
+   ],
+   "access": [
+    [
+     "Bulnes, por la Canal de Amuesa y el Jou de los Cabrones",
+     "4–5 h",
+     "+1.400 m"
+    ],
+    [
+     "Sotres, por Pandébano y Urriellu",
+     "6–7 h",
+     "+1.300 m"
+    ],
+    [
+     "Poncebos (con tramos equipados con cable)",
+     "8–10 h",
+     "+2.000 m"
+    ]
+   ],
+   "looks": "En un jou glaciar bajo la Torre de Cerredo, el techo de la Cordillera"
+  },
+  {
+   "id": "jermoso",
+   "name": "Collado Jermoso",
+   "official": "Refugio Diego Mella",
+   "match": [
+    "jermoso",
+    "mella"
+   ],
+   "massif": "Central",
+   "region": "León",
+   "lat": 43.1739,
+   "lon": -4.8806,
+   "ele": 2064,
+   "beds": 32,
+   "season": {
+    "open": [
+     [
+      "05-01",
+      "10-31"
+     ]
+    ],
+    "text": "Guardado de mayo a octubre, Semana Santa y puentes",
+    "winter": "Fuera de temporada, consulta al guarda"
+   },
+   "phone": [
+    "636 998 727"
+   ],
+   "web": "http://www.colladojermoso.com",
+   "book": "https://www.reservarefugios.com/en/shelters/collado-jermoso",
+   "owner": "Junta de Castilla y León",
+   "prices": {
+    "pernocta": [
+     12.5,
+     20
+    ],
+    "desayuno": [
+     7,
+     7.5
+    ],
+    "comida": [
+     18,
+     18
+    ],
+    "cena": [
+     18,
+     18
+    ],
+    "picnic": [
+     14,
+     14
+    ]
+   },
+   "services": [
+    "Comidas y picnic",
+    "Radio de emergencia",
+    "Webcam y estación meteorológica"
+   ],
+   "access": [
+    [
+     "Cordiñanes de Valdeón (PR-PNPE 16)",
+     "4–5 h",
+     "+1.200 m"
+    ],
+    [
+     "El Cable (teleférico de Fuente Dé), por la Vega de Liordes",
+     "4 h",
+     "+700 m"
+    ]
+   ],
+   "webcam": "collado-jermoso",
+   "looks": "Balcón sobre Valdeón, al pie del Llambrión y famoso por sus atardeceres"
+  },
+  {
+   "id": "veronica",
+   "name": "Cabaña Verónica",
+   "official": "Refugio Cabaña Verónica",
+   "match": [
+    "veronica"
+   ],
+   "massif": "Central",
+   "region": "Cantabria",
+   "lat": 43.17,
+   "lon": -4.8244,
+   "ele": 2325,
+   "beds": 6,
+   "season": {
+    "open": [
+     [
+      "04-01",
+      "10-31"
+     ]
+    ],
+    "text": "De Semana Santa a octubre",
+    "winter": "Cerrado en invierno"
+   },
+   "phone": [
+    "663 516 456"
+   ],
+   "web": "https://www.facebook.com/Refugio.Cabana.Veronica",
+   "book": "https://www.reservarefugios.com/en/shelters/cabana-veronica",
+   "owner": "Gobierno de Cantabria",
+   "prices": {
+    "pernocta": [
+     12,
+     15
+    ],
+    "desayuno": [
+     8,
+     8
+    ],
+    "comida": [
+     17,
+     17
+    ],
+    "cena": [
+     17,
+     17
+    ]
+   },
+   "services": [
+    "Comidas",
+    "El refugio más alto de Picos (antigua torreta de un portaaviones)"
+   ],
+   "access": [
+    [
+     "El Cable (teleférico de Fuente Dé), por los Horcados Rojos",
+     "2 h",
+     "+550 m"
+    ]
+   ],
+   "looks": "La cúpula metálica bajo la Torre de los Horcados Rojos"
+  },
+  {
+   "id": "terenosa",
+   "name": "La Terenosa",
+   "official": "Refugio de La Terenosa",
+   "match": [
+    "terenosa"
+   ],
+   "massif": "Central",
+   "region": "Asturias",
+   "lat": 43.2475,
+   "lon": -4.8044,
+   "ele": 1315,
+   "beds": 20,
+   "season": {
+    "open": [
+     [
+      "04-01",
+      "10-31"
+     ]
+    ],
+    "text": "Del 1 de abril al 31 de octubre",
+    "winter": "Fuera de temporada, consultar"
+   },
+   "phone": [
+    "630 552 016"
+   ],
+   "web": "https://www.facebook.com/Refugioterenosa",
+   "book": "tel:+34630552016",
+   "bookNote": "Reservas solo por teléfono",
+   "owner": "FEMPA",
+   "prices": {
+    "pernocta": [
+     15,
+     20
+    ],
+    "desayuno": [
+     8,
+     8
+    ],
+    "comida": [
+     19,
+     19
+    ],
+    "cena": [
+     19,
+     19
+    ]
+   },
+   "services": [
+    "Comidas",
+    "Primera parada camino de Urriellu"
+   ],
+   "access": [
+    [
+     "Collado de Pandébano",
+     "40 min",
+     "+100 m"
+    ],
+    [
+     "Sotres a pie",
+     "1 h 30–2 h",
+     "+300 m"
+    ]
+   ],
+   "looks": "Majada de pastores con vistas al Picu Urriellu"
+  },
+  {
+   "id": "ario",
+   "name": "Vega de Ario",
+   "official": "Refugio Marqués de Villaviciosa",
+   "match": [
+    "ario",
+    "villaviciosa"
+   ],
+   "massif": "Occidental",
+   "region": "Asturias",
+   "lat": 43.2368,
+   "lon": -4.9196,
+   "ele": 1630,
+   "beds": 35,
+   "season": {
+    "open": [
+     [
+      "05-01",
+      "10-31"
+     ]
+    ],
+    "text": "Guardado de mayo a octubre, además de Semana Santa y algunos fines de semana",
+    "winter": "Fuera de temporada, consultar"
+   },
+   "phone": [
+    "984 092 000",
+    "656 843 095"
+   ],
+   "web": "https://www.refugiovegadeario.es",
+   "book": "https://www.reservarefugios.com/en/shelters/vega-de-ario",
+   "owner": "FEMPA",
+   "prices": {
+    "pernocta": [
+     15,
+     20
+    ],
+    "desayuno": [
+     8,
+     8
+    ],
+    "comida": [
+     19,
+     19
+    ],
+    "cena": [
+     19,
+     19
+    ],
+    "picnic": [
+     10,
+     10
+    ]
+   },
+   "services": [
+    "Cocina casera",
+    "Queso gamonéu y pan ecológico",
+    "Bebidas frías y calientes"
+   ],
+   "access": [
+    [
+     "Lagos de Covadonga (PR-PNPE 4, desde el Lago Ercina)",
+     "3 h",
+     "+530 m"
+    ],
+    [
+     "Caín por la Canal de Trea (muy exigente)",
+     "5–6 h",
+     "+1.150 m"
+    ]
+   ],
+   "webcam": "vega-ario",
+   "looks": "El mejor mirador del Macizo Central desde el Occidental",
+   "libre": "Vivac abierto todo el año (4–6 plazas)"
+  },
+  {
+   "id": "vegarredonda",
+   "name": "Vegarredonda",
+   "official": "Refugio José María Remis",
+   "match": [
+    "vegarredonda",
+    "remis"
+   ],
+   "massif": "Occidental",
+   "region": "Asturias",
+   "lat": 43.2405,
+   "lon": -4.9925,
+   "ele": 1460,
+   "beds": 63,
+   "season": {
+    "open": [
+     [
+      "03-01",
+      "11-30"
+     ]
+    ],
+    "text": "De marzo a noviembre (cerrado en diciembre, enero y febrero)",
+    "winter": "Cerrado de diciembre a febrero"
+   },
+   "phone": [
+    "985 922 952",
+    "626 343 366"
+   ],
+   "web": "http://www.refugiovegarredonda.com",
+   "book": "https://www.reservarefugios.com/en/shelters/vegarredonda",
+   "owner": "FEMPA",
+   "prices": {
+    "pernocta": [
+     15,
+     20
+    ],
+    "desayuno": [
+     8,
+     8
+    ],
+    "comida": [
+     19,
+     19
+    ],
+    "cena": [
+     19,
+     19
+    ],
+    "picnic": [
+     12,
+     12
+    ],
+    "media pensión": [
+     42,
+     47
+    ],
+    "pensión completa": [
+     56,
+     61
+    ]
+   },
+   "priceNote": "Niños: pernocta 10 € federados y 15 € no federados. Pago con tarjeta a partir de 10 €.",
+   "services": [
+    "Dos comedores",
+    "Comida asturiana y bar",
+    "Pago con tarjeta"
+   ],
+   "access": [
+    [
+     "Lagos de Covadonga (Buferrera), por Pandecarmen",
+     "2 h",
+     "+400 m"
+    ]
+   ],
+   "looks": "Base para la Peña Santa y el Mirador de Ordiales"
+  },
+  {
+   "id": "vegabano",
+   "name": "Vegabaño",
+   "official": "Refugio de Vegabaño",
+   "match": [
+    "vegabano"
+   ],
+   "massif": "Occidental",
+   "region": "León",
+   "lat": 43.1502,
+   "lon": -5.0372,
+   "ele": 1432,
+   "beds": 35,
+   "season": {
+    "open": [
+     [
+      "05-01",
+      "10-31"
+     ]
+    ],
+    "text": "De mayo a octubre; el resto del año, fines de semana con reserva",
+    "winter": "Cerrado de mediados de enero a marzo"
+   },
+   "phone": [
+    "699 633 244"
+   ],
+   "web": "http://www.refugiopicos.com",
+   "book": "https://www.reservarefugios.com/en/shelters/vegabano",
+   "owner": "Privado",
+   "prices": {
+    "pernocta": [
+     12,
+     18.5
+    ],
+    "desayuno": [
+     7,
+     7.5
+    ],
+    "comida": [
+     17.5,
+     19.5
+    ],
+    "cena": [
+     17.5,
+     19.5
+    ],
+    "picnic": [
+     12,
+     13
+    ]
+   },
+   "services": [
+    "Comidas y picnic",
+    "Entre hayedos y robles"
+   ],
+   "access": [
+    [
+     "Soto de Sajambre (4 km)",
+     "1 h 15",
+     "+350 m"
+    ]
+   ],
+   "looks": "Pradera rodeada de hayedos, junto al Roblón de Cuesta Fría"
+  },
+  {
+   "id": "aliva",
+   "name": "Áliva",
+   "official": "Hotel–Refugio de Áliva",
+   "match": [
+    "aliva"
+   ],
+   "massif": "Central",
+   "region": "Cantabria",
+   "lat": 43.184,
+   "lon": -4.7786,
+   "ele": 1666,
+   "beds": 70,
+   "season": {
+    "open": [
+     [
+      "06-01",
+      "09-30"
+     ]
+    ],
+    "text": "De junio al final de la temporada de verano",
+    "winter": "Cerrado en invierno"
+   },
+   "phone": [
+    "942 730 999",
+    "942 736 610"
+   ],
+   "web": "https://cantur.com/instalaciones/7-hotel-aliva",
+   "book": "https://cantur.com/instalaciones/7-hotel-aliva",
+   "bookNote": "Hotel de montaña de Cantur, con habitaciones",
+   "owner": "Cantur",
+   "prices": null,
+   "priceNote": "Tarifas de hotel: consúltalas en la web de Cantur.",
+   "services": [
+    "Habitaciones dobles y de 4 y 6 plazas",
+    "Restaurante"
+   ],
+   "access": [
+    [
+     "El Cable (teleférico de Fuente Dé), por pista",
+     "1 h 30",
+     "+150 m"
+    ],
+    [
+     "Espinama, por pista (servicio de todoterrenos en verano)",
+     "3 h",
+     "+800 m"
+    ]
+   ],
+   "looks": "Puertos de Áliva, entre el Macizo Central y el Oriental"
+  }
+ ],
+ "asterisks": {
+  "groups": "Posible apertura en fines de semana para grupos grandes (consultar con el guarda).",
+  "libre": "Con parte de refugio libre abierta cuando no está guardado."
+ }
 }
