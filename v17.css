@@ -493,3 +493,4 @@ body.mp-fullscreen{overflow:hidden}
  .tabs.tabs-scroll .dock-x.active,.tabs.tabs-scroll .dock-x.on{color:var(--ink);background:rgba(255,255,255,.85);box-shadow:0 8px 20px -10px rgba(16,22,26,.35)}
 }
 .tabs .dock-x{min-height:60px}
+.mp-results .mp-osm{display:block;grid-template-columns:none;margin-top:4px;padding:10px 12px;border-top:1px solid var(--line);border-radius:0 0 10px 10px;font-weight:700;font-size:.84rem;color:var(--ink-2)}
